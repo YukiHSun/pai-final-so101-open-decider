@@ -1,0 +1,13 @@
+# Python 3.13 (tested on macOS / Apple Silicon)
+strands-robots[sim] @ git+https://github.com/strands-labs/robots.git@b000fc07735138728ba46ef54cd7eb6f70c9066f
+mujoco==3.10.0
+mink==1.2.0
+quadprog==0.1.13
+numpy==2.2.6
+Pillow==12.3.0
+opencv-python-headless==4.13.0.92
+imageio==2.37.4
+imageio-ffmpeg==0.6.0
+python-dotenv>=1,<2
+# Client for the hosted Jev model (also provides the Choice / Noul question types)
+typesafe-sdk==0.7.2

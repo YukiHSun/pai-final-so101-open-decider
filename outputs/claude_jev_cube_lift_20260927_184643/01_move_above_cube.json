@@ -1,0 +1,35 @@
+{
+  "robot_state": {
+    "joint_positions": [
+      -1.7234470350674553,
+      0.061123468183863675,
+      0.0015221708790740275,
+      1.5702582926365685,
+      -1.6387511624432767,
+      0.44992484450133124
+    ],
+    "ee_position": [
+      0.209290976986418,
+      -0.0014060848940692875,
+      0.09759854802170509
+    ],
+    "gripper": {
+      "position_rad": 0.44992484450133124,
+      "command_rad": 0.45,
+      "state": "open"
+    },
+    "last_completed_skill": "move_above_cube"
+  },
+  "debug": {
+    "cube_position": [
+      0.22000000000000078,
+      1.6537604619060588e-16,
+      0.014982648686791897
+    ],
+    "cube_rise": 0.0,
+    "bilateral_contact": false,
+    "hold_steps": 0,
+    "success": false
+  },
+  "simulation_step": 5100
+}

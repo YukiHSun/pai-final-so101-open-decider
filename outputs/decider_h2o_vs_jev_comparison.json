@@ -1,0 +1,722 @@
+{
+ "recorded": [
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 268,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 0.934,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 558,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 172,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.772,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 516,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 159,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.94,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 510,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.62
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.63,
+    "verdict": "pass",
+    "latency_ms": 166,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.96,
+    "gate": 0.875,
+    "verdict": "pass",
+    "latency_ms": 919,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "lift",
+   "jev_recorded": {
+    "action": "done",
+    "confidence": 0.97,
+    "gate": 0.93
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 0.97,
+    "gate": 0.91,
+    "verdict": "pass",
+    "latency_ms": 150,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "done",
+    "confidence": 0.92,
+    "gate": 0.948,
+    "verdict": "pass",
+    "latency_ms": 925,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 218,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 0.96,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 712,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 337,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.644,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 743,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 187,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.934,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 715,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.73
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.74,
+    "verdict": "pass",
+    "latency_ms": 255,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.965,
+    "gate": 0.847,
+    "verdict": "pass",
+    "latency_ms": 1216,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lift",
+   "jev_recorded": {
+    "action": "secure_grasp",
+    "confidence": 0.7,
+    "gate": 0.98
+   },
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 0.62,
+    "gate": 0.98,
+    "verdict": "pass",
+    "latency_ms": 236,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "transfer",
+    "confidence": 0.946,
+    "gate": 0.95,
+    "verdict": "pass",
+    "latency_ms": 1214,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": false
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "secure_grasp",
+   "jev_recorded": {
+    "action": "transfer",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "transfer",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 162,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "transfer",
+    "confidence": 0.962,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 719,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "transfer",
+   "jev_recorded": {
+    "action": "lower",
+    "confidence": 0.97,
+    "gate": 0.93
+   },
+   "jev": {
+    "action": "lower",
+    "confidence": 0.98,
+    "gate": 0.92,
+    "verdict": "pass",
+    "latency_ms": 161,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "lower",
+    "confidence": 0.494,
+    "gate": 0.88,
+    "verdict": "pass",
+    "latency_ms": 1213,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lower",
+   "jev_recorded": {
+    "action": "release",
+    "confidence": 0.98,
+    "gate": 0.96
+   },
+   "jev": {
+    "action": "release",
+    "confidence": 0.98,
+    "gate": 0.96,
+    "verdict": "pass",
+    "latency_ms": 162,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "release",
+    "confidence": 0.974,
+    "gate": 0.949,
+    "verdict": "pass",
+    "latency_ms": 1207,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "release",
+   "jev_recorded": {
+    "action": "retreat",
+    "confidence": 0.98,
+    "gate": null
+   },
+   "jev": {
+    "action": "retreat",
+    "confidence": 0.98,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 171,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "retreat",
+    "confidence": 0.923,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 754,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "retreat",
+   "jev_recorded": {
+    "action": "done",
+    "confidence": 0.99,
+    "gate": 0.96
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 1.0,
+    "gate": 0.96,
+    "verdict": "pass",
+    "latency_ms": 160,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "done",
+    "confidence": 0.952,
+    "gate": 0.963,
+    "verdict": "pass",
+    "latency_ms": 1232,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 195,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 0.934,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 497,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 190,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.772,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 519,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 166,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.94,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 525,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 0.54,
+    "gate": 0.03
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 0.44,
+    "gate": 0.03,
+    "verdict": "stop",
+    "latency_ms": 156,
+    "model": "jev-1.13.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.58,
+    "gate": 0.153,
+    "verdict": "pass",
+    "latency_ms": 908,
+    "model": "h2oai/h2o-lightning-4b"
+   },
+   "same_action": true
+  }
+ ],
+ "counterfactual": [
+  {
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "guards": "lift",
+   "failure": {
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no"
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 0.71,
+    "gate": 0.06,
+    "verdict": "stop",
+    "latency_ms": 193,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.445,
+    "gate": 0.174,
+    "verdict": "stop",
+    "latency_ms": 798,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "cube_lift",
+   "phase": "lift",
+   "guards": "done",
+   "failure": {
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_on_floor": "yes"
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 0.75,
+    "gate": 0.04,
+    "verdict": "pass",
+    "latency_ms": 157,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.828,
+    "gate": 0.13,
+    "verdict": "pass",
+    "latency_ms": 777,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "close_gripper",
+   "guards": "lift",
+   "failure": {
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no"
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 0.89,
+    "gate": 0.09,
+    "verdict": "stop",
+    "latency_ms": 203,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.856,
+    "gate": 0.138,
+    "verdict": "stop",
+    "latency_ms": 1177,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "lift",
+   "guards": "secure_grasp",
+   "failure": {
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 0.81,
+    "gate": 0.12,
+    "verdict": "stop",
+    "latency_ms": 219,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "secure_grasp",
+    "confidence": 0.621,
+    "gate": 0.372,
+    "verdict": "stop",
+    "latency_ms": 1140,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "transfer",
+   "guards": "lower",
+   "failure": {
+    "cube_above_goal": "no"
+   },
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 0.41,
+    "gate": 0.06,
+    "verdict": "stop",
+    "latency_ms": 163,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "transfer",
+    "confidence": 0.904,
+    "gate": 0.104,
+    "verdict": "pass",
+    "latency_ms": 1135,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "lower",
+   "guards": "release",
+   "failure": {
+    "cube_on_floor_in_goal": "no",
+    "cube_above_goal": "no"
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 0.86,
+    "gate": 0.06,
+    "verdict": "pass",
+    "latency_ms": 166,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.842,
+    "gate": 0.081,
+    "verdict": "pass",
+    "latency_ms": 1148,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "retreat",
+   "guards": "done",
+   "failure": {
+    "cube_on_floor_in_goal": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 0.6,
+    "gate": 0.08,
+    "verdict": "pass",
+    "latency_ms": 162,
+    "model": "jev-1.13.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.62,
+    "gate": 0.129,
+    "verdict": "pass",
+    "latency_ms": 1161,
+    "model": "h2oai/h2o-lightning-4b",
+    "safe": true
+   }
+  }
+ ],
+ "summary": {
+  "recorded_total": 19,
+  "recorded_same_action": 18,
+  "recorded_success_steps": 15,
+  "recorded_success_pass_jev": 15,
+  "recorded_success_pass_decider": 14,
+  "counterfactual_total": 7,
+  "counterfactual_safe_jev": 7,
+  "counterfactual_safe_decider": 7,
+  "decider_latency_ms_median": 908,
+  "decider_latency_ms_max": 1232,
+  "jev_latency_ms_median": 171,
+  "jev_latency_ms_max": 337
+ }
+}

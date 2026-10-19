@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>PAI 最終課題 レポート</title>
+<style>
+@page { size: A4; margin: 16mm 16mm 18mm; }
+:root { --ink:#14213D; --sub:#4A5568; --line:#D9D6CC; --accent:#C2571A; --good:#2F6FB0; --paper:#FFFFFF; --soft:#F3F1EA; }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; font-size:10.5pt; line-height:1.7; }
+main { max-width: 178mm; margin: 0 auto; }
+h1 { font-size:17pt; line-height:1.4; margin:0 0 4pt; }
+.lead { color:var(--sub); margin:0 0 12pt; }
+h2 { font-size:12.5pt; margin:16pt 0 6pt; padding-bottom:3pt; border-bottom:2px solid var(--ink); break-after:avoid; }
+h3 { font-size:11pt; margin:10pt 0 4pt; break-after:avoid; }
+p { margin:0 0 6pt; }
+ul, ol { margin:0 0 6pt; padding-left:18pt; }
+li { margin-bottom:2pt; }
+table { width:100%; border-collapse:collapse; margin:4pt 0 8pt; font-size:9.5pt; break-inside:avoid; }
+th, td { border-bottom:1px solid var(--line); padding:4pt 6pt; text-align:left; vertical-align:top; }
+th { background:var(--ink); color:#fff; font-weight:600; }
+td.n { font-variant-numeric: tabular-nums; }
+.bad { color:var(--accent); font-weight:700; }
+.good { color:var(--good); font-weight:700; }
+.box { background:var(--soft); border-radius:6pt; padding:7pt 10pt; margin:6pt 0 8pt; break-inside:avoid; }
+figure { margin:6pt 0 10pt; break-inside:avoid; }
+.strip { display:grid; grid-template-columns:repeat(3,1fr); gap:4pt; }
+.strip img { width:100%; aspect-ratio: 4 / 3; object-fit:cover; object-position:left center; border-radius:3pt; display:block; }
+.strip span { display:block; font-size:8.5pt; color:var(--sub); text-align:center; }
+figcaption { font-size:9pt; color:var(--sub); margin-top:3pt; }
+code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--soft); padding:0 2pt; border-radius:2pt; }
+.small { font-size:9pt; color:var(--sub); }
+</style>
+</head>
+<body>
+<main>
+
+<h1>生成 AI の「目」と無料公開の判断 AI の「頭」で、<br>SO-101 にキューブを運ばせる</h1>
+<p class="lead">Physical AI 応用1講座 最終課題 説明資料 ／ シミュレーター：MuJoCo ／ ロボット：SO-101（6 軸アーム）</p>
+
+<h2>1. 課題の概要</h2>
+<p>MuJoCo 上の SO-101 に、2 つの作業をさせました。</p>
+<ul>
+<li><b>持ち上げる</b>：3 cm の赤いキューブを 5 cm 以上持ち上げる</li>
+<li><b>運んで置く</b>：キューブを緑のゴールまで運び、中心から 10 mm 以内に置いて離れる</li>
+</ul>
+<p>動きは「キューブの上へ移動」「下ろす」「つかむ」「持ち上げる」「持ち直す」「運ぶ」など、意味のある 10 個のスキルに分けています。AI は、毎回「次にどのスキルを実行するか」だけを決めます。役割は 3 つに分けました。</p>
+<table>
+<tr><th style="width:14%">役割</th><th style="width:30%">担当</th><th>すること</th></tr>
+<tr><td>目</td><td>Claude（Claude Code のセッション）</td><td>各ステップの 2 視点の画像を見て、「キューブが指にはさまれているか」など 10 項目を yes / no / unclear で答える</td></tr>
+<tr><td>頭</td><td>判断 AI（System One 型）</td><td>観測とロボットの状態から、次のスキルを確率付きで選ぶ。安全確認（例：「空中で持てているか」）の yes 確率も返す</td></tr>
+<tr><td>手</td><td>プログラム（mink による IK + MuJoCo）</td><td>選ばれたスキルを毎回同じように実行する。決められた順番以外の動きは拒否する</td></tr>
+</table>
+
+<h2>2. 目的</h2>
+<p>これまで「頭」には、有料のホスティング型判断 AI である <b>Jev</b>（TypeSafe）を使い、2 つの作業とも成功していました。今回の目的は、2026 年 10 月に無料公開された判断 AI で、Jev を置き換えられるかを確かめることです。</p>
+<ul>
+<li><b>strands-decider</b>（AWS の研究チーム）：2B 版（Qwen3.5 ベース）、E4B 版（Gemma 4 ベース）</li>
+<li><b>H2O-Lightning-4B</b>（H2O.ai）：公開ベンチマークで Jev と同程度の総合点</li>
+</ul>
+<p>どれも自分の PC（Apple Silicon）で動くので、使用料がかからず、データも外に出ません。現実の現場では、通信が不安定な環境や、データを外に出せない工場などでの利用につながります。</p>
+
+<h2>3. 検証の方法</h2>
+<ol>
+<li><b>記録した質問の再送</b>：Jev で成功したときに送った 19 回分の質問を、そのまま各モデルに送りました。比べたのは、Jev と同じスキルを選ぶか、合格ラインを越えるかの 2 点です。</li>
+<li><b>失敗を伝えたときの安全性</b>：「つかみ損ねた」「ゴールの上にない」など、7 か所で観測を失敗の内容に書き換えました。そのうえで、危ないスキルに進まないかを確かめました。</li>
+<li><b>シミュレーションでの実行</b>：目は Claude、頭は判断 AI として、最初から最後まで動かしました。</li>
+</ol>
+<p>合格ラインは、Jev のときと同じにしました。</p>
+<ul>
+<li>スキル選択の確信度が 0.45 以上</li>
+<li>安全確認の yes 確率が 0.60 以上</li>
+</ul>
+<p>このどちらかを下回るか、順番に合わないスキルが選ばれたら、プログラムはその場で止まります。</p>
+
+<h2>4. 結果</h2>
+<h3>4.1 記録した質問での比較</h3>
+<table>
+<tr><th style="width:38%">比べた点</th><th>Jev</th><th>strands-decider 2B</th><th>strands-decider E4B</th><th>H2O-Lightning-4B</th></tr>
+<tr><td>合格ラインを越えた手（成功ランの 15 手中）</td><td class="n">15</td><td class="n bad">4</td><td class="n bad">4</td><td class="n good">14</td></tr>
+<tr><td>Jev と同じスキルを選んだ手（19 手中）</td><td>—</td><td class="n">15</td><td class="n">14</td><td class="n">18</td></tr>
+<tr><td>スキル選択の確信度（中央値）</td><td class="n">≈1.0</td><td class="n bad">0.41</td><td class="n bad">0.23</td><td class="n good">0.94</td></tr>
+<tr><td>失敗を伝えたときに止まれた場所（7 か所中）</td><td class="n">7</td><td class="n">7</td><td class="n">7</td><td class="n">7</td></tr>
+<tr><td>1 回の応答時間（中央値）</td><td class="n">約 0.2 秒</td><td class="n">約 0.5 秒</td><td class="n">約 1.5 秒</td><td class="n">約 0.9 秒</td></tr>
+</table>
+<p>strands-decider は、Jev と同じスキルを選ぶことは多かったのですが、確信度が低く、持ち上げる前に止まりました。H2O-Lightning-4B は、15 手中 14 手で合格しました。どのモデルも、失敗を伝えた 7 か所すべてで危ない動作を止められました。</p>
+
+<h3>4.2 H2O-Lightning-4B が手順を飛ばした一手と、その原因</h3>
+<p>H2O-Lightning-4B が Jev と違う選び方をしたのは、運んで置く作業の 5 手目、持ち上げた直後だけでした。Jev は「持ち直す」を選びましたが、H2O-Lightning-4B は「運ぶ」を選びました。シミュレーションで実行したときも、プログラムが順番違いとして拒否し、ここで止まりました。</p>
+<p>原因は、AI に渡していた行動説明の文でした。</p>
+<div class="box">
+<p><b>元の説明</b></p>
+<ul>
+<li>持ち直す：「持ち上げた直後で、空中に持っている。運ぶ前に握り直す」</li>
+<li>運ぶ：「しっかり空中に持っていて、ゴールの上にはない。ゴールの上へ運ぶ」</li>
+</ul>
+<p>持ち上げた直後の様子は、この両方に当てはまります。「しっかり」持てているかどうかは、画像からは分かりません。</p>
+<p style="margin-top:6pt"><b>直した説明</b></p>
+<ol style="margin-bottom:0">
+<li>順番の説明に、「1 つずつ順番どおりに進む。目的が済んでいるように見えても、スキルを飛ばさない」と書き足しました。</li>
+<li>「持ち直す」と「運ぶ」を、見た目ではなく、<b>直前に完了したスキル</b>で区別する文にしました。</li>
+</ol>
+</div>
+<table>
+<tr><th style="width:34%">持ち上げた直後に AI がつけた確率</th><th>直す前 Jev</th><th>直す前 H2O</th><th>直した後 Jev</th><th>直した後 H2O</th></tr>
+<tr><td>「持ち直す」（正しい次の手）</td><td class="n">0.79〜0.87</td><td class="n bad">0.026</td><td class="n good">1.00</td><td class="n good">0.864</td></tr>
+<tr><td>「運ぶ」</td><td class="n">0.13〜0.21</td><td class="n bad">0.949</td><td class="n">0.00</td><td class="n">0.111</td></tr>
+<tr><td>記録した質問で合格した手（15 手中）</td><td class="n">15</td><td class="n">14</td><td class="n">15</td><td class="n good">15</td></tr>
+</table>
+<p>直した後は、H2O-Lightning-4B も「持ち直す」を選ぶようになりました。Jev の迷い（0.79〜0.87）もなくなりました。19 回分の質問をすべて聞き直しても、ほかの手が悪くなることはありませんでした。</p>
+
+<h3>4.3 シミュレーションでの実行（目：Claude、頭：H2O-Lightning-4B）</h3>
+<table>
+<tr><th style="width:38%">作業</th><th>Jev（比較の基準）</th><th>H2O-Lightning-4B</th></tr>
+<tr><td>持ち上げる（5 cm 以上で合格）</td><td>成功 5.80 cm</td><td class="good">成功 5.80 cm</td></tr>
+<tr><td>運んで置く・説明を直す前</td><td>成功 7.87 mm</td><td class="bad">5 手目で停止（順番違いを拒否）</td></tr>
+<tr><td>運んで置く・説明を直した後（10 mm 以内で合格）</td><td>—</td><td class="good">成功 7.87 mm（10 手すべて H2O が判断）</td></tr>
+<tr><td>1 回の判断時間</td><td>約 0.2 秒</td><td>0.8〜1.4 秒</td></tr>
+<tr><td>使用料</td><td>作業 1 回あたり 1 円未満</td><td>かからない</td></tr>
+</table>
+<figure>
+<div class="strip">
+<div><img src="../outputs/claude_h2o/claude_jev_pick_place_20261019_204036/03_close_gripper.png" alt="指が閉じてキューブをはさんでいる"><span>つかむ（3 手目）</span></div>
+<div><img src="../outputs/claude_h2o/claude_jev_pick_place_20261019_204036/06_transfer.png" alt="キューブを持ってゴールの上へ運んだ"><span>運ぶ（6 手目）</span></div>
+<div><img src="../outputs/claude_h2o/claude_jev_pick_place_20261019_204036/09_retreat.png" alt="キューブをゴールに置き、アームが離れた"><span>置いて離れる（9 手目）</span></div>
+</div>
+<figcaption>説明を直した後の H2O-Lightning-4B による「運んで置く」（斜めカメラ。目の担当の Claude が見た画像と同じもの）</figcaption>
+</figure>
+
+<h2>5. 工夫した点</h2>
+<ul>
+<li><b>役割を分けて、AI に関節角を出させない構成</b>：AI はスキルを選ぶだけにしました。細かい動きと安全ルール（確信度、安全確認、順番チェック）はプログラム側に固定しています。判断 AI を入れ替えても、危ない動きにならない作りです。</li>
+<li><b>公平な比較の工夫</b>：途中でコードの質問文を変えていたため、Jev に実際に送った状態をそのまま記録から送り直しました。また、応答に入っているモデル名を毎回確かめました。最初は、環境変数の設定ミスで、Jev の列もローカルモデルが答えていました。モデル名を確かめることで、これに気づけました。</li>
+<li><b>失敗のケースもわざと作って確かめる</b>：成功したときの判断だけでなく、失敗の観測を 7 か所で作りました。そこで止まれるかを、全モデルで確かめています。</li>
+<li><b>サーバー設定の落とし穴を見つける</b>：H2O-Lightning-4B の配布サーバーは、出荷時の設定のままだと、迷っている yes / no の確率を 0.801 に書き換えて返します。これでは 0.60 の安全確認が効かなくなるので、書き換えなし（<code>SHIM_NOUL_FLOOR=0</code>）で動かしました。</li>
+<li><b>確率の内訳から原因を探す</b>：違った一手で、10 個のスキルそれぞれの確率を比べました。その結果、モデルの性能不足ではなく、説明文のあいまいさが主な原因だと分かりました。説明文は、見た目ではなく「直前のスキル」で区別できる形に直しました。</li>
+<li><b>実行の再現性</b>：MuJoCo と IK は決定的です。毎ステップ、それまでのスキルを最初から再実行し、指先の軌跡が記録と 1e-6 m 以内で一致することを確かめてから進めています。そのため、記録から動画を作り直せます。</li>
+</ul>
+
+<h2>6. 考察と反省</h2>
+<ul>
+<li>無料で自分の PC で動く判断 AI でも、説明文を整えれば、この作業では Jev と同じ結果を出せました。一方で、説明文が少しあいまいなだけで、正しい手の確率が 0.026 まで下がりました。<b>判断 AI に渡す選択肢の説明は、画像からは確かめられない言葉（「しっかり」など）に頼らない</b>ことが大事だと分かりました。</li>
+<li>strands-decider は、はい / いいえの安全確認では成功と失敗をおおむね分けられました（特に E4B 版）。しかし、5〜10 個の選択肢から選ぶ問題では確信度が低くなりました。「次は〇〇でよいか」とスキルごとに聞く形にすれば、使える可能性があります。</li>
+<li>どの作業も 1 回ずつの成功で、キューブとゴールの位置も 1 通りだけです。成功率や、位置を変えたときの強さは、まだ評価していません。</li>
+<li>目の担当は、作業していた Claude Code のセッションが、画像を読んで観測を書く形でした。まだ自動化はしていません。次は、画像を読むモデルを API で呼んで、ループ全体を自動で回し、繰り返し評価したいと考えています。</li>
+<li>H2O-Lightning-4B の 1 回の判断は 0.8〜1.4 秒で、Jev（約 0.2 秒）より遅いです。今回のようにスキルを 1 つずつ選ぶ作業では問題になりませんでしたが、速い制御には向きません。</li>
+</ul>
+
+<h2>7. AI の利用と再現方法</h2>
+<ul>
+<li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B（スキルの判断）。学習は行っていません。</li>
+<li>コード、各ステップの画像、観測、確率、比較結果は、GitHub リポジトリにまとめています。手順は README を見てください。</li>
+<li>動画は、H2O-Lightning-4B で「運んで置く」作業を行ったときの記録から作り直したものです。</li>
+</ul>
+<p class="small">使用した外部のもの：strands-labs/robots（SO-101 モデルの読み込み）、strands-labs/strands-decider、h2oai/h2o-lightning-4b と internet-projects/h2o-lightning-mlx（Mac 用サーバー）、MuJoCo、mink。いずれも Apache-2.0 です。Jev は TypeSafe の商用 API です。</p>
+
+</main>
+</body>
+</html>

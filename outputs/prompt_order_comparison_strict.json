@@ -1,0 +1,974 @@
+{
+ "wordings": {
+  "original": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. Skills run in order ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done; repeating last_completed_skill is not allowed.",
+  "strict": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed."
+ },
+ "key_step": [
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 0.82,
+   "probabilities": {
+    "secure_grasp": 0.84,
+    "transfer": 0.16,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 327,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 0.79,
+   "probabilities": {
+    "secure_grasp": 0.81,
+    "transfer": 0.19,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 155,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.86,
+   "probabilities": {
+    "secure_grasp": 0.87,
+    "transfer": 0.13,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.99,
+   "verdict": "pass",
+   "latency_ms": 262,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 0,
+   "action": "transfer",
+   "confidence": 0.943,
+   "probabilities": {
+    "transfer": 0.949,
+    "secure_grasp": 0.026,
+    "lower": 0.007,
+    "release": 0.004,
+    "done": 0.003,
+    "close_gripper": 0.002,
+    "lift": 0.002,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.954,
+   "verdict": "pass",
+   "latency_ms": 3497,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 1,
+   "action": "transfer",
+   "confidence": 0.943,
+   "probabilities": {
+    "transfer": 0.949,
+    "secure_grasp": 0.026,
+    "lower": 0.007,
+    "release": 0.004,
+    "done": 0.003,
+    "close_gripper": 0.002,
+    "lift": 0.002,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.953,
+   "verdict": "pass",
+   "latency_ms": 539,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 2,
+   "action": "transfer",
+   "confidence": 0.943,
+   "probabilities": {
+    "transfer": 0.949,
+    "secure_grasp": 0.026,
+    "lower": 0.007,
+    "release": 0.004,
+    "done": 0.003,
+    "close_gripper": 0.002,
+    "lift": 0.002,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.953,
+   "verdict": "pass",
+   "latency_ms": 557,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 1.0,
+   "probabilities": {
+    "secure_grasp": 1.0,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "transfer": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 195,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 1.0,
+   "probabilities": {
+    "secure_grasp": 1.0,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "transfer": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 179,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.99,
+   "probabilities": {
+    "secure_grasp": 0.99,
+    "transfer": 0.01,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 278,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 0.439,
+   "probabilities": {
+    "secure_grasp": 0.495,
+    "transfer": 0.48,
+    "lower": 0.007,
+    "release": 0.004,
+    "close_gripper": 0.003,
+    "lift": 0.003,
+    "descend": 0.002,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.953,
+   "verdict": "stop",
+   "latency_ms": 688,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 0.439,
+   "probabilities": {
+    "secure_grasp": 0.495,
+    "transfer": 0.48,
+    "lower": 0.007,
+    "release": 0.004,
+    "close_gripper": 0.003,
+    "lift": 0.003,
+    "descend": 0.002,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.953,
+   "verdict": "stop",
+   "latency_ms": 586,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "H2O live run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.439,
+   "probabilities": {
+    "secure_grasp": 0.495,
+    "transfer": 0.48,
+    "lower": 0.007,
+    "release": 0.004,
+    "close_gripper": 0.003,
+    "lift": 0.003,
+    "descend": 0.002,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.953,
+   "verdict": "stop",
+   "latency_ms": 559,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 0.68,
+   "probabilities": {
+    "secure_grasp": 0.71,
+    "transfer": 0.29,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 183,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 0.64,
+   "probabilities": {
+    "secure_grasp": 0.68,
+    "transfer": 0.32,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 181,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "jev",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.6,
+   "probabilities": {
+    "secure_grasp": 0.64,
+    "transfer": 0.36,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 150,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 0,
+   "action": "transfer",
+   "confidence": 0.946,
+   "probabilities": {
+    "transfer": 0.951,
+    "secure_grasp": 0.02,
+    "lower": 0.009,
+    "release": 0.005,
+    "done": 0.003,
+    "lift": 0.003,
+    "close_gripper": 0.003,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 992,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 1,
+   "action": "transfer",
+   "confidence": 0.946,
+   "probabilities": {
+    "transfer": 0.951,
+    "secure_grasp": 0.02,
+    "lower": 0.009,
+    "release": 0.005,
+    "done": 0.003,
+    "lift": 0.003,
+    "close_gripper": 0.003,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 628,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "original",
+   "backend": "h2o",
+   "trial": 2,
+   "action": "transfer",
+   "confidence": 0.946,
+   "probabilities": {
+    "transfer": 0.951,
+    "secure_grasp": 0.02,
+    "lower": 0.009,
+    "release": 0.005,
+    "done": 0.003,
+    "lift": 0.003,
+    "close_gripper": 0.003,
+    "descend": 0.002,
+    "retreat": 0.002,
+    "move_above_cube": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 576,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 0.99,
+   "probabilities": {
+    "secure_grasp": 0.99,
+    "transfer": 0.01,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 145,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 0.99,
+   "probabilities": {
+    "secure_grasp": 0.99,
+    "transfer": 0.01,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 214,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "jev",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.99,
+   "probabilities": {
+    "secure_grasp": 0.99,
+    "transfer": 0.01,
+    "move_above_cube": 0.0,
+    "descend": 0.0,
+    "close_gripper": 0.0,
+    "lift": 0.0,
+    "lower": 0.0,
+    "release": 0.0,
+    "retreat": 0.0,
+    "done": 0.0
+   },
+   "gate": 0.98,
+   "verdict": "pass",
+   "latency_ms": 171,
+   "model": "jev-1.13.0"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 0,
+   "action": "secure_grasp",
+   "confidence": 0.61,
+   "probabilities": {
+    "secure_grasp": 0.649,
+    "transfer": 0.322,
+    "lower": 0.007,
+    "release": 0.005,
+    "close_gripper": 0.004,
+    "lift": 0.003,
+    "descend": 0.003,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 688,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 1,
+   "action": "secure_grasp",
+   "confidence": 0.61,
+   "probabilities": {
+    "secure_grasp": 0.649,
+    "transfer": 0.322,
+    "lower": 0.007,
+    "release": 0.005,
+    "close_gripper": 0.004,
+    "lift": 0.003,
+    "descend": 0.003,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 660,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "state": "Jev recorded run",
+   "wording": "strict",
+   "backend": "h2o",
+   "trial": 2,
+   "action": "secure_grasp",
+   "confidence": 0.61,
+   "probabilities": {
+    "secure_grasp": 0.649,
+    "transfer": 0.322,
+    "lower": 0.007,
+    "release": 0.005,
+    "close_gripper": 0.004,
+    "lift": 0.003,
+    "descend": 0.003,
+    "done": 0.002,
+    "move_above_cube": 0.002,
+    "retreat": 0.002
+   },
+   "gate": 0.95,
+   "verdict": "pass",
+   "latency_ms": 651,
+   "model": "h2oai/h2o-lightning-4b"
+  }
+ ],
+ "regression": [
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "ready",
+   "expected": "move_above_cube",
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "move_above_cube",
+    "confidence": 0.965,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "expected": "descend",
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "descend",
+    "confidence": 0.937,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "descend",
+   "expected": "close_gripper",
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "close_gripper",
+    "confidence": 0.962,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "expected": "lift",
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.63,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "lift",
+    "confidence": 0.968,
+    "gate": 0.875,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "lift",
+   "expected": "done",
+   "jev": {
+    "action": "done",
+    "confidence": 1.0,
+    "gate": 0.9,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "done",
+    "confidence": 0.931,
+    "gate": 0.948,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "ready",
+   "expected": "move_above_cube",
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "move_above_cube",
+    "confidence": 0.968,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "move_above_cube",
+   "expected": "descend",
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "descend",
+    "confidence": 0.945,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "descend",
+   "expected": "close_gripper",
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "close_gripper",
+    "confidence": 0.963,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "close_gripper",
+   "expected": "lift",
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.75,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "lift",
+    "confidence": 0.973,
+    "gate": 0.847,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lift",
+   "expected": "secure_grasp",
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 0.99,
+    "gate": 0.98,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "secure_grasp",
+    "confidence": 0.596,
+    "gate": 0.95,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "secure_grasp",
+   "expected": "transfer",
+   "jev": {
+    "action": "transfer",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "transfer",
+    "confidence": 0.97,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "transfer",
+   "expected": "lower",
+   "jev": {
+    "action": "lower",
+    "confidence": 0.99,
+    "gate": 0.93,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "lower",
+    "confidence": 0.864,
+    "gate": 0.88,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lower",
+   "expected": "release",
+   "jev": {
+    "action": "release",
+    "confidence": 1.0,
+    "gate": 0.96,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "release",
+    "confidence": 0.942,
+    "gate": 0.949,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "release",
+   "expected": "retreat",
+   "jev": {
+    "action": "retreat",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "retreat",
+    "confidence": 0.94,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "retreat",
+   "expected": "done",
+   "jev": {
+    "action": "done",
+    "confidence": 1.0,
+    "gate": 0.96,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "done",
+    "confidence": 0.954,
+    "gate": 0.963,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "ready",
+   "expected": "move_above_cube",
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "move_above_cube",
+    "confidence": 0.965,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "expected": "descend",
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "descend",
+    "confidence": 0.937,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "descend",
+   "expected": "close_gripper",
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "close_gripper",
+    "confidence": 0.962,
+    "gate": null,
+    "verdict": "pass",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "expected": "descend",
+   "jev": {
+    "action": "lift",
+    "confidence": 0.97,
+    "gate": 0.03,
+    "verdict": "stop",
+    "model": "jev-1.13.0"
+   },
+   "h2o": {
+    "action": "lift",
+    "confidence": 0.731,
+    "gate": 0.153,
+    "verdict": "stop",
+    "model": "h2oai/h2o-lightning-4b"
+   }
+  }
+ ],
+ "summary": {
+  "jev_same_as_recorded": 18,
+  "jev_success_steps_passed": 15,
+  "h2o_same_as_recorded": 18,
+  "h2o_success_steps_passed": 15,
+  "total": 19,
+  "success_steps": 15
+ }
+}

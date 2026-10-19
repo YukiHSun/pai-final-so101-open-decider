@@ -12,7 +12,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 これまで「頭」には、有料のホスティング型モデル **Jev**（TypeSafe）を使っていました。今回は、2026 年 10 月に無料公開された判断 AI に置き換えられるかを検証しました。
 
-- **strands-decider**（AWS の研究チーム）：2B 版、E4B 版
+- **[strands-decider](https://github.com/strands-labs/strands-decider)**（AWS の研究チーム）：2B 版、E4B 版
 - **H2O-Lightning-4B**（H2O.ai）：判断 AI のベンチマーク JevBench で、公開モデルの中で 1 位（[H2O.ai の発表](https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench)）
 
 どれも自分の PC（Apple Silicon）で動きます。

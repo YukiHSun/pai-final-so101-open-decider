@@ -17,7 +17,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 どれも自分の PC（Apple Silicon）で動きます。
 
-- 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：（URL をここに記載）
+- 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：https://www.youtube.com/watch?v=ZC-NKxQikww
 - レポート：[report/report.pdf](report/report.pdf)（同じ内容の HTML 版は [report/report.html](report/report.html)）
 
 ## 結果

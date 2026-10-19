@@ -20,7 +20,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 - 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：https://www.youtube.com/watch?v=ZC-NKxQikww
 - レポート：[report/report.pdf](report/report.pdf)（同じ内容の HTML 版は [report/report.html](report/report.html)）
 
-## Claude Code / Codex で実行する
+## Claude Code / Codex で実行するときの大まかな流れ
 
 このキットは、**Claude Code や Codex などのコーディングエージェントの上で実行**します。エージェントが「目」になって、各ステップの画像を読み、観測 JSON を書き、次のコマンドを実行します。Claude や GPT の API キーを別に用意する必要はありません。
 

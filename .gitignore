@@ -6,3 +6,4 @@ MUJOCO_LOG.TXT
 *.mp4
 .DS_Store
 report/_build/
+!video/*.mp4

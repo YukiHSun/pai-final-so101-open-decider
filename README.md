@@ -47,7 +47,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 - H2O-Lightning-4B の重み（数 GB）のダウンロードと、SO-101 モデルの取得には、インターネット接続が必要です。
 - H2O-Lightning-4B の Mac 用サーバーは Apple Silicon 向けです。それ以外の環境では、strands-decider か Jev（`TYPESAFE_API_KEY` が必要）を使います。
 
-今回の結果（下の「結果」）は、Claude Code で実行したものです。環境とスキルのコード（`cube_lift_env.py`、`pick_place_env.py` など）は、以前 Codex で作りました。新しい PC で、エージェントに環境構築から検証までを一度に任せる流れと、Codex で「目」の役を最後まで実行する流れは、まだ試していません。
+今回の結果（下の「結果」）は、Claude Code で実行したものです。新しい PC で、エージェントに環境構築から検証までを一度に任せる流れと、Codex で「目」の役を最後まで実行する流れは、まだ試していません。
 
 ## 背景
 

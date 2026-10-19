@@ -7,7 +7,7 @@
 @page { size: A4; margin: 14mm 16mm 14mm; }
 :root { --ink:#14213D; --sub:#4A5568; --line:#D9D6CC; --accent:#C2571A; --good:#2F6FB0; --paper:#FFFFFF; --soft:#F3F1EA; }
 * { box-sizing: border-box; }
-body { margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; font-size:10.5pt; line-height:1.7; }
+body { margin:0; background:var(--paper); color:var(--ink); font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif; font-size:10.3pt; line-height:1.65; }
 main { max-width: 178mm; margin: 0 auto; }
 h1 { font-size:17pt; line-height:1.4; margin:0 0 4pt; }
 .lead { color:var(--sub); margin:0 0 12pt; }
@@ -66,7 +66,14 @@ a { color:var(--good); }
 <li><b>目の担当に答えさせる質問</b>（例：「キューブはゴールの上にあるか」）</li>
 <li><b>危ないスキルの前に聞く安全確認</b>（例：「置く前に、キューブはゴールの上にあるか」）</li>
 </ul>
-<p>キットは <b>Claude Code や Codex などのコーディングエージェントの上で実行</b>します。エージェントがそのまま「目」になって、画像を読み、観測を書き、次のコマンドを実行します。手順はリポジトリの <code>AGENTS.md</code>（Claude Code は <code>CLAUDE.md</code> 経由）に書いてあり、エージェントが自動で読み込みます。利用者は「pick_place を最初から最後まで実行して」と日本語で頼むだけです。生成 AI の API キーを別に用意する必要はありません。今回の実行は Claude Code で行いました。</p>
+<h3>Claude Code / Codex で実行するときの大まかな流れ</h3>
+<p>キットは <b>Claude Code や Codex などのコーディングエージェントの上で実行</b>します。エージェントがそのまま「目」になって、画像を読み、観測を書き、次のコマンドを実行します。生成 AI の API キーを別に用意する必要はありません。<b>環境の構築から検証までを、エージェントに任せられます。</b></p>
+<ol>
+<li>GitHub のリポジトリを clone し、そのフォルダを Claude Code（または Codex）で開きます。手順は <code>AGENTS.md</code> に書いてあり、エージェントが自動で読み込みます（Claude Code は <code>CLAUDE.md</code> 経由）。</li>
+<li>日本語で頼みます。例：「このリポジトリで SO-101 の操作環境を構築して、テストが通ることを確かめて。判断 AI には H2O-Lightning-4B をローカルで起動して使い、pick_place を最初から最後まで実行して検証して。画像を見て観測を書き、終わったら動画も作って。」</li>
+<li>エージェントは、Python 環境の準備、判断 AI サーバーの起動、テスト、<code>start</code> → 画像を見る → <code>step</code> の繰り返しを自分で進めます。<code>[SUCCESS]</code> か <code>[STOP]</code> が出たら止まり、最後に動画を書き出します。</li>
+</ol>
+<p>今回の結果は、Claude Code で実行したものです。</p>
 <p>判断 AI は、URL を 1 つ変えるだけで入れ替えられます（<code>DECIDER_URL</code>）。有料の Jev、strands-decider、H2O-Lightning-4B を同じコードで使えます。</p>
 
 <h2>3. スキルの説明</h2>
@@ -175,7 +182,7 @@ a { color:var(--good); }
 <li>無料で自分の PC で動く判断 AI でも、説明文を整えれば、この作業では Jev と同じ結果を出せました。一方で、説明文が少しあいまいなだけで、正しい手の確率が 0.026 まで下がりました。<b>判断 AI に渡す選択肢の説明は、画像からは確かめられない言葉（「しっかり」など）に頼らない</b>ことが大事だと分かりました。直したのはプログラムの動きではなく、自然言語の説明文だけです。初心者でも、日本語や英語の文を見直すだけで調整できることは、このキットの強みだと考えます。</li>
 <li>strands-decider は、はい / いいえの安全確認では成功と失敗をおおむね分けられました（特に E4B 版）。しかし、5〜10 個の選択肢から選ぶ問題では確信度が低くなりました。「次は〇〇でよいか」とスキルごとに聞く形にすれば、使える可能性があります。</li>
 <li>どの作業も 1 回ずつの成功で、キューブとゴールの位置も 1 通りだけです。成功率や、位置を変えたときの強さは、まだ評価していません。</li>
-<li>今回コストを下げられたのは「頭」の部分です。「目」は今も毎ステップ生成 AI（Claude）が画像を読んでいて、まだ自動化もしていません。次は、画像を読む部分を API で呼んでループ全体を自動で回し、繰り返し評価したいと考えています。あわせて、目の担当にも小さな公開モデルを使えるかを試し、全体のコストを下げたいと考えています。また、Codex で目の役を最後まで実行することは、まだ試していません。</li>
+<li>今回コストを下げられたのは「頭」の部分です。「目」は今も毎ステップ生成 AI（Claude）が画像を読んでいて、まだ自動化もしていません。次は、画像を読む部分を API で呼んでループ全体を自動で回し、繰り返し評価したいと考えています。あわせて、目の担当にも小さな公開モデルを使えるかを試し、全体のコストを下げたいと考えています。</li>
 <li>H2O-Lightning-4B の 1 回の判断は 0.8〜1.4 秒で、Jev（約 0.2 秒）より遅いです。今回のようにスキルを 1 つずつ選ぶ作業では問題になりませんでしたが、速い制御には向きません。</li>
 </ul>
 

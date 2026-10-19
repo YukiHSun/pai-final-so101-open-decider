@@ -2,9 +2,30 @@
 
 このリポジトリでは、コーディングエージェント自身が「目」の役を担います。エージェントは画像ファイルを読み、観測 JSON を書き、次のコマンドを実行します。判断（次のスキル）は判断 AI が、動作はプログラムが行います。関節角や座標を自分で決めてはいけません。
 
-## 準備
+## 環境構築（「環境を構築して」と頼まれたとき）
 
-- 依存関係は README の「再現方法」に従って `.venv` に入れます。
+1. Python 3.13 の仮想環境を作り、依存関係を入れます。SO-101 モデルは初回実行時にインターネットから取得されます。
+
+   ```bash
+   uv venv --python 3.13 .venv
+   uv pip install --python .venv/bin/python -r requirements.txt
+   cp .env.example .env
+   ```
+
+2. テストを実行し、すべて OK になることを確かめます。
+
+   ```bash
+   .venv/bin/python -m unittest strands_so101_sim/tests/test_claude_jev.py strands_so101_sim/tests/test_decider_client.py strands_so101_sim/tests/test_pick_place.py
+   ```
+
+3. 判断 AI のサーバーを用意します。このリポジトリの外のフォルダに置きます。
+   - Apple Silicon の Mac なら、H2O-Lightning-4B を使います。`https://github.com/internet-projects/h2o-lightning-mlx` を clone し、`./setup.sh q8` で準備します。公式の重みを取得して 8bit 版に変換するので、数 GB のダウンロードがあります。準備ができたら、`MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh` で起動します。`SHIM_NOUL_FLOOR=0` は必ず付けます。付けないと安全確認の確率が書き換えられます。
+   - 起動したら `curl http://127.0.0.1:8741/health` で応答を確かめます。
+   - それ以外の環境では、strands-decider（README 参照）か、`.env` に `TYPESAFE_API_KEY` を入れて Jev を使います。
+4. ここまでで失敗したら、エラーの内容を報告して止まります。
+
+## 準備（実行の前に）
+
 - 判断 AI を決めます。
   - ローカルの判断 AI を使う場合は `export DECIDER_URL=http://127.0.0.1:8741` を設定します（H2O-Lightning-4B の例。サーバーは README の手順で起動します）。
   - `DECIDER_URL` が未設定なら、`.env` の `TYPESAFE_API_KEY` を使って Jev を呼びます。

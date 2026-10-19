@@ -24,14 +24,30 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 このキットは、**Claude Code や Codex などのコーディングエージェントの上で実行**します。エージェントが「目」になって、各ステップの画像を読み、観測 JSON を書き、次のコマンドを実行します。Claude や GPT の API キーを別に用意する必要はありません。
 
-1. このフォルダを Claude Code（または Codex）で開きます。手順は [AGENTS.md](AGENTS.md) に書いてあり、エージェントが自動で読み込みます（Claude Code は [CLAUDE.md](CLAUDE.md) 経由で読み込みます）。
+**環境の構築から検証までを、エージェントに任せられます。** このリポジトリを clone したフォルダで Claude Code や Codex に「SO-101 の操作環境を構築して、検証して」と頼みます。そうすれば、エージェントが次の作業を自分で進め、このリポジトリと同じ結果を再現できます。
+
+- Python 環境と依存関係の準備
+- 判断 AI サーバーの起動
+- テストの実行
+- シミュレーションでの実行
+- 動画の書き出し
+
+1. このリポジトリを clone し、そのフォルダを Claude Code（または Codex）で開きます。手順は [AGENTS.md](AGENTS.md) に書いてあり、エージェントが自動で読み込みます（Claude Code は [CLAUDE.md](CLAUDE.md) 経由で読み込みます）。
 2. 次のように日本語で頼みます。
 
-   > 判断 AI は http://127.0.0.1:8741 の H2O-Lightning-4B を使って、pick_place を最初から最後まで実行して。画像を見て観測を書き、終わったら動画も作って。
+   > このリポジトリで SO-101 の操作環境を構築して、テストが通ることを確かめて。判断 AI には H2O-Lightning-4B をローカルで起動して使い、pick_place を最初から最後まで実行して検証して。画像を見て観測を書き、終わったら動画も作って。
+
+   環境がすでにあるなら、実行だけを頼むこともできます。
+
+   > 判断 AI は http://127.0.0.1:8741 の H2O-Lightning-4B を使って、pick_place を最初から最後まで実行して。
 
 3. エージェントは `start` → 画像を見る → `step` を繰り返し、`[SUCCESS]` か `[STOP]` で止まります。
 
-今回の結果（下の「結果」）は、Claude Code で実行したものです。環境とスキルのコード（`cube_lift_env.py`、`pick_place_env.py` など）は、以前 Codex で作りました。Codex で「目」の役を最後まで実行するところは、まだ試していません。
+**注意点**
+- H2O-Lightning-4B の重み（数 GB）のダウンロードと、SO-101 モデルの取得には、インターネット接続が必要です。
+- H2O-Lightning-4B の Mac 用サーバーは Apple Silicon 向けです。それ以外の環境では、strands-decider か Jev（`TYPESAFE_API_KEY` が必要）を使います。
+
+今回の結果（下の「結果」）は、Claude Code で実行したものです。環境とスキルのコード（`cube_lift_env.py`、`pick_place_env.py` など）は、以前 Codex で作りました。新しい PC で、エージェントに環境構築から検証までを一度に任せる流れと、Codex で「目」の役を最後まで実行する流れは、まだ試していません。
 
 ## 背景
 
@@ -165,7 +181,7 @@ SO-101 のモデルは、strands-robots が初回起動時に `robot_description
 
 ```bash
 git clone https://github.com/internet-projects/h2o-lightning-mlx && cd h2o-lightning-mlx
-./setup.sh   # 手順はそのリポジトリの README に従う
+./setup.sh q8   # 公式の重みを取得し、8bit 版に変換する
 MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh   # http://127.0.0.1:8741/v1/systemone
 ```
 

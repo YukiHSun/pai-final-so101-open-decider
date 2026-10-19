@@ -16,7 +16,8 @@ h3 { font-size:11pt; margin:10pt 0 4pt; break-after:avoid; }
 p { margin:0 0 6pt; }
 ul, ol { margin:0 0 6pt; padding-left:18pt; }
 li { margin-bottom:2pt; }
-table { width:100%; border-collapse:collapse; margin:4pt 0 8pt; font-size:9.5pt; break-inside:avoid; }
+table { width:100%; border-collapse:collapse; margin:4pt 0 8pt; font-size:9.5pt; break-inside:auto; }
+tr { break-inside:avoid; }
 th, td { border-bottom:1px solid var(--line); padding:4pt 6pt; text-align:left; vertical-align:top; }
 th { background:var(--ink); color:#fff; font-weight:600; }
 td.n { font-variant-numeric: tabular-nums; }
@@ -44,7 +45,8 @@ a { color:var(--good); }
 <h2>1. 背景</h2>
 <p>Physical AI を学び始めた人にとって、ロボットに「つかんで運ぶ」を成功させるまでの壁は高いです。よく使われるのは、VLA などのロボット用 AI に、お手本データで動きを学習させる方法です。しかしこの方法では、データ集め、GPU での学習、学習時と実行時のカメラ位置の違いの調整などが必要です。筆者も以前、シミュレーションで成功したお手本の動画と操作の記録（公開データ 100 回分）を元に SmolVLA を学習させてみましたが、持ち上げは 5 回とも最後のつかむところでずれて失敗しました。</p>
 <p>一方、Claude などの生成 AI は、画像を見て「キューブが指にはさまれているか」を言葉で答えられるようになりました。そこで、動きを「つかむ」「運ぶ」のような意味のある<b>スキル</b>に分け、AI には次のスキルを選ばせるだけにします。こうすれば、<b>学習なしで、自然言語の説明を書くだけで</b>シミュレーションで成功体験を得られる開発キットを作れると考えました。</p>
-<p>ただし、毎ステップの判断まで大きな生成 AI に任せると、呼び出すたびにトークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶことに特化した小さな<b>判断 AI</b>（System One 型）に任せます。これまで使ってきた Jev は、高速で安いものの、有料の API で中身も非公開です。2026 年 10 月に、同じ形式で使える判断 AI が OSS として公開されました。これを使えば、API キーも使用料も要らず、自分の PC で判断を回せます。初心者が気軽に試せる開発キットにするために、この OSS の判断 AI を採用できるかを検証しました。</p>
+<p>ただし、毎ステップの判断まで大きな生成 AI に任せると、呼び出すたびにトークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶことに特化した小さな<b>判断 AI</b>（System One 型）に任せます。2026 年 9 月に TypeSafe AI が判断 AI の Jev を公開してから、このように<b>判断を Jev に任せる取り組みが、記事で多く紹介される</b>ようになりました<sup>[1][2]</sup>。ただし Jev は、高速で安いものの、有料の API で中身も非公開です。2026 年 10 月には、同じ形式で使える判断 AI が OSS として公開されました<sup>[3]</sup>。これを使えば、API キーも使用料も要らず、自分の PC で判断を回せます。初心者が気軽に試せる開発キットにするために、この OSS の判断 AI を採用できるかを検証しました。</p>
+<p class="small" style="margin-top:2pt; font-size:8pt; line-height:1.45">[1] TypeSafe AI「Introducing System One Models &amp; Jev」（2026-09-15） <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">https://typesafe.ai/blog/introducing-system-one-models-and-jev</a><br>[2] Simon Willison「Jev introduces a new shape of LLM: System One, aka Decision Models」（2026-09-21） <a href="https://simonwillison.net/2026/Sep/21/jev/">https://simonwillison.net/2026/Sep/21/jev/</a><br>[3] labmemo「AWS『Strands Decider 2B』徹底解説」（2026-10-02） <a href="https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/">https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/</a></p>
 
 <h2>2. 課題の概要（作った開発キット）</h2>
 <p>MuJoCo 上の SO-101（6 軸アーム）に、2 つの作業をさせました。</p>

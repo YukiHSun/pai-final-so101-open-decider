@@ -60,7 +60,7 @@ Physical AI の初心者が、ロボットに「つかんで運ぶ」を成功�
 - 目に答えさせる質問
 - 安全確認の質問
 
-毎ステップの判断まで大きな生成 AI に任せると、トークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶ小さな判断 AI に任せます。さらに、有料・非公開の Jev の代わりに **OSS の判断 AI** を使えれば、API キーも使用料も要らず、自分の PC で回せます。
+毎ステップの判断まで大きな生成 AI に任せると、トークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶ小さな判断 AI に任せます。2026 年 9 月に Jev が公開されてから、**判断を Jev に任せる取り組みが記事で多く紹介される**ようになりました（[TypeSafe AI 公式ブログ](https://typesafe.ai/blog/introducing-system-one-models-and-jev)、[Simon Willison の解説](https://simonwillison.net/2026/Sep/21/jev/)）。ただし Jev は有料・非公開です。10 月には同じ形式の OSS の判断 AI も公開されました（[labmemo の strands-decider 解説](https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/)）。Jev の代わりに **OSS の判断 AI** を使えれば、API キーも使用料も要らず、自分の PC で回せます。
 
 ## スキル
 

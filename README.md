@@ -88,7 +88,21 @@ AI が次のどちらかを返すと、プログラムはその場で止まり�
 
 ### 1. 記録した質問をそのまま聞き直した比較
 
-Jev で成功したときに送った 19 回分の質問を、各モデルにそのまま送りました。
+Jev で実行したときに送った 19 回分の質問を、各モデルにそのまま送りました。質問は次の 3 つの実行記録に入っています。
+
+| 実行記録 | 回数 |
+|---|---|
+| [持ち上げる・成功](outputs/claude_jev_cube_lift_20260927_184643/session.json) | 5 回 |
+| [運んで置く・成功](outputs/claude_jev_pick_place_20260927_185507/session.json) | 10 回 |
+| [わざと失敗させた確認（つかめていないと伝えた）](outputs/claude_jev_cube_lift_negative_grasp_check/session.json) | 4 回（拒否された 1 回を含む） |
+
+各記録の `decisions`（と `rejected`）の 1 件が 1 回分の質問です。中身は次のとおりです。
+
+- `jev_state`：判断 AI に送った状態
+- `claude_observation`：目の観測
+- `action` / `probabilities`：Jev の答え
+
+質問文（スキルを選ぶ条件や安全確認の文）は、[claude_jev_controller.py](strands_so101_sim/claude_jev_controller.py) の `TaskSpec` から組み立てています。各モデルの答えは、[decider_h2o_vs_jev_comparison.json](outputs/decider_h2o_vs_jev_comparison.json) などの `recorded` にあります。
 
 | | Jev | strands-decider 2B | strands-decider E4B | H2O-Lightning-4B |
 |---|---|---|---|---|

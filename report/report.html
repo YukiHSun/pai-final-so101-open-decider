@@ -32,6 +32,7 @@ figure { margin:6pt 0 10pt; break-inside:avoid; }
 figcaption { font-size:9pt; color:var(--sub); margin-top:3pt; }
 code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--soft); padding:0 2pt; border-radius:2pt; }
 .small { font-size:9pt; color:var(--sub); }
+a { color:var(--good); }
 </style>
 </head>
 <body>
@@ -94,7 +95,7 @@ code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--so
 
 <h2>5. 検証の方法</h2>
 <ol>
-<li><b>記録した質問の再送</b>：Jev で成功したときに送った 19 回分の質問を、そのまま各モデルに送りました。比べたのは、Jev と同じスキルを選ぶか、合格ラインを越えるかの 2 点です。</li>
+<li><b>記録した質問の再送</b>：Jev で実行したときに送った 19 回分の質問を、そのまま各モデルに送りました。比べたのは、Jev と同じスキルを選ぶか、合格ラインを越えるかの 2 点です。内訳は次のとおりです。<ul><li><a href="https://github.com/YukiHSun/pai-final-so101-open-decider/blob/main/outputs/claude_jev_cube_lift_20260927_184643/session.json">持ち上げる・成功</a>：5 回</li><li><a href="https://github.com/YukiHSun/pai-final-so101-open-decider/blob/main/outputs/claude_jev_pick_place_20260927_185507/session.json">運んで置く・成功</a>：10 回</li><li><a href="https://github.com/YukiHSun/pai-final-so101-open-decider/blob/main/outputs/claude_jev_cube_lift_negative_grasp_check/session.json">わざと失敗させた確認</a>：4 回</li></ul>各記録の <code>jev_state</code> が送った状態です。</li>
 <li><b>失敗を伝えたときの安全性</b>：「つかみ損ねた」「ゴールの上にない」など、7 か所で観測を失敗の内容に書き換えました。そのうえで、危ないスキルに進まないかを確かめました。</li>
 <li><b>シミュレーションでの実行</b>：目は Claude、頭は判断 AI として、最初から最後まで動かしました。</li>
 </ol>

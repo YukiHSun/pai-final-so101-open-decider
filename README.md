@@ -6,7 +6,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 | 役割 | 担当 | すること |
 |---|---|---|
-| 目 | Claude（Claude Code のセッション） | 各ステップの画像を見て、「つかめているか」など 10 項目を yes / no で答える |
+| 目 | コーディングエージェント（Claude Code、Codex など） | 各ステップの画像を見て、「つかめているか」など 10 項目を yes / no で答える |
 | 頭 | 判断 AI（System One 型） | 観測から次の行動（スキル）を確率付きで選び、安全確認の yes / no 確率も返す |
 | 手 | プログラム（IK + MuJoCo） | 選ばれたスキルを毎回同じように実行し、順番違いの動作は拒否する |
 
@@ -19,6 +19,19 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 - 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：https://www.youtube.com/watch?v=ZC-NKxQikww
 - レポート：[report/report.pdf](report/report.pdf)（同じ内容の HTML 版は [report/report.html](report/report.html)）
+
+## Claude Code / Codex で実行する
+
+このキットは、**Claude Code や Codex などのコーディングエージェントの上で実行**します。エージェントが「目」になって、各ステップの画像を読み、観測 JSON を書き、次のコマンドを実行します。Claude や GPT の API キーを別に用意する必要はありません。
+
+1. このフォルダを Claude Code（または Codex）で開きます。手順は [AGENTS.md](AGENTS.md) に書いてあり、エージェントが自動で読み込みます（Claude Code は [CLAUDE.md](CLAUDE.md) 経由で読み込みます）。
+2. 次のように日本語で頼みます。
+
+   > 判断 AI は http://127.0.0.1:8741 の H2O-Lightning-4B を使って、pick_place を最初から最後まで実行して。画像を見て観測を書き、終わったら動画も作って。
+
+3. エージェントは `start` → 画像を見る → `step` を繰り返し、`[SUCCESS]` か `[STOP]` で止まります。
+
+今回の結果（下の「結果」）は、Claude Code で実行したものです。環境とスキルのコード（`cube_lift_env.py`、`pick_place_env.py` など）は、以前 Codex で作りました。Codex で「目」の役を最後まで実行するところは、まだ試していません。
 
 ## 背景
 
@@ -106,6 +119,7 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 ## ファイル構成
 
 ```
+AGENTS.md / CLAUDE.md         エージェント（Codex / Claude Code）向けの実行手順
 run_claude_jev_cube_lift.py   1 判断ずつ進める実行スクリプト（start / step / video）
 compare_decider_vs_jev.py     記録した質問の再送と、失敗観測での安全確認（Jev と判断 AI の比較）
 compare_prompt_order.py       指示文 3 種（original / strict / strict_anchored）の比較
@@ -169,7 +183,7 @@ strands-decider serve StrandsAgents/strands-decider-E4B-gemma4-v1-2610 --device 
 
 ### 1 判断ずつ実行する
 
-Claude（目）の役は、Claude Code のセッションが担いました。画像（`NN_*.png`）を読んで観測 JSON を書き、次の `step` に渡します。Claude API は使っていません。人が画像を見て同じ JSON を書いても、同じように動かせます。
+目の役は、コーディングエージェント（今回は Claude Code）が担います。画像（`NN_*.png`）を読んで観測 JSON を書き、次の `step` に渡します。観測項目と JSON の書き方は [AGENTS.md](AGENTS.md) にあります。Claude API は使っていません。人が画像を見て同じ JSON を書いても、同じように動かせます。
 
 ```bash
 export DECIDER_URL=http://127.0.0.1:8741        # 未設定なら Jev を使う

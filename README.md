@@ -13,7 +13,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 これまで「頭」には、有料のホスティング型モデル **Jev**（TypeSafe）を使っていました。今回は、2026 年 10 月に無料公開された判断 AI に置き換えられるかを検証しました。
 
 - **strands-decider**（AWS の研究チーム）：2B 版、E4B 版
-- **H2O-Lightning-4B**（H2O.ai）
+- **H2O-Lightning-4B**（H2O.ai）：判断 AI のベンチマーク JevBench で、公開モデルの中で 1 位（[H2O.ai の発表](https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench)）
 
 どれも自分の PC（Apple Silicon）で動きます。
 
@@ -60,7 +60,7 @@ Physical AI の初心者が、ロボットに「つかんで運ぶ」を成功�
 - 目に答えさせる質問
 - 安全確認の質問
 
-毎ステップの判断まで大きな生成 AI に任せると、トークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶ小さな判断 AI に任せます。2026 年 9 月に Jev が公開されてから、**判断を Jev に任せる取り組みが記事で多く紹介される**ようになりました（[TypeSafe AI 公式ブログ](https://typesafe.ai/blog/introducing-system-one-models-and-jev)、[Simon Willison の解説](https://simonwillison.net/2026/Sep/21/jev/)）。ただし Jev は有料・非公開です。10 月には同じ形式の OSS の判断 AI も公開されました（[labmemo の strands-decider 解説](https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/)）。Jev の代わりに **OSS の判断 AI** を使えれば、API キーも使用料も要らず、自分の PC で回せます。
+毎ステップの判断まで大きな生成 AI に任せると、トークン代と待ち時間がかかります。そこで判断は、選択肢から確率付きで選ぶ小さな判断 AI に任せます。2026 年 9 月に Jev が公開されてから、**判断を Jev に任せる取り組みが記事で多く紹介される**ようになりました（[TypeSafe AI 公式ブログ](https://typesafe.ai/blog/introducing-system-one-models-and-jev)、[Simon Willison の解説](https://simonwillison.net/2026/Sep/21/jev/)）。ロボットでも、Jev に次の動作を選ばせる例が相次いでいます（[ロボスタの記事](https://robotstart.info/article/2026/09/25/382447.html)、[Zenn「SO-101ロボットアーム 実践ガイド」第21章](https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb)）。ただし Jev は有料・非公開です。10 月には同じ形式の OSS の判断 AI も公開されました（[labmemo の strands-decider 解説](https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/)）。Jev の代わりに **OSS の判断 AI** を使えれば、API キーも使用料も要らず、自分の PC で回せます。
 
 ## スキル
 
@@ -145,6 +145,8 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 | 運んで置く・指示文の修正後 | **成功**：ゴール中心から 7.87 mm（10 mm 以内で合格）。10 手すべて H2O-Lightning-4B が判断 |
 
 どの作業も 1 回ずつの結果です。成功率はまだ評価していません。
+
+次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
 
 ## ファイル構成
 

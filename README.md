@@ -13,7 +13,7 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 これまで「頭」には、有料のホスティング型モデル **Jev**（TypeSafe）を使っていました。今回は、2026 年 10 月に無料公開された判断 AI に置き換えられるかを検証しました。
 
 - **[strands-decider](https://github.com/strands-labs/strands-decider)**（AWS の研究チーム）：2B 版、E4B 版
-- **H2O-Lightning-4B**（H2O.ai）：判断 AI のベンチマーク JevBench で、公開モデルの中で 1 位（[H2O.ai の発表](https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench)）
+- **H2O-Lightning-4B**（H2O.ai）：判断 AI のベンチマーク JevBench で、公開モデルの中で 1 位。総合点 72.5 で Jev の 71.5 を上回る（[H2O.ai の発表](https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench)）
 
 どれも自分の PC（Apple Silicon）で動きます。
 
@@ -147,6 +147,8 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 どの作業も 1 回ずつの結果です。成功率はまだ評価していません。
 
 次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
+
+この比較結果は、strands-decider から H2O-Lightning-4B を選べるようにする機能の提案 [issue #95](https://github.com/strands-labs/strands-decider/issues/95) に、使用例と評価結果として投稿しました。提案では、JevBench の総合点（H2O-Lightning-4B 72.5、Jev 71.5）と、このリポジトリの比較結果が根拠に挙げられています。
 
 ## ファイル構成
 

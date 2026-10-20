@@ -148,6 +148,8 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 
 次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
 
+## 成果の共有
+
 この比較結果は、strands-decider から H2O-Lightning-4B を選べるようにする機能の提案 [issue #95](https://github.com/strands-labs/strands-decider/issues/95) に、使用例と評価結果として投稿しました。提案では、JevBench の総合点（H2O-Lightning-4B 72.5、Jev 71.5）と、このリポジトリの比較結果が根拠に挙げられています。
 
 ## ファイル構成

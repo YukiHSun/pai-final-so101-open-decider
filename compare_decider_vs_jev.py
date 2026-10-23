@@ -91,7 +91,7 @@ def robot_state(jev_state):
 
 def main():
     load_env()
-    decider = DeciderClient(os.getenv("DECIDER_URL", "http://127.0.0.1:8765"))
+    decider = DeciderClient.from_env() if os.getenv("DECIDER_URL") else DeciderClient(os.getenv("DECIDER_URL", "http://127.0.0.1:8765"))
     out = dict(recorded=[], counterfactual=[])
 
     print("== Part 1: recorded Jev requests -> Jev (again) and strands-decider")

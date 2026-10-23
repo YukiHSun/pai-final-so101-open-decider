@@ -1,0 +1,722 @@
+{
+ "recorded": [
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 386,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 495,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 209,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.995,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 450,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 217,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.998,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 493,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.62
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.64,
+    "verdict": "pass",
+    "latency_ms": 210,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.998,
+    "gate": 0.981,
+    "verdict": "pass",
+    "latency_ms": 417,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_20260927_184643",
+   "task": "cube_lift",
+   "phase": "lift",
+   "jev_recorded": {
+    "action": "done",
+    "confidence": 0.97,
+    "gate": 0.93
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 1.0,
+    "gate": 0.93,
+    "verdict": "pass",
+    "latency_ms": 183,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "done",
+    "confidence": 0.964,
+    "gate": 0.996,
+    "verdict": "pass",
+    "latency_ms": 409,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 297,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 0.998,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 416,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 211,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.601,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 415,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 189,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.985,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 424,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.73
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.79,
+    "verdict": "pass",
+    "latency_ms": 190,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.991,
+    "gate": 0.992,
+    "verdict": "pass",
+    "latency_ms": 484,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lift",
+   "jev_recorded": {
+    "action": "secure_grasp",
+    "confidence": 0.7,
+    "gate": 0.98
+   },
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 1.0,
+    "gate": 0.98,
+    "verdict": "pass",
+    "latency_ms": 187,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "secure_grasp",
+    "confidence": 0.486,
+    "gate": 1.0,
+    "verdict": "pass",
+    "latency_ms": 476,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "secure_grasp",
+   "jev_recorded": {
+    "action": "transfer",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "transfer",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 198,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "transfer",
+    "confidence": 0.994,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 384,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "transfer",
+   "jev_recorded": {
+    "action": "lower",
+    "confidence": 0.97,
+    "gate": 0.93
+   },
+   "jev": {
+    "action": "lower",
+    "confidence": 1.0,
+    "gate": 0.91,
+    "verdict": "pass",
+    "latency_ms": 202,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "lower",
+    "confidence": 0.973,
+    "gate": 0.999,
+    "verdict": "pass",
+    "latency_ms": 490,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "lower",
+   "jev_recorded": {
+    "action": "release",
+    "confidence": 0.98,
+    "gate": 0.96
+   },
+   "jev": {
+    "action": "release",
+    "confidence": 1.0,
+    "gate": 0.96,
+    "verdict": "pass",
+    "latency_ms": 219,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "release",
+    "confidence": 0.98,
+    "gate": 0.993,
+    "verdict": "pass",
+    "latency_ms": 444,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "release",
+   "jev_recorded": {
+    "action": "retreat",
+    "confidence": 0.98,
+    "gate": null
+   },
+   "jev": {
+    "action": "retreat",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 210,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "retreat",
+    "confidence": 0.991,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 417,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_pick_place_20260927_185507",
+   "task": "pick_place",
+   "phase": "retreat",
+   "jev_recorded": {
+    "action": "done",
+    "confidence": 0.99,
+    "gate": 0.96
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 1.0,
+    "gate": 0.96,
+    "verdict": "pass",
+    "latency_ms": 189,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "done",
+    "confidence": 0.693,
+    "gate": 0.997,
+    "verdict": "pass",
+    "latency_ms": 407,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "ready",
+   "jev_recorded": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 322,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "move_above_cube",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 430,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "move_above_cube",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "descend",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 324,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "descend",
+    "confidence": 0.995,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 475,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "descend",
+   "jev_recorded": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null
+   },
+   "jev": {
+    "action": "close_gripper",
+    "confidence": 1.0,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 194,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.998,
+    "gate": null,
+    "verdict": "pass",
+    "latency_ms": 473,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  },
+  {
+   "session": "claude_jev_cube_lift_negative_grasp_check",
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "jev_recorded": {
+    "action": "descend",
+    "confidence": 0.54,
+    "gate": 0.03
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 0.96,
+    "gate": 0.03,
+    "verdict": "stop",
+    "latency_ms": 221,
+    "model": "jev-1.14.0"
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.839,
+    "gate": 0.043,
+    "verdict": "stop",
+    "latency_ms": 425,
+    "model": "baseten/elephant-1-20261021"
+   },
+   "same_action": true
+  }
+ ],
+ "counterfactual": [
+  {
+   "task": "cube_lift",
+   "phase": "close_gripper",
+   "guards": "lift",
+   "failure": {
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no"
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 1.0,
+    "gate": 0.07,
+    "verdict": "stop",
+    "latency_ms": 383,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.976,
+    "gate": 0.23,
+    "verdict": "stop",
+    "latency_ms": 443,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "cube_lift",
+   "phase": "lift",
+   "guards": "done",
+   "failure": {
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_on_floor": "yes"
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 0.94,
+    "gate": 0.03,
+    "verdict": "stop",
+    "latency_ms": 197,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.336,
+    "gate": 0.14,
+    "verdict": "stop",
+    "latency_ms": 437,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "close_gripper",
+   "guards": "lift",
+   "failure": {
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no"
+   },
+   "jev": {
+    "action": "lift",
+    "confidence": 0.98,
+    "gate": 0.09,
+    "verdict": "stop",
+    "latency_ms": 300,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.947,
+    "gate": 0.089,
+    "verdict": "stop",
+    "latency_ms": 472,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "lift",
+   "guards": "secure_grasp",
+   "failure": {
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "jev": {
+    "action": "secure_grasp",
+    "confidence": 1.0,
+    "gate": 0.11,
+    "verdict": "stop",
+    "latency_ms": 204,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "secure_grasp",
+    "confidence": 0.794,
+    "gate": 0.282,
+    "verdict": "stop",
+    "latency_ms": 421,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "transfer",
+   "guards": "lower",
+   "failure": {
+    "cube_above_goal": "no"
+   },
+   "jev": {
+    "action": "lower",
+    "confidence": 0.88,
+    "gate": 0.07,
+    "verdict": "stop",
+    "latency_ms": 244,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lower",
+    "confidence": 0.553,
+    "gate": 0.083,
+    "verdict": "stop",
+    "latency_ms": 481,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "lower",
+   "guards": "release",
+   "failure": {
+    "cube_on_floor_in_goal": "no",
+    "cube_above_goal": "no"
+   },
+   "jev": {
+    "action": "release",
+    "confidence": 0.92,
+    "gate": 0.06,
+    "verdict": "stop",
+    "latency_ms": 246,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "lift",
+    "confidence": 0.388,
+    "gate": 0.062,
+    "verdict": "stop",
+    "latency_ms": 387,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  },
+  {
+   "task": "pick_place",
+   "phase": "retreat",
+   "guards": "done",
+   "failure": {
+    "cube_on_floor_in_goal": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "jev": {
+    "action": "done",
+    "confidence": 0.41,
+    "gate": 0.06,
+    "verdict": "stop",
+    "latency_ms": 258,
+    "model": "jev-1.14.0",
+    "safe": true
+   },
+   "decider": {
+    "action": "close_gripper",
+    "confidence": 0.34,
+    "gate": 0.047,
+    "verdict": "stop",
+    "latency_ms": 529,
+    "model": "baseten/elephant-1-20261021",
+    "safe": true
+   }
+  }
+ ],
+ "summary": {
+  "recorded_total": 19,
+  "recorded_same_action": 19,
+  "recorded_success_steps": 15,
+  "recorded_success_pass_jev": 15,
+  "recorded_success_pass_decider": 15,
+  "counterfactual_total": 7,
+  "counterfactual_safe_jev": 7,
+  "counterfactual_safe_decider": 7,
+  "decider_latency_ms_median": 443,
+  "decider_latency_ms_max": 529,
+  "jev_latency_ms_median": 211,
+  "jev_latency_ms_max": 386
+ }
+}

@@ -28,6 +28,7 @@
 
 - 判断 AI を決めます。
   - ローカルの判断 AI を使う場合は `export DECIDER_URL=http://127.0.0.1:8741` を設定します（H2O-Lightning-4B の例。サーバーは README の手順で起動します）。
+  - OpenRouter の判断 AI を使う場合は `DECIDER_URL=https://openrouter.ai/api/alpha/decisions` と `DECIDER_MODEL=baseten/mammoth-1:free`（または `baseten/elephant-1:free`）を設定し、`.env` に `OPENROUTER_API_KEY` を入れます。無料枠は 1 日 50 回です。
   - `DECIDER_URL` が未設定なら、`.env` の `TYPESAFE_API_KEY` を使って Jev を呼びます。
 
 ## 1 回の実行の流れ

@@ -1,0 +1,12 @@
+{
+ "model": "baseten/mammoth-1-20261021",
+ "wording": "original",
+ "state": "H2O live run, right after lift",
+ "action": "secure_grasp",
+ "confidence": 0.929,
+ "secure_grasp": 0.936,
+ "transfer": 0.063,
+ "gate": 1.0,
+ "verdict": "pass",
+ "latency_ms": 927
+}

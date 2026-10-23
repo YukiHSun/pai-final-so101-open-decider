@@ -144,6 +144,21 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 | 運んで置く・指示文の修正前 | 5 手目で停止（順番違いを安全装置が拒否） |
 | 運んで置く・指示文の修正後 | **成功**：ゴール中心から 7.87 mm（10 mm 以内で合格）。10 手すべて H2O-Lightning-4B が判断 |
 
+### 4. より大きな判断 AI（elephant-1 / mammoth-1、OpenRouter 経由）
+
+10 月 21 日に Baseten の研究チームが公開した [elephant-1](https://huggingface.co/baselabs/elephant-1)（9B）と mammoth-1（27B）を、[OpenRouter の Decisions API](https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request) 経由で、同じ方法で確かめました。説明文は 2. で直したものを使っています。
+
+| | Jev | H2O-Lightning-4B | elephant-1 | mammoth-1 |
+|---|---|---|---|---|
+| 合格ラインを越えた手（15 手中） | 15 | 15 | 15 | 15 |
+| Jev と同じ行動（19 手中） | — | 19 | 19 | 19 |
+| 持ち上げた直後の「持ち直す」（元の説明文 → 直した説明文） | 0.79〜0.87 → 1.00 | 0.026 → 0.864 | 0.059 → 0.759 | 0.936 → 0.995 |
+| 失敗を伝えたときに止まれた場所（7 か所中） | 7 | 7 | 7 | 7 |
+| 運んで置く（シミュレーション） | 成功 7.87 mm | 成功 7.87 mm | 成功 7.87 mm | 成功 7.87 mm |
+| 1 回の応答時間（中央値） | 約 0.2 s | 約 0.9 s | 約 0.4 s | 約 1.2 s |
+
+mammoth-1 は元の説明文のままでも正しい順番を選べました。elephant-1 は速い一方、元の説明文では H2O-Lightning-4B と同じく「運ぶ」を選びました（0.93）。H2O-Lightning-4B の失敗 7 か所と応答時間は元の説明文で測った値です。記録は `outputs/decider_{elephant,mammoth}_vs_jev_comparison.json` と `outputs/claude_{elephant,mammoth}/` にあります。
+
 どの作業も 1 回ずつの結果です。成功率はまだ評価していません。
 
 次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
@@ -214,6 +229,14 @@ MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh   # http://127.0.0.1:8741/v1/system
 strands-decider serve StrandsAgents/strands-decider-E4B-gemma4-v1-2610 --device mps --port 8765
 ```
 
+**OpenRouter の判断 AI（elephant-1 / mammoth-1 など）**
+サーバーは要りません。`.env` に `OPENROUTER_API_KEY` を入れ、送り先とモデル名を指定します。無料枠は 1 日 50 回までです。
+
+```bash
+export DECIDER_URL=https://openrouter.ai/api/alpha/decisions
+export DECIDER_MODEL=baseten/mammoth-1:free     # または baseten/elephant-1:free
+```
+
 **Jev**
 `.env` に `TYPESAFE_API_KEY` を設定します。有料の API です。
 
@@ -251,4 +274,5 @@ DECIDER_URL=http://127.0.0.1:8741 .venv/bin/python compare_prompt_order.py stric
 | [strands-labs/strands-decider](https://github.com/strands-labs/strands-decider) | 判断 AI（2B / E4B） | Apache-2.0 |
 | [h2oai/h2o-lightning-4b](https://huggingface.co/h2oai/h2o-lightning-4b)、[internet-projects/h2o-lightning-mlx](https://github.com/internet-projects/h2o-lightning-mlx) | 判断 AI と Mac 用サーバー | Apache-2.0 |
 | MuJoCo、mink | 物理シミュレーション、IK | Apache-2.0 |
+| [baselabs/elephant-1](https://huggingface.co/baselabs/elephant-1)、mammoth-1 | 判断 AI（OpenRouter 経由で利用） | MIT |
 | TypeSafe Jev | 比較の基準にした有料判断 AI | 商用 API |

@@ -210,9 +210,9 @@ class JevController:
         self.spec = TASKS[task]
         self.model = model or os.getenv("JEV_MODEL", "jev-latest").strip()
         if client is None and os.getenv("DECIDER_URL", "").strip():
-            # Local strands-decider instead of the hosted Jev API; same request shape.
+            # Local strands-decider / H2O server or an OpenRouter decision model; same request shape.
             from strands_so101_sim.decider_client import DeciderClient
-            client = DeciderClient(os.environ["DECIDER_URL"].strip())
+            client = DeciderClient.from_env()
             self.model = model or os.getenv("DECIDER_MODEL", "").strip() or None
         if client is None:
             if not os.getenv("TYPESAFE_API_KEY", "").strip():

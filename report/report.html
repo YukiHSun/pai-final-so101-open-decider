@@ -23,6 +23,7 @@ th { background:var(--ink); color:#fff; font-weight:600; }
 td.n { font-variant-numeric: tabular-nums; }
 table.split { break-inside:auto; }
 table.split tr { break-inside:avoid; }
+table.keep { break-inside:avoid; }
 .bad { color:var(--accent); font-weight:700; }
 .good { color:var(--good); font-weight:700; }
 .box { background:var(--soft); border-radius:6pt; padding:7pt 10pt; margin:6pt 0 8pt; break-inside:avoid; }
@@ -75,7 +76,7 @@ a { color:var(--good); }
 <li>エージェントは、Python 環境の準備、判断 AI サーバーの起動、テスト、<code>start</code> → 画像を見る → <code>step</code> の繰り返しを自分で進めます。<code>[SUCCESS]</code> か <code>[STOP]</code> が出たら止まり、最後に動画を書き出します。</li>
 </ol>
 <p>今回の結果は、Claude Code で実行したものです。</p>
-<p>判断 AI は、URL を 1 つ変えるだけで入れ替えられます（<code>DECIDER_URL</code>）。有料の Jev、strands-decider、H2O-Lightning-4B を同じコードで使えます。</p>
+<p>判断 AI は、URL を 1 つ変えるだけで入れ替えられます（<code>DECIDER_URL</code>）。有料の Jev、strands-decider、H2O-Lightning-4B を同じコードで使えます。OpenRouter の判断 AI も、送り先・鍵・モデル名の 3 つを環境変数で指定するだけで使えます（<code>DECIDER_URL</code>、<code>DECIDER_MODEL</code>、<code>OPENROUTER_API_KEY</code>）。</p>
 
 <h2>3. スキルの説明</h2>
 <p>運んで置く作業は、次の 10 個のスキルを上から順に実行します（持ち上げる作業は 1〜4 と 10 の 5 個）。各スキルの動きはプログラムに固定されていて、AI は関節の角度も座標も出しません。AI が順番に合わないスキルを選んだり、確信度が 0.45 未満だったりすると、プログラムはその場で止まります。</p>
@@ -100,6 +101,7 @@ a { color:var(--good); }
 <li><b>H2O-Lightning-4B</b>（H2O.ai、Apache-2.0）：判断 AI のベンチマーク JevBench で、公開モデルの中で 1 位。総合点は 72.5 で、Jev の 71.5 を上回る<sup>[7][8]</sup></li>
 </ul>
 <p>どれも自分の PC（Apple Silicon）で動くので、使用料がかからず、データも外に出ません。現実の現場でも、通信が不安定な環境や、データを外に出せない工場などでの利用につながります。</p>
+<p>この検証のあと、10 月 21 日に、さらに大きな判断 AI の <b>elephant-1</b>（90 億パラメータ）と <b>mammoth-1</b>（270 億パラメータ）が公開されました<sup>[9][10]</sup>。OpenRouter 経由で無料で使えたので、同じ方法で確かめました（6.4）。</p>
 
 <h2>5. 検証の方法</h2>
 <ol>
@@ -142,7 +144,7 @@ a { color:var(--good); }
 <li>「持ち直す」と「運ぶ」を、見た目ではなく、<b>直前に完了したスキル</b>で区別する文にしました。</li>
 </ol>
 </div>
-<table>
+<table class="keep">
 <tr><th style="width:34%">持ち上げた直後に AI がつけた確率</th><th>直す前 Jev</th><th>直す前 H2O</th><th>直した後 Jev</th><th>直した後 H2O</th></tr>
 <tr><td>「持ち直す」（正しい次の手）</td><td class="n">0.79〜0.87</td><td class="n bad">0.026</td><td class="n good">1.00</td><td class="n good">0.864</td></tr>
 <tr><td>「運ぶ」</td><td class="n">0.13〜0.21</td><td class="n bad">0.949</td><td class="n">0.00</td><td class="n">0.111</td></tr>
@@ -168,6 +170,20 @@ a { color:var(--good); }
 <figcaption>説明を直した後の H2O-Lightning-4B による「運んで置く」（斜めカメラ。目の担当の Claude が見た画像と同じもの）</figcaption>
 </figure>
 
+<h3>6.4 より大きな判断 AI（elephant-1 / mammoth-1）</h3>
+<p>Baseten の研究チームが公開した 2 つの判断 AI を、OpenRouter の Decisions API<sup>[11]</sup> 経由で、6.1〜6.3 と同じ方法で確かめました。どちらも Qwen3.5 をもとにしていて、10 月 27 日まで無料で使えました。説明文は、6.2 で直したものを使っています。</p>
+<table class="keep">
+<tr><th style="width:34%">比べた点</th><th>Jev</th><th>H2O-Lightning-4B</th><th>elephant-1（9B）</th><th>mammoth-1（27B）</th></tr>
+<tr><td>合格ラインを越えた手（15 手中）</td><td class="n">15</td><td class="n">15</td><td class="n good">15</td><td class="n good">15</td></tr>
+<tr><td>Jev と同じスキルを選んだ手（19 手中）</td><td>—</td><td class="n">19</td><td class="n good">19</td><td class="n good">19</td></tr>
+<tr><td>持ち上げた直後に「持ち直す」を選ぶ確率（元の説明文 → 直した説明文）</td><td class="n">0.79〜0.87 → 1.00</td><td class="n bad">0.026 → 0.864</td><td class="n bad">0.059 → 0.759</td><td class="n good">0.936 → 0.995</td></tr>
+<tr><td>失敗を伝えたときに止まれた場所（7 か所中）</td><td class="n">7</td><td class="n">7</td><td class="n">7</td><td class="n">7</td></tr>
+<tr><td>運んで置く（シミュレーション）</td><td>成功 7.87 mm</td><td>成功 7.87 mm</td><td class="good">成功 7.87 mm</td><td class="good">成功 7.87 mm</td></tr>
+<tr><td>1 回の応答時間（中央値）</td><td class="n">約 0.2 秒</td><td class="n">約 0.9 秒</td><td class="n">約 0.4 秒</td><td class="n">約 1.2 秒</td></tr>
+</table>
+<p>どちらも、記録した 19 問すべてで Jev と同じスキルを選び、失敗を伝えた 7 か所すべてで止まれました。シミュレーションでも、運んで置く作業を最後まで成功させました（10 手すべてを各モデルが判断）。違いが出たのは、6.2 の持ち上げた直後の一手です。mammoth-1 は、元の説明文のままでも「持ち直す」を選びました。elephant-1 は、元の説明文では H2O-Lightning-4B と同じように「運ぶ」を選び（0.93）、直した説明文で正しく選べました。</p>
+<p class="small">H2O-Lightning-4B の失敗 7 か所と応答時間は、元の説明文で測った値です。記録：<code>outputs/decider_{elephant,mammoth}_vs_jev_comparison.json</code>、<code>outputs/claude_{elephant,mammoth}/</code></p>
+
 <h2>7. 工夫した点</h2>
 <ul>
 <li><b>役割を分けて、AI に関節角を出させない構成</b>：AI はスキルを選ぶだけにしました。細かい動きと安全ルール（確信度、安全確認、順番チェック）はプログラム側に固定しています。判断 AI を入れ替えても、危ない動きにならない作りです。</li>
@@ -184,8 +200,9 @@ a { color:var(--good); }
 <li>strands-decider は、はい / いいえの安全確認では成功と失敗をおおむね分けられました（特に E4B 版）。しかし、5〜10 個の選択肢から選ぶ問題では確信度が低くなりました。「次は〇〇でよいか」とスキルごとに聞く形にすれば、使える可能性があります。</li>
 <li>どの作業も 1 回ずつの成功で、キューブとゴールの位置も 1 通りだけです。成功率や、位置を変えたときの強さは、まだ評価していません。</li>
 <li>今回コストを下げられたのは「頭」の部分です。「目」は今も毎ステップ生成 AI（Claude）が画像を読んでいて、まだ自動化もしていません。次は、画像を読む部分を API で呼んでループ全体を自動で回し、繰り返し評価したいと考えています。あわせて、目の担当にも小さな公開モデルを使えるかを試し、全体のコストを下げたいと考えています。</li>
+<li>より大きな mammoth-1 は、あいまいな説明文でも正しい順番を選べました。一方、小さい elephant-1 は約 0.4 秒と速いものの、H2O-Lightning-4B と同じく説明文のあいまいさに引っ張られました。<b>モデルを大きくすると説明文の書き方に強くなり、小さいモデルでは説明文を整えることが欠かせない</b>と分かりました。用途に合わせて、速さと強さのどちらを取るかを選べます。</li>
 <li>H2O-Lightning-4B の 1 回の判断は 0.8〜1.4 秒で、Jev（約 0.2 秒）より遅いです。今回のようにスキルを 1 つずつ選ぶ作業では問題になりませんでしたが、速い制御には向きません。</li>
-<li><b>今回はシミュレーションだけの検証です。次は実機の SO-101 で検証を進めたいと考えています。</b>参考にしたいのは ABEJA の記事<sup>[9]</sup>です。この記事では、実機のロボットアームで、追加学習なしにキューブの pick &amp; place を行い、音声での指示 9 件すべてに成功しています。仕組みは 2 段です。作業の計画は大きなモデルが担い、手首カメラの画像を見た細かい位置合わせは、Jev と同じ形式の判断 AI が約 0.4 秒で答えます。キューブを見失ったときは、大きなモデルに計画をやり直させます。実機では、カメラの見え方の違いや、つかみ損ねが必ず起きます。今回の「目・頭・手」の分担と安全確認はそのまま使い、この記事のような手首カメラでの位置合わせと、見失ったときのやり直しを取り入れて、実機で成功させることを目指します。</li>
+<li><b>今回はシミュレーションだけの検証です。次は実機の SO-101 で検証を進めたいと考えています。</b>参考にしたいのは ABEJA の記事<sup>[12]</sup>です。この記事では、実機のロボットアームで、追加学習なしにキューブの pick &amp; place を行い、音声での指示 9 件すべてに成功しています。仕組みは 2 段です。作業の計画は大きなモデルが担い、手首カメラの画像を見た細かい位置合わせは、Jev と同じ形式の判断 AI が約 0.4 秒で答えます。キューブを見失ったときは、大きなモデルに計画をやり直させます。実機では、カメラの見え方の違いや、つかみ損ねが必ず起きます。今回の「目・頭・手」の分担と安全確認はそのまま使い、この記事のような手首カメラでの位置合わせと、見失ったときのやり直しを取り入れて、実機で成功させることを目指します。</li>
 </ul>
 
 <h2>9. 成果の共有</h2>
@@ -193,14 +210,14 @@ a { color:var(--good); }
 
 <h2>10. AI の利用と再現方法</h2>
 <ul>
-<li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B（スキルの判断）。学習は行っていません。</li>
+<li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B / elephant-1 / mammoth-1（スキルの判断。elephant-1 と mammoth-1 は OpenRouter 経由）。学習は行っていません。</li>
 <li>コード、各ステップの画像、観測、確率、比較結果は、GitHub リポジトリにまとめています。手順は README を見てください。</li>
 <li>動画は、H2O-Lightning-4B で「運んで置く」作業を行ったときの記録から作り直したものです。</li>
 </ul>
 <p class="small">使用した外部のもの：strands-labs/robots（SO-101 モデルの読み込み）、strands-labs/strands-decider、h2oai/h2o-lightning-4b と internet-projects/h2o-lightning-mlx（Mac 用サーバー）、MuJoCo、mink。いずれも Apache-2.0 です。Jev は TypeSafe の商用 API です。</p>
 
 <h2>参考文献</h2>
-<p class="small" style="font-size:8.5pt; line-height:1.5">[1] TypeSafe AI「Introducing System One Models &amp; Jev」（2026-09-15） <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">https://typesafe.ai/blog/introducing-system-one-models-and-jev</a><br>[2] Simon Willison「Jev introduces a new shape of LLM: System One, aka Decision Models」（2026-09-21） <a href="https://simonwillison.net/2026/Sep/21/jev/">https://simonwillison.net/2026/Sep/21/jev/</a><br>[3] ロボスタ「判断特化型AI『Jev』のロボットへの活用事例が相次ぐ」（2026-09-25） <a href="https://robotstart.info/article/2026/09/25/382447.html">https://robotstart.info/article/2026/09/25/382447.html</a><br>[4] Zenn「SO-101ロボットアーム 実践ガイド」第21章「Jevでアームを動かす」 <a href="https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb">https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb</a><br>[5] strands-labs「strands-decider」（GitHub） <a href="https://github.com/strands-labs/strands-decider">https://github.com/strands-labs/strands-decider</a><br>[6] labmemo「AWS『Strands Decider 2B』徹底解説」（2026-10-02） <a href="https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/">https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/</a><br>[7] H2O.ai「H2O-Lightning-4B Ranks First on JevBench Open-Weights Leaderboard」（2026-10-12） <a href="https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench">https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench</a><br>[8] strands-labs/strands-decider issue #95「[FEATURE] Add support for h2oai/h2o-lightning-4b as a selectable decision model」（2026-10-20） <a href="https://github.com/strands-labs/strands-decider/issues/95">https://github.com/strands-labs/strands-decider/issues/95</a><br>[9] ABEJA Tech Blog「VLMの賢さとJevの速さを両取りしたい ～ 追加学習なしでロボットを動かす ～」（2026-10-14） <a href="https://tech-blog.abeja.asia/entry/jev-zeroshot-202610">https://tech-blog.abeja.asia/entry/jev-zeroshot-202610</a></p>
+<p class="small" style="font-size:8.5pt; line-height:1.5">[1] TypeSafe AI「Introducing System One Models &amp; Jev」（2026-09-15） <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">https://typesafe.ai/blog/introducing-system-one-models-and-jev</a><br>[2] Simon Willison「Jev introduces a new shape of LLM: System One, aka Decision Models」（2026-09-21） <a href="https://simonwillison.net/2026/Sep/21/jev/">https://simonwillison.net/2026/Sep/21/jev/</a><br>[3] ロボスタ「判断特化型AI『Jev』のロボットへの活用事例が相次ぐ」（2026-09-25） <a href="https://robotstart.info/article/2026/09/25/382447.html">https://robotstart.info/article/2026/09/25/382447.html</a><br>[4] Zenn「SO-101ロボットアーム 実践ガイド」第21章「Jevでアームを動かす」 <a href="https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb">https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb</a><br>[5] strands-labs「strands-decider」（GitHub） <a href="https://github.com/strands-labs/strands-decider">https://github.com/strands-labs/strands-decider</a><br>[6] labmemo「AWS『Strands Decider 2B』徹底解説」（2026-10-02） <a href="https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/">https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/</a><br>[7] H2O.ai「H2O-Lightning-4B Ranks First on JevBench Open-Weights Leaderboard」（2026-10-12） <a href="https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench">https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench</a><br>[8] strands-labs/strands-decider issue #95「[FEATURE] Add support for h2oai/h2o-lightning-4b as a selectable decision model」（2026-10-20） <a href="https://github.com/strands-labs/strands-decider/issues/95">https://github.com/strands-labs/strands-decider/issues/95</a><br>[9] Base Labs「baselabs/elephant-1」（Hugging Face） <a href="https://huggingface.co/baselabs/elephant-1">https://huggingface.co/baselabs/elephant-1</a><br>[10] Base Labs「Mammoth-1 and Elephant-1: frontier decision models」（2026-10-21） <a href="https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models">https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models</a><br>[11] OpenRouter「Submit a Decisions request」（Decisions API） <a href="https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request">https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request</a><br>[12] ABEJA Tech Blog「VLMの賢さとJevの速さを両取りしたい ～ 追加学習なしでロボットを動かす ～」（2026-10-14） <a href="https://tech-blog.abeja.asia/entry/jev-zeroshot-202610">https://tech-blog.abeja.asia/entry/jev-zeroshot-202610</a></p>
 
 </main>
 </body>

@@ -8,6 +8,7 @@ same request.
 Part 1 (key step): the pick_place state right after lift, where H2O chose transfer
 (the live H2O run) and Jev chose secure_grasp (the recorded Jev run); asked REPEAT times.
 Part 2 (regression): every recorded Jev request, with one wording (argv[1], default strict).
+argv[2] is an optional tag appended to the output file name (e.g. the decider model).
 
     DECIDER_URL=http://127.0.0.1:8741 strands_so101_sim/.venv/bin/python compare_prompt_order.py
 """
@@ -101,7 +102,7 @@ def ask(ctl, rec, wording):
 
 def main():
     load_env()
-    decider = DeciderClient(os.getenv("DECIDER_URL", "http://127.0.0.1:8741"))
+    decider = DeciderClient.from_env() if os.getenv("DECIDER_URL") else DeciderClient(os.getenv("DECIDER_URL", "http://127.0.0.1:8741"))
     ctls = dict(jev=jev_controller("pick_place"), h2o=JevController(client=decider, task="pick_place"))
     pp = cjc.TASKS["pick_place"]
     out = dict(wordings={k: dict(instructions=WORDINGS[k](pp).skill_instructions, criteria={a: WORDINGS[k](pp).skill_criteria[a] for a in ANCHORED}) for k in WORDINGS},
@@ -147,7 +148,8 @@ def main():
         ).items()}
     out["summary"].update(total=len(out["regression"]), success_steps=len(success))
     print("\n== Summary\n" + json.dumps(out["summary"], indent=1))
-    path = ROOT / "outputs" / f"prompt_order_comparison_{final}.json"
+    tag = f"_{sys.argv[2]}" if len(sys.argv) > 2 else ""
+    path = ROOT / "outputs" / f"prompt_order_comparison_{final}{tag}.json"
     path.write_text(json.dumps(out, indent=1, ensure_ascii=False) + "\n")
     print(f"saved {path.relative_to(ROOT)}")
 

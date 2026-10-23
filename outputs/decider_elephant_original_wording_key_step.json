@@ -1,0 +1,12 @@
+{
+ "model": "baseten/elephant-1-20261021",
+ "wording": "original",
+ "state": "H2O live run, right after lift",
+ "action": "transfer",
+ "confidence": 0.922,
+ "secure_grasp": 0.059,
+ "transfer": 0.93,
+ "gate": 1.0,
+ "verdict": "pass",
+ "latency_ms": 535
+}

@@ -163,10 +163,6 @@ mammoth-1 は元の説明文のままでも正しい順番を選べました。e
 
 次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
 
-## 成果の共有
-
-この比較結果は、strands-decider から H2O-Lightning-4B を選べるようにする機能の提案 [issue #95](https://github.com/strands-labs/strands-decider/issues/95) に、使用例と評価結果として投稿しました。提案では、JevBench の総合点（H2O-Lightning-4B 72.5、Jev 71.5）と、このリポジトリの比較結果が根拠に挙げられています。
-
 ## 追記：Jev 1.14 と H2O-Lightning-4B v1.4 の画像入力
 
 Jev 1.14（2026-10-14）で、画像の入力と、物の位置を枠で答える Box 型が使えるようになりました（プレビュー機能）。そこで、記録した 15 枚の画像で、Jev 1.14 に「目」を任せられるかを確かめました。
@@ -182,7 +178,7 @@ H2O-Lightning-4B も v1.4 で画像と Box に対応しました。同じ 15 枚
 - 手元の Mac では、画像 1 枚に約 1 分かかりました。
 - 新しい重み（v1.4.1）でも、6 章の文章での判断の結果（19/19、15/15、7/7）は変わりませんでした。
 
-詳しくは [report/report.pdf](report/report.pdf) の 11 章を見てください。実行は次のとおりです。
+詳しくは [report/report.pdf](report/report.pdf) の 10 章を見てください。実行は次のとおりです。
 
 - Jev：`.venv/bin/python eval_eye_models.py jev`（`.env` に `TYPESAFE_API_KEY` が必要です）
 - H2O：`.venv/bin/python eval_eye_models.py h2o`（v1.4.2 のサーバーを 8741 番で起動しておきます）
@@ -234,6 +230,11 @@ SO-101 のモデルは、strands-robots が初回起動時に `robot_description
 
 **H2O-Lightning-4B（Mac 向け）**
 コミュニティ製の MLX 版を使いました：[internet-projects/h2o-lightning-mlx](https://github.com/internet-projects/h2o-lightning-mlx)、コミット `efe968e`。重みは 8bit 版の `netprojects/h2o-lightning-4b-mlx-q8` です。
+
+この MLX 版は、2026 年 10 月 12 日に初めて公開されたばかりの、有志による移植版です。その後も更新が続いています。
+
+- **v1.2.3**（最初の版）：6 章までの結果は、この版で測りました。`git checkout v1.2.3` で使えます。
+- **v1.4.2**（2026-10-29）：Box に対応し（v1.4.0 から）、重みも新しくなりました（v1.4.1 から）。10 章の結果は、この版で測りました。
 
 ```bash
 git clone https://github.com/internet-projects/h2o-lightning-mlx && cd h2o-lightning-mlx

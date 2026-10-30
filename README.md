@@ -17,10 +17,13 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 
 どれも自分の PC（Apple Silicon）で動きます。
 
-- 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：https://www.youtube.com/watch?v=ZC-NKxQikww
-- 判断の過程つきの動画（2 倍速）：画面の下に、各手で目（Claude）が「はい」と答えた項目、頭（H2O-Lightning-4B）が選んだスキルと確信度、安全確認の確率を表示します。
-  - [video/h2o_pick_place_decisions_2x.mp4](video/h2o_pick_place_decisions_2x.mp4)：今までの位置（L1）
-  - [video/h2o_pick_place_L8_decisions_2x.mp4](video/h2o_pick_place_L8_decisions_2x.mp4)：キューブとゴールの両方を動かした位置（L8）
+- 動画（YouTube）：https://youtu.be/xYiG_4nvSvk
+  - H2O-Lightning-4B で「運んで置く」を行った記録です。**2 倍速**で、約 1 分 30 秒です。
+  - 画面の下に、各手で目（Claude）が「はい」と答えた項目、頭（H2O-Lightning-4B）が選んだスキルと確信度、安全確認の確率を表示しています。
+  - ファイル：[video/h2o_pick_place_decisions_2x.mp4](video/h2o_pick_place_decisions_2x.mp4)
+- そのほかの動画（2 倍速）
+  - [video/h2o_pick_place_L8_decisions_2x.mp4](video/h2o_pick_place_L8_decisions_2x.mp4)：キューブとゴールの両方を動かした位置（L8）。判断の過程つきです。
+  - [video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)：判断の過程の表示なしの版です。
 - レポート：[report/report.pdf](report/report.pdf)（同じ内容の HTML 版は [report/report.html](report/report.html)）
 
 ## Claude Code / Codex で実行するときの大まかな流れ

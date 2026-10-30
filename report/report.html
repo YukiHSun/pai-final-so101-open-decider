@@ -41,7 +41,7 @@ a { color:var(--good); }
 <main>
 
 <h1>自然言語でスキルの選び方を書いて<br>SO-101 を動かす開発キット<br><span style="font-size:13pt">― OSS の判断 AI で、生成 AI のコストを下げる ―</span></h1>
-<p class="lead">Physical AI 応用1講座 最終課題 説明資料 ／ シミュレーター：MuJoCo ／ ロボット：SO-101</p>
+<p class="lead">Physical AI 応用1講座 最終課題 説明資料 ／ シミュレーター：MuJoCo ／ ロボット：SO-101<br>コード・記録・動画：<a href="https://github.com/YukiHSun/pai-final-so101-open-decider">https://github.com/YukiHSun/pai-final-so101-open-decider</a></p>
 
 <div class="box">
 <b>この資料の主な結果</b>
@@ -212,9 +212,13 @@ a { color:var(--good); }
 <tr><td>1 回の判断時間（中央値）</td><td class="n">約 1.0〜1.3 秒</td></tr>
 </table>
 <figure>
-<img src="images/layouts/fig_layouts.png" alt="位置を変えた 9 通りの最初の状態。赤がキューブ、緑がゴール" style="width:86%; display:block">
-<figcaption>位置を変えた 9 通りの最初の状態（真上のカメラを拡大。赤がキューブ、緑がゴール）。L1 は 6.3 の実行です。</figcaption>
+<img src="images/layouts/fig_layouts_3.png" alt="代表の 3 通り。上が最初の状態、下が置いて離れた後" style="width:100%; display:block">
+<figcaption>代表の 3 通り（上：最初の状態を真上から、下：置いて離れた後を斜めから）。赤がキューブ、緑がゴールです。9 通りすべての画像は GitHub の <code>outputs/claude_h2o_layouts/</code> にあります。</figcaption>
 </figure>
+<table class="keep" style="font-size:8.8pt">
+<tr><th>位置</th><th>動かしたもの</th><th>キューブ (x, y) m</th><th>ゴール (x, y) m</th><th>ずれ</th><th>確信度の最小</th><th>安全確認の最小</th></tr>
+<tr><td>L1</td><td>今までの位置</td><td class="n">(0.22, +0.00)</td><td class="n">(0.16, +0.00)</td><td class="n">7.87 mm</td><td class="n">0.79</td><td class="n">0.89</td></tr><tr><td>L2</td><td>キューブ</td><td class="n">(0.21, -0.02)</td><td class="n">(0.16, +0.00)</td><td class="n">7.75 mm</td><td class="n">0.82</td><td class="n">0.86</td></tr><tr><td>L3</td><td>キューブ</td><td class="n">(0.21, +0.02)</td><td class="n">(0.16, +0.00)</td><td class="n">7.76 mm</td><td class="n">0.83</td><td class="n">0.87</td></tr><tr><td>L4</td><td>キューブ</td><td class="n">(0.22, +0.01)</td><td class="n">(0.16, +0.00)</td><td class="n">7.99 mm</td><td class="n">0.83</td><td class="n">0.86</td></tr><tr><td>L5</td><td>キューブ</td><td class="n">(0.22, -0.02)</td><td class="n">(0.16, +0.00)</td><td class="n">7.84 mm</td><td class="n">0.81</td><td class="n">0.84</td></tr><tr><td>L6</td><td>ゴール</td><td class="n">(0.22, +0.00)</td><td class="n">(0.17, +0.02)</td><td class="n">8.06 mm</td><td class="n">0.83</td><td class="n">0.83</td></tr><tr><td>L7</td><td>ゴール</td><td class="n">(0.22, +0.00)</td><td class="n">(0.16, -0.02)</td><td class="n">8.04 mm</td><td class="n">0.82</td><td class="n">0.86</td></tr><tr><td>L8</td><td>両方</td><td class="n">(0.21, -0.02)</td><td class="n">(0.17, +0.02)</td><td class="n">8.45 mm</td><td class="n">0.82</td><td class="n">0.80</td></tr><tr><td>L9</td><td>両方</td><td class="n">(0.22, +0.01)</td><td class="n">(0.16, -0.02)</td><td class="n">8.70 mm</td><td class="n">0.82</td><td class="n">0.86</td></tr>
+</table>
 <p>キューブがゴールのすぐそばにある L8 では、斜めのカメラだと、キューブがすでにゴールの上にあるように見える場面が 2 回ありました。目の担当は真上のカメラで確かめて「まだゴールの上ではない」と答え、H2O は正しい順番のまま進みました。</p>
 <p>ただし、シミュレーションは毎回同じ動きになります。そのため、AI が同じスキルを選べば、結果は下見と同じになります。この 9 回で確かめたのは、<b>位置が変わって画像の見え方が変わっても、目と頭が正しい順番で判断し、安全確認を通れること</b>です。キューブが少しずれたときのつかみ方など、手そのものの強さは確かめていません。また、置いた位置のずれは 7.75〜8.70 mm で、合格ラインの 10 mm に近く、手の調整には余裕が少ないことも分かりました。</p>
 <p class="small">記録：<code>outputs/h2o_layout_success_rate.json</code>、<code>outputs/claude_h2o_layouts/</code>、下見：<code>check_layouts.py</code> → <code>outputs/layout_feasibility.json</code></p>
@@ -234,10 +238,11 @@ a { color:var(--good); }
 <ul>
 <li>無料で自分の PC で動く判断 AI でも、説明文を整えれば、この作業では Jev と同じ結果を出せました。一方で、説明文が少しあいまいなだけで、正しい手の確率が 0.026 まで下がりました。<b>判断 AI に渡す選択肢の説明は、画像からは確かめられない言葉（「しっかり」など）に頼らない</b>ことが大事だと分かりました。直したのはプログラムの動きではなく、自然言語の説明文だけです。初心者でも、日本語や英語の文を見直すだけで調整できることは、このキットの強みだと考えます。</li>
 <li>strands-decider は、はい / いいえの安全確認では成功と失敗をおおむね分けられました（特に E4B 版）。しかし、5〜10 個の選択肢から選ぶ問題では確信度が低くなりました。「次は〇〇でよいか」とスキルごとに聞く形にすれば、使える可能性があります。</li>
+<li><b>AI がなくても、順番に実行すればよいのでは？</b>：今回の 2 つの作業は、スキルの順番が決まっています。実際、6.5 の下見では、AI なしでスキルを順番に実行しました。そのため、今回の作業で判断 AI が担っているのは、順番を決めることではありません。担っているのは、次の 3 つです。<ul><li>観測を見て、先へ進むか止まるかを決めること（観測を失敗の内容に書き換えた 7 か所すべてで止まれました）</li><li>判断 AI を入れ替えても、同じ作りのまま動くこと（6 章の 6 つのモデル）</li><li>選び方の条件を、プログラムではなく自然言語で書き換えられること</li></ul>つかみ損ねたらつかみ直すなど、状況によって次のスキルが分かれる作業は、まだ試していません。判断 AI が本当に必要になるのはそうした作業なので、次の課題とします。</li>
 <li>合格ラインの 0.45 と 0.60 は、Jev のときに決めた値をそのまま使いました。判断 AI ごとに確率の出方が違うので、この値が適切かどうか（確率の校正）は、まだ確かめていません。</li>
 <li>運んで置く作業は、位置を変えた 9 通りすべてで成功しました（6.5）。一方、手が作業を終えられる範囲は、キューブで数 cm 四方と狭いことが分かりました。また、各位置 1 回ずつで、持ち上げる作業の位置は 1 通りだけです。置ける範囲を広げるには、判断 AI よりも、手（スキルと IK）の調整が先に必要です。</li>
 <li>今回コストを下げられたのは「頭」の部分です。「目」は今も毎ステップ生成 AI（Claude）が画像を読んでいて、まだ自動化もしていません。次は、画像を読む部分を API で呼んでループ全体を自動で回し、繰り返し評価したいと考えています。あわせて、目の担当にも小さな公開モデルを使えるかを試し、全体のコストを下げたいと考えています。</li>
-<li>今回比べたモデルでは、27B の mammoth-1 は、あいまいな説明文のままでも正しい順番を選べました。一方、4B の H2O-Lightning-4B と 9B の elephant-1 は、説明文の修正が必要でした（elephant-1 は約 0.4 秒と速いです）。ただし、これらのモデルは大きさだけでなく、学習データや作りも違います。<b>モデルの大きさと、説明文のあいまいさへの強さの関係を一般化するには、より多くのモデルと条件での検証が必要</b>です。どのモデルでも、説明文を確かめられる条件で書いておけば、正しく選べました。</li>
+<li>今回比べたモデルでは、27B の mammoth-1 は、あいまいな説明文のままでも正しい順番を選べました。一方、4B の H2O-Lightning-4B と 9B の elephant-1 は、説明文の修正が必要でした（elephant-1 は約 0.4 秒と速いです）。ただし、これらのモデルは大きさだけでなく、学習データや作りも違います。<b>モデルの大きさと、説明文のあいまいさへの強さの関係を一般化するには、より多くのモデルと条件での検証が必要</b>です。この 3 つと Jev は、説明文を確かめられる条件で書いておけば、正しく選べました。</li>
 <li>H2O-Lightning-4B の 1 回の判断は 0.8〜1.4 秒で、Jev（約 0.2 秒）より遅いです。今回のようにスキルを 1 つずつ選ぶ作業では問題になりませんでしたが、速い制御には向きません。</li>
 <li><b>今回はシミュレーションだけの検証です。次は実機の SO-101 で検証を進めたいと考えています。</b>参考にしたいのは ABEJA の記事<sup>[12]</sup>です。この記事では、実機のロボットアームで、追加学習なしにキューブの pick &amp; place を行い、音声での指示 9 件すべてに成功しています。仕組みは 2 段です。作業の計画は大きなモデルが担い、手首カメラの画像を見た細かい位置合わせは、Jev と同じ形式の判断 AI が約 0.4 秒で答えます。キューブを見失ったときは、大きなモデルに計画をやり直させます。実機では、カメラの見え方の違いや、つかみ損ねが必ず起きます。今回の「目・頭・手」の分担と安全確認はそのまま使い、この記事のような手首カメラでの位置合わせと、見失ったときのやり直しを取り入れて、実機で成功させることを目指します。</li>
 </ul>
@@ -245,7 +250,7 @@ a { color:var(--good); }
 <h2>9. AI の利用と再現方法</h2>
 <ul>
 <li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B / elephant-1 / mammoth-1（スキルの判断。elephant-1 と mammoth-1 は OpenRouter 経由）、Jev 1.13 / 1.14、H2O-Lightning-4B v1.4.2（10 章の画像の観測と再確認）。学習は行っていません。</li>
-<li>コード、各ステップの画像、観測、確率、比較結果は、GitHub リポジトリにまとめています。手順は README を見てください。</li>
+<li>コード、各ステップの画像、観測、確率、比較結果は、GitHub リポジトリ（<a href="https://github.com/YukiHSun/pai-final-so101-open-decider">https://github.com/YukiHSun/pai-final-so101-open-decider</a>）にまとめています。手順は README を見てください。</li>
 <li>動画は、H2O-Lightning-4B で「運んで置く」作業を行ったときの記録から作り直したものです。GitHub には、画面の下に判断の過程（目が「はい」と答えた項目、選んだスキルと確信度、安全確認の確率）を表示した動画も置いています（今までの位置と、6.5 の L8）。</li>
 </ul>
 <p class="small">使用した外部のもの：strands-labs/robots（SO-101 モデルの読み込み）、strands-labs/strands-decider、h2oai/h2o-lightning-4b と internet-projects/h2o-lightning-mlx（Mac 用サーバー）、MuJoCo、mink。いずれも Apache-2.0 です。Jev は TypeSafe の商用 API です。</p>

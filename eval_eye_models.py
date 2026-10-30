@@ -14,6 +14,7 @@ their labels decided by majority. Two Ollama models answer the same questions:
     .venv/bin/python eval_eye_models.py [d1|vl|jev|both]   # Ollama on 127.0.0.1:11434
     D1_MODEL=d1-omni:2b .venv/bin/python eval_eye_models.py d1
     JEV_MODEL=jev-1.13.0 .venv/bin/python eval_eye_models.py jev   # TYPESAFE_API_KEY in .env
+    .venv/bin/python eval_eye_models.py h2o   # H2O-Lightning-4B v1.4+ (images, box) on 127.0.0.1:8741
 
 Writes outputs/eye_eval_<model>.json with per-image answers, agreement and latency.
 """
@@ -39,6 +40,8 @@ D1_MODEL = os.getenv("D1_MODEL", "d1:2b")
 VL_MODEL = os.getenv("VL_MODEL", "lfm3-vl:2b")
 JEV_URL = os.getenv("JEV_URL", "https://api.typesafe.ai/v1/systemone")
 JEV_MODEL = os.getenv("JEV_MODEL", "jev-1.14.0")
+H2O_URL = os.getenv("H2O_URL", "http://127.0.0.1:8741/v1/systemone")
+H2O_TAG = os.getenv("H2O_TAG", "h2o-lightning-4b-v1.4.2")  # names the output file; the server picks the weights
 # How the 1280x480 step image (oblique | top-down) is shown to the model. A small cube in a
 # side-by-side frame was often missed, so each view can be sent on its own and upscaled 2x.
 EYE_VIEW = os.getenv("EYE_VIEW", "both2")  # full | left2 | both2
@@ -65,7 +68,7 @@ def b64(images):
 
 
 def post(path, body, timeout=300, headers=None):
-    url = path if path.startswith("https://") else OLLAMA + path
+    url = path if "://" in path else OLLAMA + path
     req = request.Request(url, data=json.dumps(body).encode(),
                           headers={"content-type": "application/json", **(headers or {})})
     started = time.monotonic()
@@ -148,21 +151,26 @@ def ask_d1(item):
                 head_seconds=round(head_s, 2), usage=eye.get("usage"))
 
 
-def ask_jev(item):
+def ask_h2o(item):
+    """H2O-Lightning-4B serves the same /v1/systemone shape (assets, box) locally, without a key."""
+    return ask_jev(item, url=H2O_URL, model=None)
+
+
+def ask_jev(item, url=JEV_URL, model=JEV_MODEL):
     """Same eye/head split as d1, sent to Jev with the views as image assets."""
     spec = TASKS[item["task"]]
-    headers = {"Authorization": f"Bearer {typesafe_key()}", "TypeSafe-Danger-Zone-Images": "true"}
+    headers = {"Authorization": f"Bearer {typesafe_key()}", "TypeSafe-Danger-Zone-Images": "true"} if model else {}
     imgs = views(item["data"])
     names = ["oblique_view", "top_down_view"][: len(imgs)]
     assets = {f"img-{n}": {"type": "image", "format": "png", "data_base64": d} for n, d in zip(names, b64(imgs))}
     questions = {f: {"type": "noul", "instructions": q.split(" (yes")[0],
                      "criteria": {"true": "Yes, clearly visible in the images.", "false": "No, or it cannot be seen."}}
                  for f, q in spec.observation_fields.items()}
-    if JEV_MODEL != "jev-1.13.0":  # box questions need Jev 1.14
+    if model != "jev-1.13.0":  # box questions need Jev 1.14
         questions.update({f"box_{n}": {"type": "box", "instructions": f"the red cube in `{n}`"} for n in names})
     state = {"scene": VIEW_TEXT[EYE_VIEW], **{n: f"img-{n}" for n in names}}
-    eye, eye_s = post(JEV_URL, {"model": JEV_MODEL, "assets": assets, "state": state, "questions": questions},
-                      headers=headers)
+    eye, eye_s = post(url, {**({"model": model} if model else {}), "assets": assets, "state": state,
+                            "questions": questions}, headers=headers)
     probs = {f: round(eye["answers"][f]["noul"], 3) for f in spec.observation_fields}
     answers = {f: ("yes" if p >= 0.5 else "no") for f, p in probs.items()}
     boxes = {}
@@ -172,15 +180,18 @@ def ask_jev(item):
         if got:
             boxes[n] = dict(box=got["box"], confidence=round(got["confidence"], 3), truth=truth,
                             iou=round(iou(got["box"], truth), 3) if truth else None)
-    head = jev_head(spec, item["phase"], answers, headers["Authorization"])
+            if "present" in got:  # H2O also says whether the object is visible at all
+                boxes[n]["present"] = round(got["present"], 3)
+    auth = {"Authorization": headers["Authorization"]} if model else {}
+    head = jev_head(spec, item["phase"], answers, auth, url, model)
     # Reference: the same head and gate asked with Claude's observation, to see whether eye errors flip the gate.
-    ref = jev_head(spec, item["phase"], item["labels"], headers["Authorization"])
+    ref = jev_head(spec, item["phase"], item["labels"], auth, url, model)
     return dict(answers=answers, p_yes=probs, boxes=boxes, next_skill=head["action"],
                 next_skill_confidence=head["confidence"], gate=head["gate"], gate_with_claude_eye=ref["gate"],
                 seconds=round(eye_s, 2), head_seconds=head["seconds"], usage=eye.get("usage"))
 
 
-def jev_head(spec, phase, answers, auth):
+def jev_head(spec, phase, answers, auth, url, model):
     """Text-only head call as in the kit: next_skill plus the gate question for this phase, if any."""
     state = {"task": spec.goal, "last_completed_skill": phase,
              "visual_observation": {spec.observation_fields[f]: a for f, a in answers.items()}}
@@ -190,8 +201,8 @@ def jev_head(spec, phase, answers, auth):
     if gate:
         questions[gate.name] = {"type": "noul", "instructions": gate.question,
                                 "criteria": {"true": gate.yes, "false": gate.no}}
-    head, seconds = post(JEV_URL, {"model": JEV_MODEL, "state": state, "questions": questions},
-                         headers={"Authorization": auth})
+    head, seconds = post(url, {**({"model": model} if model else {}), "state": state, "questions": questions},
+                         headers=auth)
     choice = head["answers"]["next_skill"]
     out = dict(action=choice["choice"], confidence=round(choice["confidence"], 3), seconds=round(seconds, 2), gate=None)
     if gate:
@@ -223,8 +234,8 @@ def ask_vl(item):
 def main():
     which = sys.argv[1] if len(sys.argv) > 1 else "both"
     items = labelled_images()
-    for name, ask in (("d1", ask_d1), ("vl", ask_vl), ("jev", ask_jev)):
-        if which != name and not (which == "both" and name != "jev"):
+    for name, ask in (("d1", ask_d1), ("vl", ask_vl), ("jev", ask_jev), ("h2o", ask_h2o)):
+        if which != name and not (which == "both" and name in ("d1", "vl")):
             continue
         rows, per_field = [], Counter()
         totals = Counter()
@@ -244,11 +255,11 @@ def main():
             print(f"  {name} {item['task']:10s} {item['phase']:15s} {sum(agree.values())}/{len(agree)} "
                   f"{result['seconds']:.2f}s{extra} wrong={wrong}")
         fields = sorted({f for f, _ in per_field})
-        summary = dict(model=dict(d1=D1_MODEL, vl=VL_MODEL, jev=JEV_MODEL)[name], images=len(items),
+        summary = dict(model=dict(d1=D1_MODEL, vl=VL_MODEL, jev=JEV_MODEL, h2o=H2O_TAG)[name], images=len(items),
                        agreement=round(totals["agree"] / totals["fields"], 3),
                        per_field={f: f"{per_field[(f, True)]}/{per_field[(f, True)] + per_field[(f, False)]}" for f in fields},
                        median_seconds=sorted(r["seconds"] for r in rows)[len(rows) // 2])
-        if name in ("d1", "jev"):
+        if name in ("d1", "jev", "h2o"):
             summary["next_skill_correct"] = f"{totals['skill_ok']}/{len(items)}"
         ious = sorted(b["iou"] for r in rows for b in r.get("boxes", {}).values() if b["iou"] is not None)
         if ious:

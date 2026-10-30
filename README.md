@@ -167,7 +167,7 @@ mammoth-1 は元の説明文のままでも正しい順番を選べました。e
 
 この比較結果は、strands-decider から H2O-Lightning-4B を選べるようにする機能の提案 [issue #95](https://github.com/strands-labs/strands-decider/issues/95) に、使用例と評価結果として投稿しました。提案では、JevBench の総合点（H2O-Lightning-4B 72.5、Jev 71.5）と、このリポジトリの比較結果が根拠に挙げられています。
 
-## 追記：Jev 1.14 の画像入力
+## 追記：Jev 1.14 と H2O-Lightning-4B v1.4 の画像入力
 
 Jev 1.14（2026-10-14）で、画像の入力と、物の位置を枠で答える Box 型が使えるようになりました（プレビュー機能）。そこで、記録した 15 枚の画像で、Jev 1.14 に「目」を任せられるかを確かめました。
 
@@ -175,7 +175,17 @@ Jev 1.14（2026-10-14）で、画像の入力と、物の位置を枠で答え�
 - 見えるか、浮いているか、ゴールの中かは、3 回とも全問正解でした。
 - 指の開き閉じは見分けられませんでした（53〜62%）。そのため、運んで置く作業では「しっかりつかめたか」の安全確認で止まります。
 
-詳しくは [report/report.pdf](report/report.pdf) の 11 章を見てください。実行は `.venv/bin/python eval_eye_models.py jev` です（`.env` に `TYPESAFE_API_KEY` が必要です）。
+H2O-Lightning-4B も v1.4 で画像と Box に対応しました。同じ 15 枚で確かめた結果は次のとおりです。
+
+- 一致率は 83.8% でした。危ない向きの「はい」は 1 個だけでした（Jev 1.14 は 12〜14 個）。
+- キューブの位置は IoU 0.83 と正確で、隠れたキューブも見分けられました。
+- 手元の Mac では、画像 1 枚に約 1 分かかりました。
+- 新しい重み（v1.4.1）でも、6 章の文章での判断の結果（19/19、15/15、7/7）は変わりませんでした。
+
+詳しくは [report/report.pdf](report/report.pdf) の 11 章を見てください。実行は次のとおりです。
+
+- Jev：`.venv/bin/python eval_eye_models.py jev`（`.env` に `TYPESAFE_API_KEY` が必要です）
+- H2O：`.venv/bin/python eval_eye_models.py h2o`（v1.4.2 のサーバーを 8741 番で起動しておきます）
 
 ## ファイル構成
 
@@ -184,7 +194,7 @@ AGENTS.md / CLAUDE.md         エージェント（Codex / Claude Code）向け�
 run_claude_jev_cube_lift.py   1 判断ずつ進める実行スクリプト（start / step / video）
 compare_decider_vs_jev.py     記録した質問の再送と、失敗観測での安全確認（Jev と判断 AI の比較）
 compare_prompt_order.py       指示文 3 種（original / strict / strict_anchored）の比較
-eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 の画像入力と Box、Ollama の小型モデル）
+eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 / H2O-Lightning-4B v1.4 の画像入力と Box、Ollama の小型モデル）
 strands_so101_sim/
   claude_jev_controller.py    質問の組み立て、ゲート（0.45 / 0.60）、Jev / ローカル判断 AI の切り替え
   decider_client.py           /v1/systemone を呼ぶローカル判断 AI 用クライアント（標準ライブラリのみ）

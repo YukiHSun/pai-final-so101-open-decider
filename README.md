@@ -159,7 +159,19 @@ H2O-Lightning-4B は、持ち上げた直後に「持ち直す（secure_grasp）
 
 mammoth-1 は元の説明文のままでも正しい順番を選べました。elephant-1 は速い一方、元の説明文では H2O-Lightning-4B と同じく「運ぶ」を選びました（0.93）。H2O-Lightning-4B の失敗 7 か所と応答時間は元の説明文で測った値です。記録は `outputs/decider_{elephant,mammoth}_vs_jev_comparison.json` と `outputs/claude_{elephant,mammoth}/` にあります。
 
-どの作業も 1 回ずつの結果です。成功率はまだ評価していません。
+### 5. 位置を変えた 9 通りでの実行（成功率）
+
+キューブとゴールの位置を変えて、運んで置く作業を 9 通り実行しました（目：Claude、頭：H2O-Lightning-4B v1.2.3）。
+
+- 9 通りすべてで成功しました。10 手すべてを、正しい順番で選びました。
+- いちばん低い値は、スキル選択の確信度が 0.79、安全確認が 0.80 でした。合格ラインは 0.45 と 0.60 です。
+- 置いた位置のずれは 7.75〜8.70 mm でした（合格は 10 mm 以内）。
+
+先に AI なしでスキルを決まった順番に実行する「下見」（`check_layouts.py`）をしました。その結果、下見した 41 通りのうち、作業を終えられたのは 20 通りでした。手（スキルと IK）が作業を終えられる位置は、キューブで x 0.21〜0.22 m、y ±0.02 m の付近だけでした。9 通りは、その中から選んでいます。
+
+シミュレーションは毎回同じ動きになるので、確かめたのは「位置が変わっても目と頭が正しく判断できること」です。各位置は 1 回ずつです。
+
+記録：`outputs/h2o_layout_success_rate.json`、`outputs/claude_h2o_layouts/`、`outputs/layout_feasibility.json`。
 
 次は実機の SO-101 での検証を進めます。[ABEJA の記事](https://tech-blog.abeja.asia/entry/jev-zeroshot-202610)では、大きなモデルによる計画と、Jev 形式の判断 AI による手首カメラでの位置合わせを組み合わせ、実機アームを追加学習なしで動かしています。この記事を参考に、手首カメラでの位置合わせと、見失ったときのやり直しを取り入れる予定です。
 
@@ -190,6 +202,7 @@ AGENTS.md / CLAUDE.md         エージェント（Codex / Claude Code）向け�
 run_claude_jev_cube_lift.py   1 判断ずつ進める実行スクリプト（start / step / video）
 compare_decider_vs_jev.py     記録した質問の再送と、失敗観測での安全確認（Jev と判断 AI の比較）
 compare_prompt_order.py       指示文 3 種（original / strict / strict_anchored）の比較
+check_layouts.py              AI なしでスキルを順番に実行し、手が作業を終えられる位置を調べる
 eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 / H2O-Lightning-4B v1.4 の画像入力と Box、Ollama の小型モデル）
 strands_so101_sim/
   claude_jev_controller.py    質問の組み立て、ゲート（0.45 / 0.60）、Jev / ローカル判断 AI の切り替え

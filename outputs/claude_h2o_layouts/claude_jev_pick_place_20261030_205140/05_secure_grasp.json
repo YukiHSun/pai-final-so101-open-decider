@@ -1,0 +1,52 @@
+{
+  "robot_state": {
+    "joint_positions": [
+      -1.628680012131065,
+      -0.016755391343653978,
+      0.21877909506233703,
+      1.3668087160851445,
+      -1.6410430139562198,
+      0.2748714300020884
+    ],
+    "ee_position": [
+      0.21019883890937247,
+      -0.019355745721297477,
+      0.08090278040987967
+    ],
+    "gripper": {
+      "position_rad": 0.2748714300020884,
+      "command_rad": 0.24,
+      "state": "closed"
+    },
+    "last_completed_skill": "secure_grasp"
+  },
+  "debug": {
+    "cube_position": [
+      0.20932738661855588,
+      -0.024015066645933596,
+      0.07232714895513906
+    ],
+    "cube_rise": 0.057344500268347164,
+    "bilateral_contact": true,
+    "hold_steps": 3192,
+    "lift_success_now": true,
+    "lift_verified": true,
+    "released": false,
+    "xy_error": 0.05486268765404332,
+    "footprint_inside": false,
+    "height_error": 0.05732714895513906,
+    "linear_speed": 0.0004185419955829023,
+    "angular_speed": 0.000621171985700045,
+    "floor_supported": false,
+    "robot_contact": true,
+    "clearance": 0.00857563145474062,
+    "place_goal": [
+      0.16,
+      0.0
+    ],
+    "stable_steps": 0,
+    "max_transfer_contact_gap_steps": 0,
+    "success": false
+  },
+  "simulation_step": 54201
+}

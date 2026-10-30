@@ -1,0 +1,518 @@
+{
+ "feasible": "20/41",
+ "layouts": [
+  {
+   "cube_xy": [
+    0.21,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.75
+  },
+  {
+   "cube_xy": [
+    0.21,
+    -0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.88
+  },
+  {
+   "cube_xy": [
+    0.21,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.85
+  },
+  {
+   "cube_xy": [
+    0.21,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "lift",
+   "error": "ControlError: Lift must pass the 5 cm / 1 second criterion before transport"
+  },
+  {
+   "cube_xy": [
+    0.21,
+    0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.76
+  },
+  {
+   "cube_xy": [
+    0.22,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.84
+  },
+  {
+   "cube_xy": [
+    0.22,
+    -0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.67
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.87
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.99
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.23,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.23,
+    -0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.23,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.23,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.23,
+    0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    -0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    -0.02
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Grasp lost during transfer for more than 50 ms"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    -0.01
+   ],
+   "ok": true,
+   "placement_error_mm": 8.87
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 8.04
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    0.01
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Grasp lost during transfer for more than 50 ms"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    0.02
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Joint target exceeds model limits"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    -0.02
+   ],
+   "ok": true,
+   "placement_error_mm": 8.04
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    -0.01
+   ],
+   "ok": true,
+   "placement_error_mm": 7.78
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.01
+   ],
+   "ok": true,
+   "placement_error_mm": 8.1
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.02
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Joint target exceeds model limits"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    -0.02
+   ],
+   "ok": true,
+   "placement_error_mm": 7.68
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    -0.01
+   ],
+   "ok": true,
+   "placement_error_mm": 7.67
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    0.0
+   ],
+   "ok": true,
+   "placement_error_mm": 7.77
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    0.01
+   ],
+   "ok": true,
+   "placement_error_mm": 7.82
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    0.02
+   ],
+   "ok": true,
+   "placement_error_mm": 8.06
+  },
+  {
+   "cube_xy": [
+    0.21,
+    0.03
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "descend",
+   "error": "ControlError: Cube is not touching both fingers"
+  },
+  {
+   "cube_xy": [
+    0.24,
+    -0.03
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "ok": false,
+   "stopped_after": "ready",
+   "error": "ControlError: IK target unreachable"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.03
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Joint target exceeds model limits"
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.15,
+    -0.03
+   ],
+   "ok": false,
+   "stopped_after": "secure_grasp",
+   "error": "ControlError: Grasp lost during transfer for more than 50 ms"
+  },
+  {
+   "cube_xy": [
+    0.21,
+    -0.02
+   ],
+   "goal_xy": [
+    0.17,
+    0.02
+   ],
+   "ok": true,
+   "placement_error_mm": 8.45
+  },
+  {
+   "cube_xy": [
+    0.22,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    -0.02
+   ],
+   "ok": true,
+   "placement_error_mm": 8.7
+  },
+  {
+   "cube_xy": [
+    0.21,
+    0.02
+   ],
+   "goal_xy": [
+    0.17,
+    -0.01
+   ],
+   "ok": false,
+   "stopped_after": "descend",
+   "error": "ControlError: Cube is not touching both fingers"
+  }
+ ]
+}

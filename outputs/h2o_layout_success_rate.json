@@ -1,0 +1,186 @@
+{
+ "note": "Eye = Claude Code, head = H2O-Lightning-4B MLX v1.2.3 (strict_anchored wording), hand = scripted skills. L1 is the run from section 6.3. The simulator is deterministic, so a layout's physical outcome equals the scripted dry run when the AI picks the same skills.",
+ "runs": [
+  {
+   "layout": "L1",
+   "session": "outputs/claude_h2o/claude_jev_pick_place_20261019_204036",
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 7.87,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.787,
+   "min_gate_probability": 0.885,
+   "median_latency_s": 1.04,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L2",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_205140",
+   "cube_xy": [
+    0.21,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 7.75,
+   "lift_cm": 5.78,
+   "min_choice_confidence": 0.822,
+   "min_gate_probability": 0.858,
+   "median_latency_s": 1.28,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L3",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_205410",
+   "cube_xy": [
+    0.21,
+    0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 7.76,
+   "lift_cm": 5.79,
+   "min_choice_confidence": 0.832,
+   "min_gate_probability": 0.867,
+   "median_latency_s": 1.03,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L4",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_205633",
+   "cube_xy": [
+    0.22,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 7.99,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.835,
+   "min_gate_probability": 0.864,
+   "median_latency_s": 1.05,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L5",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_205847",
+   "cube_xy": [
+    0.22,
+    -0.02
+   ],
+   "goal_xy": [
+    0.16,
+    0.0
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 7.84,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.808,
+   "min_gate_probability": 0.836,
+   "median_latency_s": 1.05,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L6",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_210100",
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.17,
+    0.02
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 8.06,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.829,
+   "min_gate_probability": 0.828,
+   "median_latency_s": 1.06,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L7",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_210327",
+   "cube_xy": [
+    0.22,
+    0.0
+   ],
+   "goal_xy": [
+    0.16,
+    -0.02
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 8.04,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.823,
+   "min_gate_probability": 0.864,
+   "median_latency_s": 1.05,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L8",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_210545",
+   "cube_xy": [
+    0.21,
+    -0.02
+   ],
+   "goal_xy": [
+    0.17,
+    0.02
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 8.45,
+   "lift_cm": 5.77,
+   "min_choice_confidence": 0.821,
+   "min_gate_probability": 0.802,
+   "median_latency_s": 1.06,
+   "model": "h2oai/h2o-lightning-4b"
+  },
+  {
+   "layout": "L9",
+   "session": "outputs/claude_h2o_layouts/claude_jev_pick_place_20261030_210812",
+   "cube_xy": [
+    0.22,
+    0.01
+   ],
+   "goal_xy": [
+    0.16,
+    -0.02
+   ],
+   "status": "success",
+   "all_skills_in_order": true,
+   "placement_error_mm": 8.7,
+   "lift_cm": 5.8,
+   "min_choice_confidence": 0.821,
+   "min_gate_probability": 0.864,
+   "median_latency_s": 1.06,
+   "model": "h2oai/h2o-lightning-4b"
+  }
+ ],
+ "success": "9/9"
+}

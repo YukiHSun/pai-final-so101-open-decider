@@ -53,7 +53,7 @@ a { color:var(--good); }
 <div class="kpis">
 <div class="kpi"><div class="kpi-num">9 / 9</div><div class="kpi-txt">キューブとゴールの位置を変えた 9 通りで成功（6.5）</div></div>
 <div class="kpi"><div class="kpi-num">0.026 → 0.864</div><div class="kpi-txt">説明文を直しただけで、AI が正しい一手を選ぶ確率が上がった（6.2）</div></div>
-<div class="kpi"><div class="kpi-num">判断の使用料 0 円</div><div class="kpi-txt">有料の Jev の代わりに、PC で動く公開モデルで判断（6.1・6.3）</div></div>
+<div class="kpi"><div class="kpi-num">0 円</div><div class="kpi-txt"><b>判断 AI の API 料金</b>。有料の Jev の代わりに、PC で動く公開モデルで判断（6.1・6.3）</div></div>
 </div>
 <p class="small" style="margin:5pt 0 0">※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。</p>
 </div>
@@ -77,7 +77,7 @@ a { color:var(--good); }
 <tr><td>頭</td><td>判断 AI（System One 型）</td><td>観測とロボットの状態から、次のスキルを確率付きで選ぶ。安全確認（例：「空中で持てているか」）の yes 確率も返す</td></tr>
 <tr><td>手</td><td>プログラム（mink による IK + MuJoCo）</td><td>選ばれたスキルを毎回同じように実行する。決められた順番以外の動きは拒否する</td></tr>
 </table>
-<p>利用者が書くのは、次の自然言語の文だけです。どれも 1 つのファイル（<code>claude_jev_controller.py</code> の <code>TaskSpec</code>）にまとまっています。</p>
+<p>用意した 10 個のスキルで足りる作業なら、利用者が書くのは、次の自然言語の文だけです。新しい動きが必要な作業では、スキルをプログラムで追加する必要があります。どれも 1 つのファイル（<code>claude_jev_controller.py</code> の <code>TaskSpec</code>）にまとまっています。</p>
 <ul>
 <li><b>作業の目標</b>（例：「キューブを持ち上げ、運び、緑のゴールの中に置いてから離れる」）</li>
 <li><b>各スキルを選ぶ条件</b>（例：「直前に持ち上げを終えたら、運ぶ前に一度握り直す」）</li>

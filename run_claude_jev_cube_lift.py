@@ -153,6 +153,72 @@ def cmd_step(args):
     return 0 if session["status"] in ("running", "success") else 1
 
 
+class DecisionPanel:
+    """Bottom strip that shows, for the skill being executed, what the eye saw and what the head chose."""
+
+    FIELD_JA = {"cube_visible": "キューブが見える", "goal_visible": "ゴールが見える", "cube_on_floor": "床にある",
+                "gripper_above_cube": "真上にいる", "fingers_around_cube": "指がはさむ位置",
+                "cube_between_closed_fingers": "閉じた指にはさまれている", "cube_lifted_clear": "浮いている",
+                "cube_above_goal": "ゴールの上", "cube_on_floor_in_goal": "ゴールの中に置かれた",
+                "fingers_open": "指が開いている", "gripper_clear_of_cube": "グリッパーが離れた"}
+    SKILL_JA = {"move_above_cube": "キューブの上へ", "descend": "下ろす", "close_gripper": "つかむ", "lift": "持ち上げる",
+                "secure_grasp": "持ち直す", "transfer": "運ぶ", "lower": "置く", "release": "離す", "retreat": "離れる",
+                "done": "完了"}
+    HEIGHT = 160  # 480 + 160 keeps the height a multiple of 16, so the encoder does not rescale
+    LINE = 34
+
+    def __init__(self, session, label):
+        from PIL import ImageFont
+        self.label = label
+        self.total = len(session["decisions"])
+        # Each skill appears once per run, so the active skill identifies the decision being executed.
+        self.by_action = {d["action"]: (i, d) for i, d in enumerate(session["decisions"])}
+        font_path = Path("/System/Library/Fonts/ヒラギノ角ゴシック W6.ttc")
+        self.font = ImageFont.truetype(str(font_path), 19) if font_path.exists() else ImageFont.load_default()
+
+    def skill(self, action):
+        return f"{self.SKILL_JA.get(action, action)}（{action}）"
+
+    def lines(self, active_skill, width=1260):
+        """(text, colour) rows; the first one is the eye's answer and may wrap onto a second row."""
+        if active_skill not in self.by_action:
+            return [("待機中（最初の判断の前）", (255, 214, 102))]
+        i, d = self.by_action[active_skill]
+        seen = [self.FIELD_JA.get(k, k) for k, v in d["claude_observation"].items() if k != "notes" and v == "yes"]
+        ranked = sorted(d["probabilities"].items(), key=lambda kv: -kv[1])
+        runner_up = f"（次点 {self.SKILL_JA.get(ranked[1][0], ranked[1][0])} {ranked[1][1]:.2f}）" if len(ranked) > 1 else ""
+        gate = d.get("gate")
+        if gate:
+            ok = gate["probability"] >= 0.60
+            gate_text = f"安全確認：{gate['probability']:.2f}（0.60 以上で実行）→ {'通過' if ok else '停止'}"
+        else:
+            gate_text = "安全確認：このスキルの前にはなし"
+        eye = f"{i + 1}/{self.total} 手目　目（Claude）が「はい」と答えた項目：{'、'.join(seen)}"
+        return ([(row, (255, 214, 102)) for row in self.wrap(eye, 2, width)]
+                + [(f"頭（{self.label}）が選んだスキル：{self.skill(d['action'])}　確信度 {d['confidence']:.2f}{runner_up}", "white"),
+                   (gate_text, "white")])
+
+    def wrap(self, text, max_rows, width):
+        rows, row = [], ""
+        for ch in text:
+            if self.font.getlength(row + ch) > width and row:
+                rows.append(row)
+                row = "　" + ch
+            else:
+                row += ch
+        rows.append(row)
+        return rows[:max_rows]
+
+    def attach(self, frame, active_skill):
+        from PIL import Image, ImageDraw
+        out = Image.new("RGB", (frame.width, frame.height + self.HEIGHT), (20, 24, 36))
+        out.paste(frame, (0, 0))
+        draw = ImageDraw.Draw(out)
+        for n, (text, colour) in enumerate(self.lines(active_skill, frame.width - 20)):
+            draw.text((10, frame.height + 6 + self.LINE * n), text, font=self.font, fill=colour)
+        return out
+
+
 def cmd_video(args):
     from PIL import Image, ImageDraw
     import imageio.v2 as imageio
@@ -161,8 +227,9 @@ def cmd_video(args):
     run_dir = args.session.resolve()
     session = load_session(run_dir)
     task = task_of(session)
-    video_path = run_dir / f"claude_jev_{task}.mp4"
+    video_path = run_dir / (f"claude_jev_{task}_decisions.mp4" if args.show_decisions else f"claude_jev_{task}.mp4")
     writer = imageio.get_writer(video_path, fps=25, codec="libx264", quality=7)
+    panel = DecisionPanel(session, args.label) if args.show_decisions else None
 
     def record_frame(e):
         if task == "pick_place":
@@ -175,6 +242,8 @@ def cmd_video(args):
         draw.rectangle((0, 0, frame.width, 37), fill="black")
         draw.text((8, 3), f"{args.label} | {getattr(e, 'active_skill', 'open_gripper')} | step {e.steps}", fill="white")
         draw.text((8, 20), second, fill="white")
+        if panel:
+            frame = panel.attach(frame, getattr(e, "active_skill", "open_gripper"))
         writer.append_data(np.asarray(frame))
 
     try:
@@ -203,6 +272,8 @@ def main(argv=None):
     p = sub.add_parser("video")
     p.add_argument("--session", type=Path, required=True)
     p.add_argument("--label", default="CLAUDE+JEV", help="overlay label for the decision backend")
+    p.add_argument("--show-decisions", action="store_true",
+                   help="add a bottom strip with the observation, chosen skill, confidence and gate per step")
     args = parser.parse_args(argv)
     if sys.platform == "darwin":
         os.environ.setdefault("MUJOCO_GL", "glfw")

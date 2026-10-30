@@ -18,6 +18,9 @@ MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持
 どれも自分の PC（Apple Silicon）で動きます。
 
 - 動画：[video/h2o_pick_place_2x.mp4](video/h2o_pick_place_2x.mp4)（H2O-Lightning-4B で「運んで置く」を行った記録。**2 倍速**、約 1 分 30 秒）／ YouTube：https://www.youtube.com/watch?v=ZC-NKxQikww
+- 判断の過程つきの動画（2 倍速）：画面の下に、各手で目（Claude）が「はい」と答えた項目、頭（H2O-Lightning-4B）が選んだスキルと確信度、安全確認の確率を表示します。
+  - [video/h2o_pick_place_decisions_2x.mp4](video/h2o_pick_place_decisions_2x.mp4)：今までの位置（L1）
+  - [video/h2o_pick_place_L8_decisions_2x.mp4](video/h2o_pick_place_L8_decisions_2x.mp4)：キューブとゴールの両方を動かした位置（L8）
 - レポート：[report/report.pdf](report/report.pdf)（同じ内容の HTML 版は [report/report.html](report/report.html)）
 
 ## Claude Code / Codex で実行するときの大まかな流れ
@@ -289,6 +292,8 @@ export DECIDER_URL=http://127.0.0.1:8741        # 未設定なら Jev を使う
   --observation '{"cube_visible":"yes","goal_visible":"yes","gripper_above_cube":"no", ... ,"notes":"..."}'
 # done まで繰り返す。終わったら動画を書き出す
 .venv/bin/python run_claude_jev_cube_lift.py video --session outputs/claude_h2o/<セッション> --label "CLAUDE+H2O-LIGHTNING-4B"
+# 判断の過程（観測・選んだスキル・確信度・安全確認）を画面の下に出すときは --show-decisions を付ける
+.venv/bin/python run_claude_jev_cube_lift.py video --session outputs/claude_h2o/<セッション> --label "H2O-Lightning-4B" --show-decisions
 ```
 
 各 `step` は、それまでのスキルを最初から再実行します。そのうえで、指先の軌跡が記録と 1e-6 m 以内で一致することを確かめてから、次へ進みます。MuJoCo と IK は決定的です。

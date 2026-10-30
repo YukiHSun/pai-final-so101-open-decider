@@ -35,6 +35,10 @@ figcaption { font-size:9pt; color:var(--sub); margin-top:3pt; }
 code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--soft); padding:0 2pt; border-radius:2pt; }
 .small { font-size:9pt; color:var(--sub); }
 a { color:var(--good); }
+.kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:6pt; }
+.kpi { background:#fff; border:1px solid var(--line); border-radius:5pt; padding:6pt 8pt; }
+.kpi-num { font-size:15pt; font-weight:700; color:var(--good); line-height:1.25; }
+.kpi-txt { font-size:8.8pt; color:var(--sub); line-height:1.45; margin-top:2pt; }
 </style>
 </head>
 <body>
@@ -44,12 +48,14 @@ a { color:var(--good); }
 <p class="lead">Physical AI 応用1講座 最終課題 説明資料 ／ シミュレーター：MuJoCo ／ ロボット：SO-101<br>コード・記録・動画：<a href="https://github.com/YukiHSun/pai-final-so101-open-decider">https://github.com/YukiHSun/pai-final-so101-open-decider</a></p>
 
 <div class="box">
-<b>この資料の主な結果</b>
-<ul style="margin-top:3pt">
-<li><b>説明文を直すだけで成功</b>：OSS の判断 AI（H2O-Lightning-4B）は最初、「持ち直す」を飛ばしました。スキルの選び方の説明文を「直前に完了したスキル」で書き直すと、このスキルを選ぶ確率が 0.026 から 0.864 に上がり、運んで置く作業を最後まで成功させました（6.2・6.3）。追加の学習や、プログラムの動きの変更はしていません。</li>
-<li><b>位置を変えた 9 通りすべてで成功</b>：キューブとゴールの位置を変えた 9 通りで、10 手すべてを判断 AI が正しい順番で選び、9 通りとも成功しました（6.5）。9 通りは、AI なしの下見で手が作業を終えられると確かめた位置（41 通り中 20 通り）から選んでいます。</li>
-<li><b>頭のコストを下げた</b>：判断 AI を自分の PC で動かすことで、毎ステップの判断に使用料がかからなくなりました。画像を読む「目」は、今も Claude が担当しています（10 章で、目を判断 AI に任せる試みとその限界も確かめました）。</li>
-</ul>
+<div style="font-size:11pt; font-weight:700; margin-bottom:3pt">この資料で作ったもの</div>
+<p style="margin:0 0 6pt">ロボット用の学習をしないで、SO-101 に「つかんで運んで置く」をさせる開発キットです。動きは 10 個のスキルとしてプログラムで用意し、AI には画像から分かった状態をもとに<b>「次にどのスキルを使うか」だけ</b>を選ばせます。選び方は自然言語で書きます。</p>
+<div class="kpis">
+<div class="kpi"><div class="kpi-num">9 / 9</div><div class="kpi-txt">キューブとゴールの位置を変えた 9 通りで成功（6.5）</div></div>
+<div class="kpi"><div class="kpi-num">0.026 → 0.864</div><div class="kpi-txt">説明文を直しただけで、AI が正しい一手を選ぶ確率が上がった（6.2）</div></div>
+<div class="kpi"><div class="kpi-num">判断の使用料 0 円</div><div class="kpi-txt">有料の Jev の代わりに、PC で動く公開モデルで判断（6.1・6.3）</div></div>
+</div>
+<p class="small" style="margin:5pt 0 0">※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。</p>
 </div>
 
 <h2>1. 背景</h2>

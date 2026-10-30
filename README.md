@@ -167,6 +167,16 @@ mammoth-1 は元の説明文のままでも正しい順番を選べました。e
 
 この比較結果は、strands-decider から H2O-Lightning-4B を選べるようにする機能の提案 [issue #95](https://github.com/strands-labs/strands-decider/issues/95) に、使用例と評価結果として投稿しました。提案では、JevBench の総合点（H2O-Lightning-4B 72.5、Jev 71.5）と、このリポジトリの比較結果が根拠に挙げられています。
 
+## 追記：Jev 1.14 の画像入力
+
+Jev 1.14（2026-10-14）で、画像の入力と、物の位置を枠で答える Box 型が使えるようになりました（プレビュー機能）。そこで、記録した 15 枚の画像で、Jev 1.14 に「目」を任せられるかを確かめました。
+
+- 観測が Claude と一致した割合は 81.5〜84.6% でした（3 回実行）。1 枚 0.3〜0.4 秒です。
+- 見えるか、浮いているか、ゴールの中かは、3 回とも全問正解でした。
+- 指の開き閉じは見分けられませんでした（53〜62%）。そのため、運んで置く作業では「しっかりつかめたか」の安全確認で止まります。
+
+詳しくは [report/report.pdf](report/report.pdf) の 11 章を見てください。実行は `.venv/bin/python eval_eye_models.py jev` です（`.env` に `TYPESAFE_API_KEY` が必要です）。
+
 ## ファイル構成
 
 ```
@@ -174,6 +184,7 @@ AGENTS.md / CLAUDE.md         エージェント（Codex / Claude Code）向け�
 run_claude_jev_cube_lift.py   1 判断ずつ進める実行スクリプト（start / step / video）
 compare_decider_vs_jev.py     記録した質問の再送と、失敗観測での安全確認（Jev と判断 AI の比較）
 compare_prompt_order.py       指示文 3 種（original / strict / strict_anchored）の比較
+eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 の画像入力と Box、Ollama の小型モデル）
 strands_so101_sim/
   claude_jev_controller.py    質問の組み立て、ゲート（0.45 / 0.60）、Jev / ローカル判断 AI の切り替え
   decider_client.py           /v1/systemone を呼ぶローカル判断 AI 用クライアント（標準ライブラリのみ）

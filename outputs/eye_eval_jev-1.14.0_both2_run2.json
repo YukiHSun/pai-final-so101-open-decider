@@ -1,0 +1,1422 @@
+{
+ "summary": {
+  "model": "jev-1.14.0",
+  "images": 15,
+  "agreement": 0.823,
+  "per_field": {
+   "cube_above_goal": "8/10",
+   "cube_between_closed_fingers": "9/15",
+   "cube_lifted_clear": "15/15",
+   "cube_on_floor": "5/5",
+   "cube_on_floor_in_goal": "10/10",
+   "cube_visible": "15/15",
+   "fingers_around_cube": "12/15",
+   "fingers_open": "5/10",
+   "goal_visible": "10/10",
+   "gripper_above_cube": "11/15",
+   "gripper_clear_of_cube": "7/10"
+  },
+  "median_seconds": 0.36,
+  "next_skill_correct": "15/15",
+  "box_iou_median": 0.526,
+  "box_iou_at_least_0.5": "9/17",
+  "eye_view": "both2"
+ },
+ "rows": [
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/00_ready.png",
+   "phase": "ready",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "expected_skill": "move_above_cube",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": true,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.98,
+    "goal_visible": 0.98,
+    "gripper_above_cube": 0.25,
+    "fingers_around_cube": 0.21,
+    "cube_between_closed_fingers": 0.15,
+    "cube_lifted_clear": 0.31,
+    "cube_above_goal": 0.15,
+    "cube_on_floor_in_goal": 0.2,
+    "fingers_open": 0.69,
+    "gripper_clear_of_cube": 0.87
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.57,
+      "left": 0.45,
+      "right": 0.52
+     },
+     "confidence": 0.88,
+     "truth": {
+      "left": 0.475,
+      "right": 0.525,
+      "top": 0.5072916666666667,
+      "bottom": 0.5854166666666667
+     },
+     "iou": 0.382
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.51,
+      "left": 0.5,
+      "right": 0.56
+     },
+     "confidence": 0.92,
+     "truth": {
+      "left": 0.55234375,
+      "right": 0.58125,
+      "top": 0.4822916666666667,
+      "bottom": 0.5177083333333333
+     },
+     "iou": 0.066
+    }
+   },
+   "next_skill": "move_above_cube",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.5,
+   "head_seconds": 0.2,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/01_move_above_cube.png",
+   "phase": "move_above_cube",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "expected_skill": "descend",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": true,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.92,
+    "goal_visible": 0.96,
+    "gripper_above_cube": 0.69,
+    "fingers_around_cube": 0.43,
+    "cube_between_closed_fingers": 0.12,
+    "cube_lifted_clear": 0.28,
+    "cube_above_goal": 0.42,
+    "cube_on_floor_in_goal": 0.38,
+    "fingers_open": 0.94,
+    "gripper_clear_of_cube": 0.92
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.49,
+      "bottom": 0.58,
+      "left": 0.43,
+      "right": 0.52
+     },
+     "confidence": 0.88,
+     "truth": {
+      "left": 0.475,
+      "right": 0.52421875,
+      "top": 0.509375,
+      "bottom": 0.584375
+     },
+     "iou": 0.369
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.54,
+      "left": 0.44,
+      "right": 0.51
+     },
+     "confidence": 0.78,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "descend",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.52,
+   "head_seconds": 0.16,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/02_descend.png",
+   "phase": "descend",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "close_gripper",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": true,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.89,
+    "goal_visible": 0.96,
+    "gripper_above_cube": 0.85,
+    "fingers_around_cube": 0.61,
+    "cube_between_closed_fingers": 0.4,
+    "cube_lifted_clear": 0.23,
+    "cube_above_goal": 0.38,
+    "cube_on_floor_in_goal": 0.41,
+    "fingers_open": 0.68,
+    "gripper_clear_of_cube": 0.39
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.51,
+      "bottom": 0.59,
+      "left": 0.42,
+      "right": 0.5
+     },
+     "confidence": 0.83,
+     "truth": {
+      "left": 0.48125,
+      "right": 0.51796875,
+      "top": 0.51875,
+      "bottom": 0.5916666666666667
+     },
+     "iou": 0.173
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.54,
+      "left": 0.47,
+      "right": 0.49
+     },
+     "confidence": 0.79,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "close_gripper",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.35,
+   "head_seconds": 0.18,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/03_close_gripper.png",
+   "phase": "close_gripper",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "lift",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": false,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.88,
+    "goal_visible": 0.96,
+    "gripper_above_cube": 0.89,
+    "fingers_around_cube": 0.59,
+    "cube_between_closed_fingers": 0.33,
+    "cube_lifted_clear": 0.19,
+    "cube_above_goal": 0.28,
+    "cube_on_floor_in_goal": 0.31,
+    "fingers_open": 0.68,
+    "gripper_clear_of_cube": 0.42
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.51,
+      "bottom": 0.59,
+      "left": 0.42,
+      "right": 0.5
+     },
+     "confidence": 0.84,
+     "truth": {
+      "left": 0.46953125,
+      "right": 0.51796875,
+      "top": 0.5197916666666667,
+      "bottom": 0.590625
+     },
+     "iou": 0.278
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.53,
+      "left": 0.46,
+      "right": 0.49
+     },
+     "confidence": 0.78,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "lift",
+   "next_skill_confidence": 0.7,
+   "gate": {
+    "name": "grasp_secure",
+    "guards": "lift",
+    "probability": 0.07,
+    "passes": false
+   },
+   "gate_with_claude_eye": {
+    "name": "grasp_secure",
+    "guards": "lift",
+    "probability": 0.87,
+    "passes": true
+   },
+   "seconds": 0.28,
+   "head_seconds": 0.18,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/04_lift.png",
+   "phase": "lift",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "secure_grasp",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": false,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true,
+    "cube_above_goal": false,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": false,
+    "gripper_clear_of_cube": false
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.91,
+    "goal_visible": 0.98,
+    "gripper_above_cube": 0.81,
+    "fingers_around_cube": 0.47,
+    "cube_between_closed_fingers": 0.42,
+    "cube_lifted_clear": 0.64,
+    "cube_above_goal": 0.56,
+    "cube_on_floor_in_goal": 0.26,
+    "fingers_open": 0.71,
+    "gripper_clear_of_cube": 0.67
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.45,
+      "bottom": 0.52,
+      "left": 0.47,
+      "right": 0.53
+     },
+     "confidence": 0.77,
+     "truth": {
+      "left": 0.46953125,
+      "right": 0.52109375,
+      "top": 0.43645833333333334,
+      "bottom": 0.5125
+     },
+     "iou": 0.648
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.52,
+      "left": 0.46,
+      "right": 0.51
+     },
+     "confidence": 0.74,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "secure_grasp",
+   "next_skill_confidence": 1.0,
+   "gate": {
+    "name": "cube_held_in_air",
+    "guards": "secure_grasp",
+    "probability": 0.11,
+    "passes": false
+   },
+   "gate_with_claude_eye": {
+    "name": "cube_held_in_air",
+    "guards": "secure_grasp",
+    "probability": 0.97,
+    "passes": true
+   },
+   "seconds": 0.4,
+   "head_seconds": 0.16,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/05_secure_grasp.png",
+   "phase": "secure_grasp",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "transfer",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": false,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": false,
+    "gripper_clear_of_cube": false
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.9,
+    "goal_visible": 0.97,
+    "gripper_above_cube": 0.83,
+    "fingers_around_cube": 0.46,
+    "cube_between_closed_fingers": 0.41,
+    "cube_lifted_clear": 0.7,
+    "cube_above_goal": 0.36,
+    "cube_on_floor_in_goal": 0.23,
+    "fingers_open": 0.71,
+    "gripper_clear_of_cube": 0.64
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.45,
+      "bottom": 0.52,
+      "left": 0.47,
+      "right": 0.53
+     },
+     "confidence": 0.83,
+     "truth": {
+      "left": 0.46953125,
+      "right": 0.521875,
+      "top": 0.43645833333333334,
+      "bottom": 0.5114583333333333
+     },
+     "iou": 0.646
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.52,
+      "left": 0.45,
+      "right": 0.51
+     },
+     "confidence": 0.71,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "transfer",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.35,
+   "head_seconds": 0.17,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/06_transfer.png",
+   "phase": "transfer",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "lower",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true,
+    "cube_above_goal": false,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": false,
+    "gripper_clear_of_cube": false
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "yes",
+    "cube_above_goal": "no",
+    "cube_on_floor_in_goal": "no",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.92,
+    "goal_visible": 0.89,
+    "gripper_above_cube": 0.88,
+    "fingers_around_cube": 0.54,
+    "cube_between_closed_fingers": 0.36,
+    "cube_lifted_clear": 0.68,
+    "cube_above_goal": 0.26,
+    "cube_on_floor_in_goal": 0.26,
+    "fingers_open": 0.81,
+    "gripper_clear_of_cube": 0.57
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.42,
+      "bottom": 0.51,
+      "left": 0.4,
+      "right": 0.47
+     },
+     "confidence": 0.84,
+     "truth": {
+      "left": 0.409375,
+      "right": 0.4578125,
+      "top": 0.4114583333333333,
+      "bottom": 0.48333333333333334
+     },
+     "iou": 0.457
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.45,
+      "bottom": 0.52,
+      "left": 0.41,
+      "right": 0.46
+     },
+     "confidence": 0.61,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "lower",
+   "next_skill_confidence": 0.84,
+   "gate": {
+    "name": "cube_over_goal",
+    "guards": "lower",
+    "probability": 0.07,
+    "passes": false
+   },
+   "gate_with_claude_eye": {
+    "name": "cube_over_goal",
+    "guards": "lower",
+    "probability": 0.94,
+    "passes": true
+   },
+   "seconds": 0.29,
+   "head_seconds": 0.16,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/07_lower.png",
+   "phase": "lower",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "no",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "release",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": false,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.93,
+    "goal_visible": 0.96,
+    "gripper_above_cube": 0.94,
+    "fingers_around_cube": 0.65,
+    "cube_between_closed_fingers": 0.54,
+    "cube_lifted_clear": 0.21,
+    "cube_above_goal": 0.93,
+    "cube_on_floor_in_goal": 0.93,
+    "fingers_open": 0.52,
+    "gripper_clear_of_cube": 0.15
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.49,
+      "bottom": 0.55,
+      "left": 0.41,
+      "right": 0.48
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.4171875,
+      "right": 0.46484375,
+      "top": 0.484375,
+      "bottom": 0.553125
+     },
+     "iou": 0.619
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.53,
+      "left": 0.47,
+      "right": 0.52
+     },
+     "confidence": 0.75,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "release",
+   "next_skill_confidence": 0.99,
+   "gate": {
+    "name": "cube_set_in_goal",
+    "guards": "release",
+    "probability": 0.76,
+    "passes": true
+   },
+   "gate_with_claude_eye": {
+    "name": "cube_set_in_goal",
+    "guards": "release",
+    "probability": 0.91,
+    "passes": true
+   },
+   "seconds": 0.28,
+   "head_seconds": 0.19,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/08_release.png",
+   "phase": "release",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "expected_skill": "retreat",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": true,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.89,
+    "goal_visible": 0.96,
+    "gripper_above_cube": 0.88,
+    "fingers_around_cube": 0.56,
+    "cube_between_closed_fingers": 0.21,
+    "cube_lifted_clear": 0.2,
+    "cube_above_goal": 0.77,
+    "cube_on_floor_in_goal": 0.69,
+    "fingers_open": 0.85,
+    "gripper_clear_of_cube": 0.42
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.49,
+      "bottom": 0.56,
+      "left": 0.4,
+      "right": 0.47
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.415625,
+      "right": 0.46015625,
+      "top": 0.484375,
+      "bottom": 0.5552083333333333
+     },
+     "iou": 0.564
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.54,
+      "left": 0.43,
+      "right": 0.51
+     },
+     "confidence": 0.76,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "retreat",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.42,
+   "head_seconds": 0.25,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "pick_place",
+   "image": "outputs/claude_elephant/claude_jev_pick_place_20261023_121825/09_retreat.png",
+   "phase": "retreat",
+   "labels": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "expected_skill": "done",
+   "agree": {
+    "cube_visible": true,
+    "goal_visible": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true,
+    "cube_above_goal": true,
+    "cube_on_floor_in_goal": true,
+    "fingers_open": true,
+    "gripper_clear_of_cube": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "goal_visible": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no",
+    "cube_above_goal": "yes",
+    "cube_on_floor_in_goal": "yes",
+    "fingers_open": "yes",
+    "gripper_clear_of_cube": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.91,
+    "goal_visible": 0.87,
+    "gripper_above_cube": 0.78,
+    "fingers_around_cube": 0.47,
+    "cube_between_closed_fingers": 0.11,
+    "cube_lifted_clear": 0.4,
+    "cube_above_goal": 0.89,
+    "cube_on_floor_in_goal": 0.72,
+    "fingers_open": 0.95,
+    "gripper_clear_of_cube": 0.89
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.49,
+      "bottom": 0.56,
+      "left": 0.41,
+      "right": 0.47
+     },
+     "confidence": 0.9,
+     "truth": {
+      "left": 0.41015625,
+      "right": 0.45703125,
+      "top": 0.484375,
+      "bottom": 0.5552083333333333
+     },
+     "iou": 0.685
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.55,
+      "left": 0.4,
+      "right": 0.46
+     },
+     "confidence": 0.57,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "done",
+   "next_skill_confidence": 1.0,
+   "gate": {
+    "name": "task_complete",
+    "guards": "done",
+    "probability": 0.92,
+    "passes": true
+   },
+   "gate_with_claude_eye": {
+    "name": "task_complete",
+    "guards": "done",
+    "probability": 0.92,
+    "passes": true
+   },
+   "seconds": 0.63,
+   "head_seconds": 0.17,
+   "usage": {
+    "input_tokens": 7289,
+    "output_tokens": 234
+   }
+  },
+  {
+   "task": "cube_lift",
+   "image": "outputs/claude_h2o/claude_jev_cube_lift_20261019_190433/00_ready.png",
+   "phase": "ready",
+   "labels": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "expected_skill": "move_above_cube",
+   "agree": {
+    "cube_visible": true,
+    "cube_on_floor": true,
+    "gripper_above_cube": true,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.99,
+    "cube_on_floor": 0.81,
+    "gripper_above_cube": 0.11,
+    "fingers_around_cube": 0.19,
+    "cube_between_closed_fingers": 0.1,
+    "cube_lifted_clear": 0.24
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.58,
+      "left": 0.47,
+      "right": 0.52
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.475,
+      "right": 0.525,
+      "top": 0.5072916666666667,
+      "bottom": 0.5854166666666667
+     },
+     "iou": 0.581
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.51,
+      "left": 0.55,
+      "right": 0.58
+     },
+     "confidence": 0.96,
+     "truth": {
+      "left": 0.55234375,
+      "right": 0.58125,
+      "top": 0.4822916666666667,
+      "bottom": 0.5177083333333333
+     },
+     "iou": 0.526
+    }
+   },
+   "next_skill": "move_above_cube",
+   "next_skill_confidence": 1.0,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.28,
+   "head_seconds": 0.18,
+   "usage": {
+    "input_tokens": 7089,
+    "output_tokens": 158
+   }
+  },
+  {
+   "task": "cube_lift",
+   "image": "outputs/claude_h2o/claude_jev_cube_lift_20261019_190433/01_move_above_cube.png",
+   "phase": "move_above_cube",
+   "labels": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "expected_skill": "descend",
+   "agree": {
+    "cube_visible": true,
+    "cube_on_floor": true,
+    "gripper_above_cube": false,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.91,
+    "cube_on_floor": 0.58,
+    "gripper_above_cube": 0.49,
+    "fingers_around_cube": 0.29,
+    "cube_between_closed_fingers": 0.14,
+    "cube_lifted_clear": 0.35
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.59,
+      "left": 0.46,
+      "right": 0.53
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.47578125,
+      "right": 0.52421875,
+      "top": 0.509375,
+      "bottom": 0.584375
+     },
+     "iou": 0.472
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.55,
+      "left": 0.43,
+      "right": 0.52
+     },
+     "confidence": 0.67,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "descend",
+   "next_skill_confidence": 0.9,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.51,
+   "head_seconds": 0.19,
+   "usage": {
+    "input_tokens": 7089,
+    "output_tokens": 158
+   }
+  },
+  {
+   "task": "cube_lift",
+   "image": "outputs/claude_h2o/claude_jev_cube_lift_20261019_190433/02_descend.png",
+   "phase": "descend",
+   "labels": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "no"
+   },
+   "expected_skill": "close_gripper",
+   "agree": {
+    "cube_visible": true,
+    "cube_on_floor": true,
+    "gripper_above_cube": false,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.91,
+    "cube_on_floor": 0.88,
+    "gripper_above_cube": 0.79,
+    "fingers_around_cube": 0.51,
+    "cube_between_closed_fingers": 0.54,
+    "cube_lifted_clear": 0.18
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.51,
+      "bottom": 0.6,
+      "left": 0.46,
+      "right": 0.52
+     },
+     "confidence": 0.84,
+     "truth": {
+      "left": 0.48125,
+      "right": 0.51796875,
+      "top": 0.51875,
+      "bottom": 0.5916666666666667
+     },
+     "iou": 0.496
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.47,
+      "bottom": 0.56,
+      "left": 0.42,
+      "right": 0.47
+     },
+     "confidence": 0.67,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "close_gripper",
+   "next_skill_confidence": 0.65,
+   "gate": null,
+   "gate_with_claude_eye": null,
+   "seconds": 0.33,
+   "head_seconds": 0.18,
+   "usage": {
+    "input_tokens": 7089,
+    "output_tokens": 158
+   }
+  },
+  {
+   "task": "cube_lift",
+   "image": "outputs/claude_h2o/claude_jev_cube_lift_20261019_190433/03_close_gripper.png",
+   "phase": "close_gripper",
+   "labels": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no"
+   },
+   "expected_skill": "lift",
+   "agree": {
+    "cube_visible": true,
+    "cube_on_floor": true,
+    "gripper_above_cube": false,
+    "fingers_around_cube": true,
+    "cube_between_closed_fingers": true,
+    "cube_lifted_clear": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "cube_on_floor": "yes",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "no"
+   },
+   "p_yes": {
+    "cube_visible": 0.9,
+    "cube_on_floor": 0.89,
+    "gripper_above_cube": 0.85,
+    "fingers_around_cube": 0.61,
+    "cube_between_closed_fingers": 0.63,
+    "cube_lifted_clear": 0.17
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.51,
+      "bottom": 0.59,
+      "left": 0.47,
+      "right": 0.52
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.46953125,
+      "right": 0.51796875,
+      "top": 0.5197916666666667,
+      "bottom": 0.590625
+     },
+     "iou": 0.829
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.48,
+      "bottom": 0.55,
+      "left": 0.43,
+      "right": 0.49
+     },
+     "confidence": 0.7,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "lift",
+   "next_skill_confidence": 1.0,
+   "gate": {
+    "name": "grasp_secure",
+    "guards": "lift",
+    "probability": 0.79,
+    "passes": true
+   },
+   "gate_with_claude_eye": {
+    "name": "grasp_secure",
+    "guards": "lift",
+    "probability": 0.79,
+    "passes": true
+   },
+   "seconds": 0.36,
+   "head_seconds": 0.23,
+   "usage": {
+    "input_tokens": 7089,
+    "output_tokens": 158
+   }
+  },
+  {
+   "task": "cube_lift",
+   "image": "outputs/claude_h2o/claude_jev_cube_lift_20261019_190433/04_lift.png",
+   "phase": "lift",
+   "labels": {
+    "cube_visible": "yes",
+    "cube_on_floor": "no",
+    "gripper_above_cube": "no",
+    "fingers_around_cube": "yes",
+    "cube_between_closed_fingers": "yes",
+    "cube_lifted_clear": "yes"
+   },
+   "expected_skill": "done",
+   "agree": {
+    "cube_visible": true,
+    "cube_on_floor": true,
+    "gripper_above_cube": false,
+    "fingers_around_cube": false,
+    "cube_between_closed_fingers": false,
+    "cube_lifted_clear": true
+   },
+   "answers": {
+    "cube_visible": "yes",
+    "cube_on_floor": "no",
+    "gripper_above_cube": "yes",
+    "fingers_around_cube": "no",
+    "cube_between_closed_fingers": "no",
+    "cube_lifted_clear": "yes"
+   },
+   "p_yes": {
+    "cube_visible": 0.92,
+    "cube_on_floor": 0.27,
+    "gripper_above_cube": 0.89,
+    "fingers_around_cube": 0.44,
+    "cube_between_closed_fingers": 0.48,
+    "cube_lifted_clear": 0.72
+   },
+   "boxes": {
+    "oblique_view": {
+     "box": {
+      "top": 0.44,
+      "bottom": 0.51,
+      "left": 0.47,
+      "right": 0.53
+     },
+     "confidence": 0.86,
+     "truth": {
+      "left": 0.46953125,
+      "right": 0.52109375,
+      "top": 0.43645833333333334,
+      "bottom": 0.5125
+     },
+     "iou": 0.787
+    },
+    "top_down_view": {
+     "box": {
+      "top": 0.46,
+      "bottom": 0.53,
+      "left": 0.43,
+      "right": 0.48
+     },
+     "confidence": 0.61,
+     "truth": null,
+     "iou": null
+    }
+   },
+   "next_skill": "done",
+   "next_skill_confidence": 0.98,
+   "gate": {
+    "name": "task_complete",
+    "guards": "done",
+    "probability": 0.4,
+    "passes": false
+   },
+   "gate_with_claude_eye": {
+    "name": "task_complete",
+    "guards": "done",
+    "probability": 0.94,
+    "passes": true
+   },
+   "seconds": 0.36,
+   "head_seconds": 0.28,
+   "usage": {
+    "input_tokens": 7089,
+    "output_tokens": 158
+   }
+  }
+ ]
+}

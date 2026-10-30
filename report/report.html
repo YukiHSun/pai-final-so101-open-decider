@@ -210,14 +210,58 @@ a { color:var(--good); }
 
 <h2>10. AI の利用と再現方法</h2>
 <ul>
-<li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B / elephant-1 / mammoth-1（スキルの判断。elephant-1 と mammoth-1 は OpenRouter 経由）。学習は行っていません。</li>
+<li>推論に使った AI：Claude（画像の観測）、Jev / strands-decider 2B・E4B / H2O-Lightning-4B / elephant-1 / mammoth-1（スキルの判断。elephant-1 と mammoth-1 は OpenRouter 経由）、Jev 1.13 / 1.14（11 章の画像の観測）。学習は行っていません。</li>
 <li>コード、各ステップの画像、観測、確率、比較結果は、GitHub リポジトリにまとめています。手順は README を見てください。</li>
 <li>動画は、H2O-Lightning-4B で「運んで置く」作業を行ったときの記録から作り直したものです。</li>
 </ul>
 <p class="small">使用した外部のもの：strands-labs/robots（SO-101 モデルの読み込み）、strands-labs/strands-decider、h2oai/h2o-lightning-4b と internet-projects/h2o-lightning-mlx（Mac 用サーバー）、MuJoCo、mink。いずれも Apache-2.0 です。Jev は TypeSafe の商用 API です。</p>
 
+<h2>11. 追記：Jev 1.14 でできるようになったこと</h2>
+<p>2026 年 10 月 14 日、TypeSafe は Jev 1.14 を公開しました<sup>[13]</sup>。これまでの Jev は文章だけを受け取るモデルでした。そのため、このキットでは画像を読む「目」を Claude が担当していました。1.14 では、次のことができるようになりました。</p>
+<table class="keep">
+<tr><th style="width:26%">新しくできること</th><th>内容</th><th style="width:30%">このキットにとっての意味</th></tr>
+<tr><td>画像の入力</td><td>PNG / JPEG の画像を、リクエストの中の状態や質問に入れられます。1.13 と 1.14 が対応しています<sup>[14]</sup>。画像は文章と同じ入力トークンとして数えられ、画像ごとの追加料金はありません。</td><td>目と頭を 1 つの API にまとめ、Claude なしで自動で回せる可能性</td></tr>
+<tr><td>Box 型の答え</td><td>画像の中で物がどこにあるかを、上下左右の端（0〜1 の割合）と確信度で答えます。1.14 だけが対応しています<sup>[15]</sup>。</td><td>キューブの位置を画像から直接求められる可能性</td></tr>
+<tr><td>使うときの条件</td><td>画像と Box は、<code>TypeSafe-Danger-Zone-Images: true</code> のヘッダーを付けたときだけ使えるプレビュー機能です。公式は、本番での利用は保証できないとしています。また、画像を使うと文章だけのときより性能が落ちるので、質問をできるだけ単純に分けるように勧めています<sup>[13]</sup>。</td><td>安全確認は、これまでどおりプログラム側に残す</td></tr>
+</table>
+
+<h3>11.1 「目」として使えるかの検証</h3>
+<p>Jev 1.14 に「目」を任せられるかを確かめました。使ったのは、6 章までに記録した画像のうち、重なりを除いた 15 枚です（運んで置く 10 枚、持ち上げる 5 枚）。正解は、同じ画像に Claude が書いた観測の多数決です。</p>
+<p>2 つのカメラの画像は、切り分けてそれぞれ 2 倍に拡大し、2 枚で送りました。質問は、観測の項目ごとに 1 文の短い yes / no にしています。続けて、Jev の観測をもとに、次のスキルと安全確認の確率を、キットと同じ質問で答えさせました。</p>
+<p>Jev は同じ画像でも答えが少し変わるため、1.14 は 3 回実行しました。</p>
+<table class="keep">
+<tr><th style="width:40%">比べた点</th><th>Jev 1.13</th><th>Jev 1.14（3 回）</th></tr>
+<tr><td>観測が Claude と一致した割合</td><td class="n">74.6%</td><td class="n good">81.5〜84.6%</td></tr>
+<tr><td>正解が「いいえ」なのに「はい」と答えた数</td><td class="n bad">30</td><td class="n">12〜14</td></tr>
+<tr><td>1 枚の画像を見る時間（中央値）</td><td class="n">約 0.3 秒</td><td class="n good">0.3〜0.4 秒</td></tr>
+<tr><td>次のスキルを正しく選べた数（15 枚中）</td><td class="n">15</td><td class="n">15</td></tr>
+<tr><td>安全確認で止まった数（Claude の観測では 0）</td><td>—</td><td class="n bad">7 か所中 3〜4</td></tr>
+<tr><td>キューブの位置の重なり（IoU、中央値）</td><td>—（Box 非対応）</td><td class="n">0.53〜0.56</td></tr>
+</table>
+
+<h3>11.2 できるようになったことと、まだ足りないこと</h3>
+<ul>
+<li><b>見えるか、浮いているか、ゴールの中か</b>：キューブやゴールが見えるか、キューブが床から浮いているか、ゴールの中に置かれているかは、3 回とも全問正解でした。1 枚 0.3〜0.4 秒なので、実機で動きながら見られる速さです。</li>
+<li><b>指の開き閉じ</b>：見分けられませんでした。「指が開いている」が Claude と一致したのは 53% で、当てずっぽうとほぼ同じです。キューブを閉じた指ではさんでいるのに、「指が開いている」に 0.73〜0.76 の確率を付けました（図 1）。</li>
+<li><b>安全確認への影響</b>：キットの安全確認は、目が書いた観測をもとに判断 AI が確率を出します。そのため、運んで置く作業では、指を閉じた直後の「しっかりつかめたか」が毎回 0.07 になって止まりました。本当は失敗しているのに通ってしまう例は、ありませんでした。ただし、今回の画像はすべて成功した実行のものです。</li>
+<li><b>キューブの位置</b>：キューブだけが写っているときは、正解の枠とおおむね重なりました（IoU 0.53〜0.79）。一方、隣に緑のゴールがあると、枠がゴールの方へ引っぱられ、IoU は 0.07 まで下がりました（図 2）。グリッパーに隠れて見えないキューブにも、確信度 0.72 で枠を返しました。</li>
+</ul>
+<figure>
+<img src="images/jev-1.14/fig2_fingers.png" alt="指は閉じてキューブをはさんでいるが、Jev は指が開いていると答えた" style="width:72%; display:block">
+<figcaption>図 1　指を閉じてキューブをはさんでいる場面。数字は Jev 1.14 が答えた「はい」の確率です。</figcaption>
+</figure>
+<figure>
+<img src="images/jev-1.14/fig1_box.png" alt="キューブの位置の答え。黄が正解、桃が Jev 1.14" style="width:72%; display:block">
+<figcaption>図 2　キューブの位置の答え（黄：赤いピクセルから作った正解、桃：Jev 1.14）。右上はゴールに引っぱられた例、右下は隠れて見えないのに枠を返した例です。</figcaption>
+</figure>
+
+<h3>11.3 まとめと次の一歩</h3>
+<p>Jev 1.14 で、画像を見る「目」と、スキルを選ぶ「頭」を、同じ判断 AI で行えるようになりました。速さは十分で、大まかな状態は正しく見分けられます。ただし、指のような細かい部分の見分けはまだ弱く、今のまま Claude の目と入れ替えると、安全確認で止まって作業を最後まで進められません。</p>
+<p>止まる方向の間違いが中心なので、このキットの「安全確認はプログラム側に残す」作りとは相性がよいと考えます。次は、公式の勧めに合わせて質問をさらに分けることを試します。たとえば、Box で見つけたキューブのまわりだけを切り出して、指のことだけを聞き直します。また、つかみ損ねの場面を作り、安全確認が正しく止まるかも確かめます。</p>
+<p class="small">評価スクリプト：<code>eval_eye_models.py</code>（<code>jev</code> モード。位置の正解は画像の赤いピクセルから自動で作ります）。記録：<code>outputs/eye_eval_jev-*.json</code></p>
+
 <h2>参考文献</h2>
-<p class="small" style="font-size:8.5pt; line-height:1.5">[1] TypeSafe AI「Introducing System One Models &amp; Jev」（2026-09-15） <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">https://typesafe.ai/blog/introducing-system-one-models-and-jev</a><br>[2] Simon Willison「Jev introduces a new shape of LLM: System One, aka Decision Models」（2026-09-21） <a href="https://simonwillison.net/2026/Sep/21/jev/">https://simonwillison.net/2026/Sep/21/jev/</a><br>[3] ロボスタ「判断特化型AI『Jev』のロボットへの活用事例が相次ぐ」（2026-09-25） <a href="https://robotstart.info/article/2026/09/25/382447.html">https://robotstart.info/article/2026/09/25/382447.html</a><br>[4] Zenn「SO-101ロボットアーム 実践ガイド」第21章「Jevでアームを動かす」 <a href="https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb">https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb</a><br>[5] strands-labs「strands-decider」（GitHub） <a href="https://github.com/strands-labs/strands-decider">https://github.com/strands-labs/strands-decider</a><br>[6] labmemo「AWS『Strands Decider 2B』徹底解説」（2026-10-02） <a href="https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/">https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/</a><br>[7] H2O.ai「H2O-Lightning-4B Ranks First on JevBench Open-Weights Leaderboard」（2026-10-12） <a href="https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench">https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench</a><br>[8] strands-labs/strands-decider issue #95「[FEATURE] Add support for h2oai/h2o-lightning-4b as a selectable decision model」（2026-10-20） <a href="https://github.com/strands-labs/strands-decider/issues/95">https://github.com/strands-labs/strands-decider/issues/95</a><br>[9] Base Labs「baselabs/elephant-1」（Hugging Face） <a href="https://huggingface.co/baselabs/elephant-1">https://huggingface.co/baselabs/elephant-1</a><br>[10] Base Labs「Mammoth-1 and Elephant-1: frontier decision models」（2026-10-21） <a href="https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models">https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models</a><br>[11] OpenRouter「Submit a Decisions request」（Decisions API） <a href="https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request">https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request</a><br>[12] ABEJA Tech Blog「VLMの賢さとJevの速さを両取りしたい ～ 追加学習なしでロボットを動かす ～」（2026-10-14） <a href="https://tech-blog.abeja.asia/entry/jev-zeroshot-202610">https://tech-blog.abeja.asia/entry/jev-zeroshot-202610</a></p>
+<p class="small" style="font-size:8.5pt; line-height:1.5">[1] TypeSafe AI「Introducing System One Models &amp; Jev」（2026-09-15） <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">https://typesafe.ai/blog/introducing-system-one-models-and-jev</a><br>[2] Simon Willison「Jev introduces a new shape of LLM: System One, aka Decision Models」（2026-09-21） <a href="https://simonwillison.net/2026/Sep/21/jev/">https://simonwillison.net/2026/Sep/21/jev/</a><br>[3] ロボスタ「判断特化型AI『Jev』のロボットへの活用事例が相次ぐ」（2026-09-25） <a href="https://robotstart.info/article/2026/09/25/382447.html">https://robotstart.info/article/2026/09/25/382447.html</a><br>[4] Zenn「SO-101ロボットアーム 実践ガイド」第21章「Jevでアームを動かす」 <a href="https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb">https://zenn.dev/oggata/books/41ce1497ddde6a/viewer/1eafeb</a><br>[5] strands-labs「strands-decider」（GitHub） <a href="https://github.com/strands-labs/strands-decider">https://github.com/strands-labs/strands-decider</a><br>[6] labmemo「AWS『Strands Decider 2B』徹底解説」（2026-10-02） <a href="https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/">https://labmemo.com/aws-strands-decider-2b-open-source-decision-model-guide-2026-10/</a><br>[7] H2O.ai「H2O-Lightning-4B Ranks First on JevBench Open-Weights Leaderboard」（2026-10-12） <a href="https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench">https://h2o.ai/company/press-media/2026/h2o-lightning-4b-ranks-first-on-jevbench</a><br>[8] strands-labs/strands-decider issue #95「[FEATURE] Add support for h2oai/h2o-lightning-4b as a selectable decision model」（2026-10-20） <a href="https://github.com/strands-labs/strands-decider/issues/95">https://github.com/strands-labs/strands-decider/issues/95</a><br>[9] Base Labs「baselabs/elephant-1」（Hugging Face） <a href="https://huggingface.co/baselabs/elephant-1">https://huggingface.co/baselabs/elephant-1</a><br>[10] Base Labs「Mammoth-1 and Elephant-1: frontier decision models」（2026-10-21） <a href="https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models">https://labs.baseten.co/articles/mammoth-1-and-elephant-1-frontier-decision-models</a><br>[11] OpenRouter「Submit a Decisions request」（Decisions API） <a href="https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request">https://openrouter.ai/docs/api/api-reference/alphadecisions/submit-a-decisions-request</a><br>[12] ABEJA Tech Blog「VLMの賢さとJevの速さを両取りしたい ～ 追加学習なしでロボットを動かす ～」（2026-10-14） <a href="https://tech-blog.abeja.asia/entry/jev-zeroshot-202610">https://tech-blog.abeja.asia/entry/jev-zeroshot-202610</a><br>[13] TypeSafe AI「Jev 1.14」（2026-10-14） <a href="https://typesafe.ai/blog/jev-1-14">https://typesafe.ai/blog/jev-1-14</a><br>[14] TypeSafe Docs「Images」 <a href="https://docs.typesafe.ai/go/images">https://docs.typesafe.ai/go/images</a><br>[15] TypeSafe Docs「Box」 <a href="https://docs.typesafe.ai/go/box">https://docs.typesafe.ai/go/box</a></p>
 
 </main>
 </body>

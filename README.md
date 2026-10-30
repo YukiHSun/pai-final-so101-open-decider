@@ -237,12 +237,14 @@ SO-101 のモデルは、strands-robots が初回起動時に `robot_description
 - **v1.4.2**（2026-10-29）：Box に対応し（v1.4.0 から）、重みも新しくなりました（v1.4.1 から）。10 章の結果は、この版で測りました。
 
 ```bash
-git clone https://github.com/internet-projects/h2o-lightning-mlx && cd h2o-lightning-mlx
-./setup.sh q8   # 公式の重みを取得し、8bit 版に変換する
+git clone https://github.com/internet-projects/h2o-lightning-mlx h2o-lightning-mlx-v1.2.3
+cd h2o-lightning-mlx-v1.2.3
+git checkout v1.2.3   # 10 章を試すときは v1.4.2（別のフォルダに clone する）
+bash setup.sh q8      # 公式の重み（約 9 GB）を取得し、8bit 版に変換する。setup.sh には実行権限がないので bash で実行する
 MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh   # http://127.0.0.1:8741/v1/systemone
 ```
 
-`SHIM_NOUL_FLOOR=0` は必須です。出荷時の設定（0.801）のままだと、迷っている yes / no の確率を 0.801 / 0.199 に書き換えて返します。そうなると 0.60 の安全確認が意味をなさなくなります。
+`SHIM_NOUL_FLOOR=0` は必須です。v1.2.3 の出荷時の設定（0.801）のままだと、迷っている yes / no の確率を 0.801 / 0.199 に書き換えて返します。そうなると 0.60 の安全確認が意味をなさなくなります。v1.4.2 は初期設定で書き換えませんが、同じように付けておきます。
 
 **strands-decider**
 [strands-labs/strands-decider](https://github.com/strands-labs/strands-decider) の GitHub main（`930e6d5`）を別の環境に入れました。

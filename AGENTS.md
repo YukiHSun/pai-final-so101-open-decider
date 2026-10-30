@@ -19,7 +19,23 @@
    ```
 
 3. 判断 AI のサーバーを用意します。このリポジトリの外のフォルダに置きます。
-   - Apple Silicon の Mac なら、H2O-Lightning-4B を使います。`https://github.com/internet-projects/h2o-lightning-mlx` を clone し、`./setup.sh q8` で準備します。公式の重みを取得して 8bit 版に変換するので、数 GB のダウンロードがあります。準備ができたら、`MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh` で起動します。`SHIM_NOUL_FLOOR=0` は必ず付けます。付けないと安全確認の確率が書き換えられます。
+   - Apple Silicon の Mac なら、H2O-Lightning-4B の Mac 版（MLX 版）を使います。版によって結果が変わるので、目的に合わせて版を選びます。
+     - 6 章までの結果を再現するとき：v1.2.3
+     - 10 章（画像と Box）を試すとき：v1.4.2
+
+     ```bash
+     git clone https://github.com/internet-projects/h2o-lightning-mlx h2o-lightning-mlx-v1.2.3
+     cd h2o-lightning-mlx-v1.2.3
+     git checkout v1.2.3            # 10 章を試すときは v1.4.2
+     bash setup.sh q8               # 公式の重み（約 9 GB）を取得し、8bit 版に変換する
+     MODEL=mlx-q8 SHIM_NOUL_FLOOR=0 bash serve.sh
+     ```
+
+   - 注意点は次のとおりです。
+     - `setup.sh` には実行の権限が付いていないので、`./setup.sh` ではなく `bash setup.sh` で実行します。
+     - 2 つの版を使うときは、版ごとに別のフォルダに clone します。v1.4.2 の `setup.sh` は、別の版で作ったファイルがあると止まります。
+     - `SHIM_NOUL_FLOOR=0` は必ず付けます。v1.2.3 は、付けないと迷っている yes / no の確率を 0.801 に書き換えるので、安全確認が効かなくなります。v1.4.2 は初期設定で書き換えませんが、同じように付けておきます。
+     - 準備（ダウンロードと変換）には数十分かかります。ノート PC では電源につなぎ、スリープしないようにしておきます。
    - 起動したら `curl http://127.0.0.1:8741/health` で応答を確かめます。
    - それ以外の環境では、strands-decider（README 参照）か、`.env` に `TYPESAFE_API_KEY` を入れて Jev を使います。
 4. ここまでで失敗したら、エラーの内容を報告して止まります。

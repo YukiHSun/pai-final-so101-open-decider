@@ -37,6 +37,7 @@ code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--so
 a { color:var(--good); }
 .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:6pt; }
 .kpi { background:#fff; border:1px solid var(--line); border-radius:5pt; padding:6pt 8pt; }
+.kpi-label { font-size:8.8pt; font-weight:700; color:var(--ink); }
 .kpi-num { font-size:15pt; font-weight:700; color:var(--good); line-height:1.25; }
 .kpi-txt { font-size:8.8pt; color:var(--sub); line-height:1.45; margin-top:2pt; }
 </style>
@@ -51,9 +52,9 @@ a { color:var(--good); }
 <div style="font-size:11pt; font-weight:700; margin-bottom:3pt">この資料で作ったもの</div>
 <p style="margin:0 0 6pt">ロボット用の学習をしないで、SO-101 に「つかんで運んで置く」をさせる開発キットです。動きは 10 個のスキルとしてプログラムで用意し、AI には画像から分かった状態をもとに<b>「次にどのスキルを使うか」だけ</b>を選ばせます。選び方は自然言語で書きます。</p>
 <div class="kpis">
-<div class="kpi"><div class="kpi-num">9 / 9</div><div class="kpi-txt">キューブとゴールの位置を変えた 9 通りで成功（6.5）</div></div>
-<div class="kpi"><div class="kpi-num">0.026 → 0.864</div><div class="kpi-txt">説明文を直しただけで、AI が正しい一手を選ぶ確率が上がった（6.2）</div></div>
-<div class="kpi"><div class="kpi-num">0 円</div><div class="kpi-txt"><b>判断 AI の API 料金</b>。有料の Jev の代わりに、PC で動く公開モデルで判断（6.1・6.3）</div></div>
+<div class="kpi"><div class="kpi-label">置き場所を変えても成功</div><div class="kpi-num">9 通り中 9 通り</div><div class="kpi-txt">キューブとゴールの置き場所を変えた 9 通りすべてで、最後まで運んで置けました（6.5）</div></div>
+<div class="kpi"><div class="kpi-label">説明文を直すだけで判断が改善</div><div class="kpi-num">2.6% → 86.4%</div><div class="kpi-txt">持ち上げた直後に、AI が正しいスキル（持ち直す）を選ぶ確率です。スキルの選び方の説明文を書き直しただけで上がりました（6.2）</div></div>
+<div class="kpi"><div class="kpi-label">判断にかかる料金</div><div class="kpi-num">0 円</div><div class="kpi-txt">判断 AI の API 料金です。有料の Jev の代わりに、PC で動く公開モデルで判断しました（6.1・6.3）</div></div>
 </div>
 <p class="small" style="margin:5pt 0 0">※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。</p>
 </div>

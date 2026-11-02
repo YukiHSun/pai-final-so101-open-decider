@@ -36,8 +36,8 @@ code { font-family:"SF Mono",Menlo,monospace; font-size:9pt; background:var(--so
 .small { font-size:9pt; color:var(--sub); }
 a { color:var(--good); }
 .kpis { display:grid; grid-template-columns:repeat(3,1fr); gap:6pt; }
-.kpi { background:#fff; border:1px solid var(--line); border-radius:5pt; padding:6pt 8pt; }
-.kpi-label { font-size:8.8pt; font-weight:700; color:var(--ink); }
+.kpi { background:#fff; border:1px solid var(--line); border-radius:5pt; padding:6pt 7pt; }
+.kpi-label { font-size:8.2pt; white-space:nowrap; letter-spacing:-0.2pt; font-weight:700; color:var(--ink); }
 .kpi-num { font-size:15pt; font-weight:700; color:var(--good); line-height:1.25; }
 .kpi-txt { font-size:8.8pt; color:var(--sub); line-height:1.45; margin-top:2pt; }
 </style>
@@ -53,10 +53,9 @@ a { color:var(--good); }
 <p style="margin:0 0 6pt">ロボット用の学習をしないで、SO-101 に「つかんで運んで置く」をさせる開発キットです。動きは「つかむ」「運ぶ」のようなひとまとまりの動作（<b>スキル</b>）に分けて、10 個をプログラムで用意し、AI には画像から分かった状態をもとに<b>「次にどのスキルを使うか」だけ</b>を選ばせます。選び方は自然言語で書きます。</p>
 <div class="kpis">
 <div class="kpi"><div class="kpi-label">置き場所を変えても成功</div><div class="kpi-num">9 通り中 9 通り</div><div class="kpi-txt">キューブとゴールの置き場所を変えた 9 通りすべてで、最後まで運んで置けました（6.5）</div></div>
-<div class="kpi"><div class="kpi-label">プロンプト修正で信頼度アップ</div><div class="kpi-num">2.6% → 86.4%</div><div class="kpi-txt">持ち上げた直後、正しいスキル「持ち直す」への判断 AI の信頼度。学習なし、プロンプトの書き直しだけで上がりました（6.2）</div></div>
+<div class="kpi"><div class="kpi-label">プロンプト修正で判断の確実度アップ</div><div class="kpi-num">2.6% → 86.4%</div><div class="kpi-txt">持ち上げた直後、正しいスキル「持ち直す」を選ぶ確実度（信頼度スコア）。プロンプトの書き直しだけで上がりました（6.2）</div></div>
 <div class="kpi"><div class="kpi-label">1 回の判断の時間と料金</div><div class="kpi-num">約 0.9 秒・0 円</div><div class="kpi-txt">PC で動く公開モデルの場合。有料の Jev は約 0.2 秒で、作業 1 回 1 円未満でした（6.1・6.3）</div></div>
 </div>
-<p style="margin:6pt 0 0; font-size:9.5pt"><b>信頼度スコアが上がった理由</b>：最初の説明文では、「持ち直す」と次の「運ぶ」の条件が、どちらも「キューブを空中に持っている」と読めました。そのため AI は「持ち直す」を飛ばして「運ぶ」を選んでいました。そこで、見た目ではなく<b>「直前に終えたスキル」</b>で選び分ける条件（例：直前が「持ち上げる」なら次は「持ち直す」）に書き直したところ、正しく選べるようになりました。</p>
 <p class="small" style="margin:5pt 0 0">※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。</p>
 </div>
 

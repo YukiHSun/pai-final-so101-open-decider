@@ -50,7 +50,7 @@ a { color:var(--good); }
 
 <div class="box">
 <div style="font-size:11pt; font-weight:700; margin-bottom:3pt">この資料で作ったもの</div>
-<p style="margin:0 0 6pt">ロボット用の学習をしないで、SO-101 に「つかんで運んで置く」をさせる開発キットです。動きは 10 個のスキルとしてプログラムで用意し、AI には画像から分かった状態をもとに<b>「次にどのスキルを使うか」だけ</b>を選ばせます。選び方は自然言語で書きます。</p>
+<p style="margin:0 0 6pt">ロボット用の学習をしないで、SO-101 に「つかんで運んで置く」をさせる開発キットです。動きは「つかむ」「運ぶ」のようなひとまとまりの動作（<b>スキル</b>）に分けて、10 個をプログラムで用意し、AI には画像から分かった状態をもとに<b>「次にどのスキルを使うか」だけ</b>を選ばせます。選び方は自然言語で書きます。</p>
 <div class="kpis">
 <div class="kpi"><div class="kpi-label">置き場所を変えても成功</div><div class="kpi-num">9 通り中 9 通り</div><div class="kpi-txt">キューブとゴールの置き場所を変えた 9 通りすべてで、最後まで運んで置けました（6.5）</div></div>
 <div class="kpi"><div class="kpi-label">正しいスキルへの信頼度スコア</div><div class="kpi-num">2.6% → 86.4%</div><div class="kpi-txt">持ち上げた直後に、判断 AI が正しいスキル「持ち直す」につけた信頼度スコア。説明文を書き直しただけで上がりました（6.2）</div></div>

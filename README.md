@@ -224,6 +224,33 @@ H2O-Lightning-4B も v1.4 で画像と Box に対応しました。同じ 15 枚
 - Jev：`.venv/bin/python eval_eye_models.py jev`（`.env` に `TYPESAFE_API_KEY` が必要です）
 - H2O：`.venv/bin/python eval_eye_models.py h2o`（v1.4.2 のサーバーを 8741 番で起動しておきます）
 
+## 追記：strands-decider の fork で H2O-Lightning-4B を動かす（締め切り後の追記）
+
+この節は、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 10 日に追記したものです。
+
+H2O-Lightning-4B を、OSS の判断 AI の道具である strands-decider から、ほかのモデルと同じ使い方で動かせるようにしました。strands-decider 本体は自分のモデル専用の方針なので、fork で対応しています。
+
+- fork：[YukiHSun/strands-decider（feat/h2o-lightning-4b-on-main）](https://github.com/YukiHSun/strands-decider/tree/feat/h2o-lightning-4b-on-main)
+- 協力者の yutamorrow さんが作った H2O-Lightning-4B の読み込み部分（[feat/h2o-lightning-4b](https://github.com/yutamorrow/strands-decider/tree/feat/h2o-lightning-4b)）を、strands-decider の最新版に合わせました。
+- 迷っている yes / no の確率を 0.801 に書き換える設定を外すオプション `--noul-floor 0` を足しました。この書き換えがあると、0.60 の安全確認が効かなくなるためです。
+
+```bash
+strands-decider serve h2oai/h2o-lightning-4b --revision v1.2.3 --attention one-way --noul-floor 0 --device mps --port 8766
+DECIDER_URL=http://127.0.0.1:8766 .venv/bin/python compare_prompt_order.py strict_anchored strands_decider_h2o_v123
+```
+
+6 章と同じ質問を送り、6 章の結果（MLX 版、8bit）と比べました。
+
+| 比べた点 | 結果 |
+|---|---|
+| 記録した 19 問で、6 章と同じスキルを選んだ数 | 19 / 19 |
+| 合格か停止かの判定が同じだった数 | 19 / 19 |
+| 確信度の差 / 安全確認の確率の差（いちばん大きい値） | 0.029 / 0.009 |
+| 失敗を伝えたときに止まれた場所 | 7 か所中 7 |
+| 1 回の判断時間（中央値、Mac の GPU） | 約 1.1 秒 |
+
+記録：`outputs/prompt_order_comparison_strict_anchored_strands_decider_h2o_v123.json`、`outputs/decider_strands_decider_h2o_v123_vs_jev_comparison.json`
+
 ## ファイル構成
 
 ```

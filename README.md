@@ -251,6 +251,32 @@ DECIDER_URL=http://127.0.0.1:8766 .venv/bin/python compare_prompt_order.py stric
 
 記録：`outputs/prompt_order_comparison_strict_anchored_strands_decider_h2o_v123.json`、`outputs/decider_strands_decider_h2o_v123_vs_jev_comparison.json`
 
+## 追記：同じ fork で Clef-Flash も動かす（締め切り後の追記）
+
+この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 10 日に追記したものです。
+
+Cloudflare の 9B の判断 AI、[Clef-Flash](https://huggingface.co/Cloudflare/clef-flash)（Apache-2.0）も、同じ fork から、ほかのモデルと同じ使い方で動かせるようにしました。公式の参考コードと答えがすべて同じになることを、27 問で確かめています（確率の差は 0.0）。
+
+- fork：[YukiHSun/strands-decider（feat/clef-flash）](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash)
+
+```bash
+strands-decider serve Cloudflare/clef-flash --device mps --port 8742   # GPU サーバーでは --device cuda
+DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_decider_vs_jev.py decider_clef_flash_vs_jev_comparison.json
+DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_prompt_order.py strict_anchored clef_flash
+```
+
+| 比べた点 | Clef-Flash | Jev 1.14 |
+|---|---|---|
+| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 13 / 15 | 15 / 15 |
+| 同じく、直した説明文 | 12 / 15 | 15 / 15 |
+| 持ち上げた直後に「持ち直す」を選ぶ確率（直した説明文） | 約 0.32 | 1.00 |
+| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 |
+| 1 回の判断時間（中央値） | 約 1.8 秒（Mac の GPU） | 約 0.16 秒 |
+
+安全確認はすべて効きましたが、手順の判断は Jev や H2O-Lightning-4B より弱めでした。Clef-Flash は、直した説明文で、cube_lift の持ち上げ直後に別のタスクのスキルを選びました。`compare_prompt_order.py` はこのとき止まるので、その 1 問は「止まった不正解」として記録しています。
+
+記録：`outputs/decider_clef_flash_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_clef_flash.json`
+
 ## ファイル構成
 
 ```

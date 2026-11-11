@@ -281,7 +281,7 @@ DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_prompt_order.py stric
 
 この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 11 日に追記したものです。
 
-個人の開発者が公開している 4B の判断 AI を 2 つ、作者のサーバーで動かして比べました。fork には入れていません。
+個人の開発者が公開している 4B の判断 AI を 2 つ、作者のサーバーで動かして比べました。そのあと、2 つとも同じ fork（[feat/clef-flash](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash)）にも入れました（この節の最後）。
 
 - [Mapika/decider-4b](https://huggingface.co/Mapika/decider-4b)：重みは Apache-2.0、画像も読めます。サーバーは [Mapika/decider](https://github.com/Mapika/decider) です。
 - [jaredpalmer/kev-4b](https://huggingface.co/jaredpalmer/kev-4b)：Apache-2.0、Qwen3.5-4B に LoRA と回答用のヘッドを足したものです。サーバーは [jaredpalmer/kev](https://github.com/jaredpalmer/kev) で、Mac では MLX で動きます。
@@ -307,6 +307,22 @@ DECIDER_URL=http://127.0.0.1:8743 .venv/bin/python compare_prompt_order.py stric
 - Kev-4B：いちばん速い一方、成功した手の半分ほどが確信度不足で止まりました。持ち上げた直後に「運ぶ」を確信度 0.53 で選び、合格ラインを越えてしまいました（Clef-Flash で通った 1 手は、片付けのあとに「離れる」をもう一度選んだもの）。
 
 記録：`outputs/decider_mapika_decider4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_mapika_decider4b.json`、`outputs/eye_eval_mapika-decider-4b_both2.json`（Hugging Face の版 585473d。「目」の JSON は 95 枚分で、表の値は Jev 1.14 と同じ 15 枚で数えたもの）、`outputs/decider_kev4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_kev4b.json`（Hugging Face の版 6cfce5c）
+
+### fork でも動かす
+
+2 つとも同じ fork に入れ、strands-decider のコマンドから、ほかのモデルと同じ使い方で動かせるようにしました。作者のコードは動かさず、質問文の組み立て方と答えの読み取り方を fork 側に書き写しています。
+
+```bash
+strands-decider serve Mapika/decider-4b --device mps --port 8743
+strands-decider serve jaredpalmer/kev-4b --device mps --port 8744
+```
+
+- 作者のサーバーと fork に同じ 30 件を送ると、46 個の答えで選んだ答えがすべて同じでした（確率の差は最大で decider-4b 0.021、Kev-4B 0.026）。
+- キットの 19 問：decider-4b はスキルも合格・停止の判定も 19 / 19 で作者のサーバーと同じでした。Kev-4B はスキルが 19 / 19 で同じでした。判定は、作者の MLX 版と 19 / 19、PyTorch 版と 18 / 19 で同じでした（分かれた 1 問は確信度が 0.45 のすぐ上と下：fork 0.444、PyTorch 版 0.457）。
+- 1 回の判断時間（中央値、Mac の PyTorch）：decider-4b 約 1.1 秒、Kev-4B 約 1.2 秒。
+- fork は画像に対応していないので、decider-4b を「目」として使うときは作者のサーバーを使います。
+
+記録：`outputs/decider_fork_mapika_decider4b_vs_jev_comparison.json`、`outputs/decider_fork_kev4b_vs_jev_comparison.json`、`outputs/decider_kev4b_official_torch_vs_jev_comparison.json`（作者のサーバーの PyTorch 版）
 
 ## ファイル構成
 

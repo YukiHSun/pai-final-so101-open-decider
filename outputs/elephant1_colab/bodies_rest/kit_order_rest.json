@@ -1,0 +1,46 @@
+[
+ {
+  "state": {
+   "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+   "last_completed_skill": "close_gripper",
+   "gripper_state": "closed",
+   "fingertip_position_m": [
+    0.2202,
+    0.0002,
+    0.0154
+   ],
+   "visual_observation": {
+    "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+    "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+    "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+    "Are both fingers straddling the cube at its height? (yes / no / unclear)": "no",
+    "Is the cube squeezed between closed fingers? (yes / no / unclear)": "no",
+    "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+   },
+   "visual_notes": "Deliberate negative check: report that the closed fingers missed and the cube is not between them."
+  },
+  "questions": {
+   "next_skill": {
+    "type": "choice",
+    "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+    "criteria": {
+     "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+     "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+     "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+     "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+     "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+     "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+     "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+    }
+   },
+   "grasp_secure": {
+    "type": "noul",
+    "instructions": "Is the cube firmly squeezed between both closed fingers so that lifting is safe?",
+    "criteria": {
+     "true": "Both fingers are closed on the cube.",
+     "false": "The grasp missed, is one-sided, or the cube is not between the fingers."
+    }
+   }
+  }
+ }
+]

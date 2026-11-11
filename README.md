@@ -324,6 +324,61 @@ strands-decider serve jaredpalmer/kev-4b --device mps --port 8744
 
 記録：`outputs/decider_fork_mapika_decider4b_vs_jev_comparison.json`、`outputs/decider_fork_kev4b_vs_jev_comparison.json`、`outputs/decider_kev4b_official_torch_vs_jev_comparison.json`（作者のサーバーの PyTorch 版）
 
+## 追記：elephant-1 を作者の動かし方と fork で確かめる（締め切り後の追記）
+
+この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 11 日に追記したものです（レポート 10.9 節）。
+
+6.4 節では OpenRouter 経由で試した [elephant-1](https://huggingface.co/baselabs/elephant-1)（9B、MIT）を、作者が指定している動かし方（[OneJev](https://github.com/OmniJev/OneJev) に作者の `serve.patch` を当てたもの）で動かしました。NVIDIA の GPU が必要なので Google Colab の L4（24 GB）で答えさせ、答えを持ち帰って小さなサーバーから返し、キットのスクリプトをそのまま実行しました。そのあと [fork（feat/clef-flash）](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash) にも入れ、Mac で動かせるようにしました。
+
+| 比べた点 | 作者の動かし方（Colab L4） | fork（Mac） | Jev 1.14 |
+|---|---|---|---|
+| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 15 / 15 | 15 / 15 | 15 / 15 |
+| 同じく、直した説明文 | 14 / 15 | 14 / 15 | 15 / 15 |
+| 間違った手が合格ラインを越えた数（成功した 15 手） | 0 | 0 | 0 |
+| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 |
+| 持ち上げた直後に「持ち直す」を選ぶ確率（元 → 直した説明文） | 0.039 → 0.931 | 0.040 → 0.930 | 0.79〜0.87 → 1.00 |
+| 1 回の判断時間（中央値） | 約 0.42 秒 | 約 2.2 秒 | 約 0.15 秒 |
+
+- 元の説明文では Jev 1.14 と同じ結果で、fork で試した判断 AI の中でいちばん近い結果です。
+- 直した説明文で落ちた 1 手は、cube_lift の持ち上げた直後に別のタスクの「持ち直す」を選んだもの（止まりました）。Clef-Flash と decider-4b でも同じ間違いが起きたので、説明文の側を直す必要があります。
+- fork と作者の動かし方は、42 件・67 個の答えですべて同じ答えを選びました（確率の差は最大 0.026）。fork の質問文は OneJev のものと 67 問すべてで同じでした。キットでも、スキルと合格・停止の判定がすべて同じでした。
+
+### 動かし方
+
+fork（Mac でも GPU でも。重みは約 19 GB、Mac は 32 GB 以上）：
+
+```bash
+git clone -b feat/clef-flash https://github.com/YukiHSun/strands-decider && cd strands-decider
+pip install -e .
+strands-decider serve baselabs/elephant-1 --device mps --port 8748     # GPU なら --device cuda
+curl -s http://127.0.0.1:8748/health                                  # "attention":"noncausal" と出れば OK
+```
+
+作者の動かし方（Colab CLI と Colab の GPU が必要。VM は最後に必ず返します）：
+
+```bash
+scripts/elephant1_colab/run_colab.sh L4      # outputs/elephant1_colab/bodies/ の質問に答え、answers/ に保存（約 20 分）
+python scripts/elephant1_colab/replay_server.py outputs/elephant1_colab/answers/*.json --port 8745
+```
+
+キットの比較（どちらのサーバーにも同じように向けます）：
+
+```bash
+DECIDER_URL=http://127.0.0.1:8748 .venv/bin/python compare_decider_vs_jev.py decider_fork_elephant1_vs_jev_comparison.json
+DECIDER_URL=http://127.0.0.1:8748 .venv/bin/python scripts/run_order_tolerant.py strict_anchored fork_elephant1
+```
+
+`scripts/run_order_tolerant.py` は、別のタスクのスキルが返ってきたときに止めずに「止まった不正解」として数えるための包み（キット本体は変えていません）。
+
+気をつけること：
+
+- L4（24 GB）では、作者のコードが出力層を 32 ビットに広げる途中でメモリが足りなくなります。`answer_bodies.py` は同じ変換を CPU を通して行います（値は同じ、ピーク 20.4 GB）。
+- 作者のコードは、モデルをローカルのフォルダーから読んだときだけ、このモデルの注意の向き（ブロックの中で双方向）を使います。Hugging Face の名前で渡すと、黙ってふつうの一方向の注意で動きます。
+- Colab の CLI は、接続が切れたまま止まることがあります。`run_colab.sh` は処理を VM の中で独立して動かし、短い命令でログを見に行きます。
+- このとき Colab で借りられたのは T4 と L4 だけでした（A100、H100 は借りられず）。
+
+記録：`outputs/decider_elephant1_official_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_elephant1_official.json`（作者の動かし方）、`outputs/decider_fork_elephant1_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_fork_elephant1.json`（fork）、`outputs/elephant1_colab/`（送った質問、Colab での答え、`fork_vs_official_parity.json`）。Hugging Face の版 b3f8a93、OneJev 81ce62f。
+
 ## ファイル構成
 
 ```
@@ -332,6 +387,8 @@ run_claude_jev_cube_lift.py   1 判断ずつ進める実行スクリプト（sta
 compare_decider_vs_jev.py     記録した質問の再送と、失敗観測での安全確認（Jev と判断 AI の比較）
 compare_prompt_order.py       指示文 3 種（original / strict / strict_anchored）の比較
 check_layouts.py              AI なしでスキルを順番に実行し、手が作業を終えられる位置を調べる
+scripts/elephant1_colab/      elephant-1 を作者の動かし方で Colab の GPU に答えさせるスクリプトと、答えを返すサーバー
+scripts/run_order_tolerant.py compare_prompt_order.py の包み（別のタスクのスキルを止まった不正解として数える）
 eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 / H2O-Lightning-4B v1.4 の画像入力と Box、Ollama の小型モデル）
 strands_so101_sim/
   claude_jev_controller.py    質問の組み立て、ゲート（0.45 / 0.60）、Jev / ローカル判断 AI の切り替え

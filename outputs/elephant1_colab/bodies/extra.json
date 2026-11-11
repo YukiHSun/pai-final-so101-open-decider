@@ -1,0 +1,86 @@
+[
+ {
+  "state": "The ticket says the printer is jammed again.",
+  "questions": {
+   "urgency": {
+    "type": "score",
+    "instructions": "How urgent is this ticket?",
+    "criteria": [
+     "not urgent",
+     "somewhat urgent",
+     "very urgent"
+    ]
+   }
+  }
+ },
+ {
+  "state": "Pick a colour for a stop sign.",
+  "questions": {
+   "colour": {
+    "type": "choice",
+    "instructions": "Which colour?",
+    "criteria": {
+     "red": null,
+     "orange": null,
+     "yellow": null,
+     "green": null,
+     "blue": null,
+     "indigo": null,
+     "violet": null,
+     "black": null,
+     "white": null,
+     "grey": null,
+     "brown": null,
+     "pink": null
+    }
+   }
+  }
+ },
+ {
+  "state": "The door is open.",
+  "questions": {
+   "open": {
+    "type": "noul",
+    "instructions": "",
+    "criteria": {
+     "true": "The door is open.",
+     "false": "The door is closed."
+    }
+   }
+  }
+ },
+ {
+  "state": {
+   "readings": [
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    30
+   ],
+   "unit": "C"
+  },
+  "questions": {
+   "spike": {
+    "type": "noul",
+    "instructions": "Is there a sudden spike in the readings?"
+   },
+   "trend": {
+    "type": "choice",
+    "instructions": "Overall trend?",
+    "criteria": {
+     "up": {
+      "meaning": "rising"
+     },
+     "down": {
+      "meaning": "falling"
+     },
+     "flat": null
+    }
+   }
+  }
+ }
+]

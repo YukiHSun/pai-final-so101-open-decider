@@ -1,0 +1,987 @@
+{
+ "model": "baselabs/elephant-1",
+ "revision": "b3f8a93462fb1051a9de031e94a7ff380e254072",
+ "runtime": "OneJev qev @81ce62f + serve.patch",
+ "device": "NVIDIA L4",
+ "torch": "2.14.1+cu130",
+ "transformers": "5.19.0",
+ "attention": "noncausal",
+ "readout": "slot_lm",
+ "fork_mode": "batched",
+ "fork_max_abs_diff": 0.005424555287701194,
+ "calibration": "none",
+ "head_dtype": "float32",
+ "head_upcast": "same cast via CPU (24 GB card)",
+ "rows": [
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "The red cube has just been lifted and is held between the closed fingers, clearly above the floor. It is still beside the green goal, not over it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. Skills run in order ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done; repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "The cube has just been lifted and is held in the air; tighten the grip before carrying it.",
+       "transfer": "The cube is held tightly in the air but not above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "transfer",
+      "probabilities": {
+       "move_above_cube": 5.4e-05,
+       "descend": 7.5e-05,
+       "close_gripper": 0.000105,
+       "lift": 0.000107,
+       "secure_grasp": 0.038888,
+       "transfer": 0.951441,
+       "lower": 0.009002,
+       "release": 0.000183,
+       "retreat": 8.3e-05,
+       "done": 6.1e-05
+      },
+      "confidence": 0.946046
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.999527
+     }
+    },
+    "usage": {
+     "input_tokens": 875,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "e03721927739f4c5f070cdb93eb2d140f6d05f165723697b278aee673848e6c6",
+    "fork_mode": "batched",
+    "prefix_tokens": 431,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.00684915099986938,
+     "forward_s": 0.4738188660001015,
+     "total_s": 0.4812141639999936
+    }
+   },
+   "ms": 481.4
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "The red cube has just been lifted and is held between the closed fingers, clearly above the floor. It is still beside the green goal, not over it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "The cube has just been lifted and is held in the air; tighten the grip before carrying it.",
+       "transfer": "The cube is held tightly in the air but not above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "transfer",
+      "probabilities": {
+       "move_above_cube": 0.000118,
+       "descend": 0.000178,
+       "close_gripper": 0.000394,
+       "lift": 0.000391,
+       "secure_grasp": 0.338604,
+       "transfer": 0.651658,
+       "lower": 0.008112,
+       "release": 0.000274,
+       "retreat": 0.000172,
+       "done": 0.0001
+      },
+      "confidence": 0.612953
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.999495
+     }
+    },
+    "usage": {
+     "input_tokens": 918,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "a9def5003b971c663713af9ef514f8afc75b17862d8e38a9160f060df02ccafb",
+    "fork_mode": "batched",
+    "prefix_tokens": 431,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.006888479000053849,
+     "forward_s": 0.4917147080000177,
+     "total_s": 0.49919576100000995
+    }
+   },
+   "ms": 499.4
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "The red cube has just been lifted and is held between the closed fingers, clearly above the floor. It is still beside the green goal, not over it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "secure_grasp",
+      "probabilities": {
+       "move_above_cube": 6.6e-05,
+       "descend": 0.000101,
+       "close_gripper": 0.000293,
+       "lift": 0.000291,
+       "secure_grasp": 0.93091,
+       "transfer": 0.064638,
+       "lower": 0.003437,
+       "release": 0.000143,
+       "retreat": 8.3e-05,
+       "done": 4e-05
+      },
+      "confidence": 0.923233
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.999495
+     }
+    },
+    "usage": {
+     "input_tokens": 939,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "06344714a99f2711ec0007939b181c1ec8a1bf47051df49410c1f808e869194f",
+    "fork_mode": "batched",
+    "prefix_tokens": 431,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.007061387000021568,
+     "forward_s": 0.49732545999995637,
+     "total_s": 0.5049554350000562
+    }
+   },
+   "ms": 505.1
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: the red cube is held between the closed fingers several cm above the floor, beside (not over) the green goal. Its reflection is separated from it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. Skills run in order ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done; repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "The cube has just been lifted and is held in the air; tighten the grip before carrying it.",
+       "transfer": "The cube is held tightly in the air but not above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "transfer",
+      "probabilities": {
+       "move_above_cube": 2.4e-05,
+       "descend": 3.8e-05,
+       "close_gripper": 4.4e-05,
+       "lift": 7.6e-05,
+       "secure_grasp": 0.009008,
+       "transfer": 0.985973,
+       "lower": 0.004664,
+       "release": 0.000105,
+       "retreat": 4e-05,
+       "done": 2.9e-05
+      },
+      "confidence": 0.984415
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.999733
+     }
+    },
+    "usage": {
+     "input_tokens": 878,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "765cc8adeba7198269a646ee492ee31515b1ec15f61e4e6dad5af817ac15ba16",
+    "fork_mode": "batched",
+    "prefix_tokens": 434,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.006798478000064279,
+     "forward_s": 0.4727926649998153,
+     "total_s": 0.48016320700003234
+    }
+   },
+   "ms": 480.4
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: the red cube is held between the closed fingers several cm above the floor, beside (not over) the green goal. Its reflection is separated from it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "The cube has just been lifted and is held in the air; tighten the grip before carrying it.",
+       "transfer": "The cube is held tightly in the air but not above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "transfer",
+      "probabilities": {
+       "move_above_cube": 0.000103,
+       "descend": 0.000164,
+       "close_gripper": 0.000276,
+       "lift": 0.00071,
+       "secure_grasp": 0.201664,
+       "transfer": 0.789427,
+       "lower": 0.007158,
+       "release": 0.000252,
+       "retreat": 0.000156,
+       "done": 9e-05
+      },
+      "confidence": 0.76603
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.99974
+     }
+    },
+    "usage": {
+     "input_tokens": 921,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "718fd925b7bdde2f752fa0479d5ab271e59edc68fafc4972f9ea7bfa23580c1e",
+    "fork_mode": "batched",
+    "prefix_tokens": 434,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.006947986999875866,
+     "forward_s": 0.4994128289999935,
+     "total_s": 0.5069458579998809
+    }
+   },
+   "ms": 507.1
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the green goal square visible in the images? (yes / no / unclear)": "yes",
+      "Is the gripper directly above or at the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes",
+      "Is the cube positioned over the green goal square? (yes / no / unclear)": "no",
+      "Is the cube resting on the floor inside the green goal square? (yes / no / unclear)": "no",
+      "Are the gripper fingers open? (yes / no / unclear)": "no",
+      "Is the gripper raised away, not touching the cube? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: the red cube is held between the closed fingers several cm above the floor, beside (not over) the green goal. Its reflection is separated from it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must pick up a 3 cm red cube, carry it, and set it down inside the green square goal area, then release it and move the gripper away. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> secure_grasp -> transfer -> lower -> release -> retreat -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal.",
+       "lower": "The held cube is above the green goal area; lower it onto the floor.",
+       "release": "The held cube rests on the floor inside the green goal; open the fingers.",
+       "retreat": "The fingers are open and the cube sits inside the goal; raise the gripper away.",
+       "done": "The cube rests alone inside the green goal with the gripper raised away, or the task cannot continue safely."
+      }
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "instructions": "Is the cube held in the air between the closed fingers, clear of the floor?",
+      "criteria": {
+       "true": "The cube is lifted and held between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "secure_grasp",
+      "probabilities": {
+       "move_above_cube": 8.9e-05,
+       "descend": 0.000132,
+       "close_gripper": 0.000211,
+       "lift": 0.000392,
+       "secure_grasp": 0.855032,
+       "transfer": 0.138227,
+       "lower": 0.005522,
+       "release": 0.000209,
+       "retreat": 0.000125,
+       "done": 6e-05
+      },
+      "confidence": 0.838925
+     },
+     "cube_held_in_air": {
+      "type": "noul",
+      "noul": 0.99974
+     }
+    },
+    "usage": {
+     "input_tokens": 942,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "5557fbf91b41934992c61d0079d08369092218148bed8524d69dec9577434ff4",
+    "fork_mode": "batched",
+    "prefix_tokens": 434,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.007159026999943308,
+     "forward_s": 0.5014462800002093,
+     "total_s": 0.5091894009999578
+    }
+   },
+   "ms": 509.4
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "ready",
+     "gripper_state": "open",
+     "fingertip_position_m": [
+      0.0204,
+      -0.3794,
+      0.2547
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "no",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "no",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "no",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Red cube sits alone on the floor ahead of the arm. The open gripper is to the left of the cube in both views, not above it."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "move_above_cube",
+      "probabilities": {
+       "move_above_cube": 0.999884,
+       "descend": 0.000108,
+       "close_gripper": 4e-06,
+       "lift": 2e-06,
+       "done": 1e-06,
+       "secure_grasp": 1e-06,
+       "transfer": 1e-06
+      },
+      "confidence": 0.999865
+     }
+    },
+    "usage": {
+     "input_tokens": 653,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "0cf632f7107f034d07ed221a3cbfa47a5e948c6e8ad98df6edcbf1fa8f9a3384",
+    "fork_mode": "batched",
+    "prefix_tokens": 326,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.004174421000016082,
+     "forward_s": 0.32451280300006147,
+     "total_s": 0.32919872000002215
+    }
+   },
+   "ms": 329.4
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "move_above_cube",
+     "gripper_state": "open",
+     "fingertip_position_m": [
+      0.2093,
+      -0.0014,
+      0.0976
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "no",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "no",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: the open fingers hover several cm directly above the red cube, which is still on the floor. Top-down view: the cube is hidden under the gripper."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "descend",
+      "probabilities": {
+       "move_above_cube": 3.2e-05,
+       "descend": 0.997435,
+       "close_gripper": 0.002497,
+       "lift": 1.7e-05,
+       "done": 6e-06,
+       "secure_grasp": 6e-06,
+       "transfer": 7e-06
+      },
+      "confidence": 0.997007
+     }
+    },
+    "usage": {
+     "input_tokens": 660,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "0b85128d525b351e9b586a3d01bc89a7fbf653815526af3da167403549a6857e",
+    "fork_mode": "batched",
+    "prefix_tokens": 333,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.004258135000100083,
+     "forward_s": 0.33455364099995677,
+     "total_s": 0.3393476769999779
+    }
+   },
+   "ms": 339.5
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "descend",
+     "gripper_state": "open",
+     "fingertip_position_m": [
+      0.2198,
+      0.0002,
+      0.0151
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "no",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: the open fingers have descended to floor level and the red cube sits between them. Gripper is still open. Top-down: cube hidden under the gripper."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "close_gripper",
+      "probabilities": {
+       "move_above_cube": 1.2e-05,
+       "descend": 0.001978,
+       "close_gripper": 0.997933,
+       "lift": 6.6e-05,
+       "done": 4e-06,
+       "secure_grasp": 3e-06,
+       "transfer": 5e-06
+      },
+      "confidence": 0.997588
+     }
+    },
+    "usage": {
+     "input_tokens": 659,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "888021e0c7a204c479cad94f9e36b03384d7f717bbbc99a8595e891b72ff936c",
+    "fork_mode": "batched",
+    "prefix_tokens": 332,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.004253142000152366,
+     "forward_s": 0.3275445619999573,
+     "total_s": 0.33230933800018647
+    }
+   },
+   "ms": 332.5
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "close_gripper",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0154
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Oblique view: both fingers now press against opposite sides of the red cube, which is still on the floor. Change from the previous frame is subtle. Top-down: cube hidden under gripper."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     },
+     "grasp_secure": {
+      "type": "noul",
+      "instructions": "Is the cube firmly squeezed between both closed fingers so that lifting is safe?",
+      "criteria": {
+       "true": "Both fingers are closed on the cube.",
+       "false": "The grasp missed, is one-sided, or the cube is not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "lift",
+      "probabilities": {
+       "move_above_cube": 3.2e-05,
+       "descend": 0.000639,
+       "close_gripper": 0.001496,
+       "lift": 0.997761,
+       "done": 2.9e-05,
+       "secure_grasp": 1.9e-05,
+       "transfer": 2.5e-05
+      },
+      "confidence": 0.997387
+     },
+     "grasp_secure": {
+      "type": "noul",
+      "noul": 0.981525
+     }
+    },
+    "usage": {
+     "input_tokens": 738,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "ca9ca3d6534799550a74ed15ae3c3dc2e4659956bd48ae86fd0de85ac08aa8e0",
+    "fork_mode": "batched",
+    "prefix_tokens": 337,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.005744683000102668,
+     "forward_s": 0.4239850309998019,
+     "total_s": 0.4303107180001007
+    }
+   },
+   "ms": 430.5
+  },
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "lift",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0807
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "no",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "yes",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "yes",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "yes"
+     },
+     "visual_notes": "Oblique view: the red cube is held between the closed fingers several cm above the floor; its reflection is separated from it. Top-down: cube hidden under the gripper."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     },
+     "task_complete": {
+      "type": "noul",
+      "instructions": "Is the cube held clear of the floor by the gripper, completing the lift?",
+      "criteria": {
+       "true": "The cube is held in the air between the fingers.",
+       "false": "The cube is still on the floor, dropped, or not visible."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "secure_grasp",
+      "probabilities": {
+       "move_above_cube": 0.000495,
+       "descend": 0.002889,
+       "close_gripper": 0.003265,
+       "lift": 0.001425,
+       "done": 0.469163,
+       "secure_grasp": 0.520876,
+       "transfer": 0.001888
+      },
+      "confidence": 0.441022
+     },
+     "task_complete": {
+      "type": "noul",
+      "noul": 0.996067
+     }
+    },
+    "usage": {
+     "input_tokens": 734,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "db02cf03a7529a6c7217a84e0bfbd72d76ca6cf4cd141cb16019d346c8f8e63a",
+    "fork_mode": "batched",
+    "prefix_tokens": 331,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.0058294240000122954,
+     "forward_s": 0.42751133100000516,
+     "total_s": 0.43389126700003544
+    }
+   },
+   "ms": 434.1
+  }
+ ]
+}

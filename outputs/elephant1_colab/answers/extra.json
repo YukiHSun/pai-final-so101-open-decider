@@ -1,0 +1,249 @@
+{
+ "model": "baselabs/elephant-1",
+ "revision": "b3f8a93462fb1051a9de031e94a7ff380e254072",
+ "runtime": "OneJev qev @81ce62f + serve.patch",
+ "device": "NVIDIA L4",
+ "torch": "2.14.1+cu130",
+ "transformers": "5.19.0",
+ "attention": "noncausal",
+ "readout": "slot_lm",
+ "fork_mode": "batched",
+ "fork_max_abs_diff": 0.005424555287701194,
+ "calibration": "none",
+ "head_dtype": "float32",
+ "head_upcast": "same cast via CPU (24 GB card)",
+ "rows": [
+  {
+   "body": {
+    "state": "The ticket says the printer is jammed again.",
+    "questions": {
+     "urgency": {
+      "type": "score",
+      "instructions": "How urgent is this ticket?",
+      "criteria": [
+       "not urgent",
+       "somewhat urgent",
+       "very urgent"
+      ]
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "urgency": {
+      "type": "score",
+      "score": 0.91855,
+      "legend": {
+       "0": "not urgent",
+       "1": "somewhat urgent",
+       "2": "very urgent"
+      },
+      "probabilities": {
+       "0": 0.28641,
+       "1": 0.50863,
+       "2": 0.20496
+      },
+      "confidence": 0.262945
+     }
+    },
+    "usage": {
+     "input_tokens": 116,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "0d18e2e6753746d7fac0d35fa467d939b9761bb5d975afdc1334b1563038aa6b",
+    "fork_mode": "batched",
+    "prefix_tokens": 55,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.0014462359999924956,
+     "forward_s": 0.2131265739999435,
+     "total_s": 0.2152008850000584
+    }
+   },
+   "ms": 228.1
+  },
+  {
+   "body": {
+    "state": "Pick a colour for a stop sign.",
+    "questions": {
+     "colour": {
+      "type": "choice",
+      "instructions": "Which colour?",
+      "criteria": {
+       "red": null,
+       "orange": null,
+       "yellow": null,
+       "green": null,
+       "blue": null,
+       "indigo": null,
+       "violet": null,
+       "black": null,
+       "white": null,
+       "grey": null,
+       "brown": null,
+       "pink": null
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "colour": {
+      "type": "choice",
+      "choice": "red",
+      "probabilities": {
+       "red": 0.99031,
+       "orange": 0.003525,
+       "yellow": 0.001349,
+       "green": 0.000603,
+       "blue": 0.000627,
+       "indigo": 0.000176,
+       "violet": 0.000706,
+       "black": 0.001179,
+       "white": 0.000495,
+       "grey": 0.000163,
+       "brown": 0.000257,
+       "pink": 0.000609
+      },
+      "confidence": 0.989429
+     }
+    },
+    "usage": {
+     "input_tokens": 149,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "d23c3cba84bc7d3b3447e4fc4cbef029b4ce9f0dd3aca5ed2cb1c3b680cf186c",
+    "fork_mode": "batched",
+    "prefix_tokens": 53,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.0016804619999675197,
+     "forward_s": 0.20996770800002196,
+     "total_s": 0.21226719900005264
+    }
+   },
+   "ms": 212.4
+  },
+  {
+   "body": {
+    "state": "The door is open.",
+    "questions": {
+     "open": {
+      "type": "noul",
+      "instructions": "",
+      "criteria": {
+       "true": "The door is open.",
+       "false": "The door is closed."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "open": {
+      "type": "noul",
+      "noul": 0.847441
+     }
+    },
+    "usage": {
+     "input_tokens": 108,
+     "output_tokens": 1
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "f549bff3209aa979a0990cc91a5a100d91c324fe517231026335954a14e7abd7",
+    "fork_mode": "batched",
+    "prefix_tokens": 50,
+    "branches": 1,
+    "timing": {
+     "render_s": 0.0013693360001525434,
+     "forward_s": 0.2109060299999328,
+     "total_s": 0.21264262199997574
+    }
+   },
+   "ms": 212.8
+  },
+  {
+   "body": {
+    "state": {
+     "readings": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      30
+     ],
+     "unit": "C"
+    },
+    "questions": {
+     "spike": {
+      "type": "noul",
+      "instructions": "Is there a sudden spike in the readings?"
+     },
+     "trend": {
+      "type": "choice",
+      "instructions": "Overall trend?",
+      "criteria": {
+       "up": {
+        "meaning": "rising"
+       },
+       "down": {
+        "meaning": "falling"
+       },
+       "flat": null
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "spike": {
+      "type": "noul",
+      "noul": 0.905867
+     },
+     "trend": {
+      "type": "choice",
+      "choice": "up",
+      "probabilities": {
+       "up": 0.911486,
+       "down": 0.013759,
+       "flat": 0.074755
+      },
+      "confidence": 0.86723
+     }
+    },
+    "usage": {
+     "input_tokens": 233,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "0a68458f570a5a88c9c9386479b42e3d1746ed06bfd428a4158a669e7fa964f8",
+    "fork_mode": "batched",
+    "prefix_tokens": 106,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.0027286340000500786,
+     "forward_s": 0.9243993850000152,
+     "total_s": 0.9275969330001317
+    }
+   },
+   "ms": 927.8
+  }
+ ]
+}

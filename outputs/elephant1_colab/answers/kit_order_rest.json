@@ -1,0 +1,103 @@
+{
+ "model": "baselabs/elephant-1",
+ "revision": "b3f8a93462fb1051a9de031e94a7ff380e254072",
+ "runtime": "OneJev qev @81ce62f + serve.patch",
+ "device": "NVIDIA L4",
+ "torch": "2.14.1+cu130",
+ "transformers": "5.19.0",
+ "attention": "noncausal",
+ "readout": "slot_lm",
+ "fork_mode": "batched",
+ "fork_max_abs_diff": 0.005424555287701194,
+ "calibration": "none",
+ "head_dtype": "float32",
+ "head_upcast": "same cast via CPU (24 GB card)",
+ "rows": [
+  {
+   "body": {
+    "state": {
+     "task": "Grip the 3 cm red cube with the SO-101 gripper and lift it over 5 cm.",
+     "last_completed_skill": "close_gripper",
+     "gripper_state": "closed",
+     "fingertip_position_m": [
+      0.2202,
+      0.0002,
+      0.0154
+     ],
+     "visual_observation": {
+      "Is the red cube visible in the images? (yes / no / unclear)": "yes",
+      "Is the cube resting on the floor? (yes / no / unclear)": "yes",
+      "Is the open gripper hovering directly above the cube? (yes / no / unclear)": "yes",
+      "Are both fingers straddling the cube at its height? (yes / no / unclear)": "no",
+      "Is the cube squeezed between closed fingers? (yes / no / unclear)": "no",
+      "Is the cube held clearly above the floor? (yes / no / unclear)": "no"
+     },
+     "visual_notes": "Deliberate negative check: report that the closed fingers missed and the cube is not between them."
+    },
+    "questions": {
+     "next_skill": {
+      "type": "choice",
+      "instructions": "A simulated SO-101 arm must grip a 3 cm red cube and lift it over 5 cm. Choose the next skill. The skills must run one by one in exactly this order: ready -> move_above_cube -> descend -> close_gripper -> lift -> done. The next skill is always the one that comes immediately after last_completed_skill in that order. Never skip a skill, even when the observation suggests its purpose is already achieved. Repeating last_completed_skill is not allowed.",
+      "criteria": {
+       "move_above_cube": "The gripper has not yet approached the cube; move the open gripper above the visible cube.",
+       "descend": "The open gripper is hovering above the cube; lower the open fingers around it.",
+       "close_gripper": "The open fingers straddle the cube at its height; close them on the cube.",
+       "lift": "The cube is squeezed between the closed fingers while still on the floor; raise it.",
+       "done": "The cube is already held clear of the floor after lifting, or the task cannot continue safely.",
+       "secure_grasp": "last_completed_skill is lift: the cube has just been raised. Always tighten the grip once before carrying it, even if the cube already looks firmly held.",
+       "transfer": "last_completed_skill is secure_grasp: the grip has already been tightened and the cube is not yet above the green goal; carry it over the goal."
+      }
+     },
+     "grasp_secure": {
+      "type": "noul",
+      "instructions": "Is the cube firmly squeezed between both closed fingers so that lifting is safe?",
+      "criteria": {
+       "true": "Both fingers are closed on the cube.",
+       "false": "The grasp missed, is one-sided, or the cube is not between the fingers."
+      }
+     }
+    }
+   },
+   "response": {
+    "model": "",
+    "answers": {
+     "next_skill": {
+      "type": "choice",
+      "choice": "lift",
+      "probabilities": {
+       "move_above_cube": 0.00645,
+       "descend": 0.140699,
+       "close_gripper": 0.007525,
+       "lift": 0.839537,
+       "done": 0.004925,
+       "secure_grasp": 0.000474,
+       "transfer": 0.00039
+      },
+      "confidence": 0.812793
+     },
+     "grasp_secure": {
+      "type": "noul",
+      "noul": 0.014518
+     }
+    },
+    "usage": {
+     "input_tokens": 718,
+     "output_tokens": 2
+    }
+   },
+   "meta": {
+    "prompt_version": "qev-labels-v2",
+    "prompt_sha256": "b6affc8c4de33a129e547fdc1cbc5a7c3e99f46b2f7ee2e4daedc249c9e7cb51",
+    "fork_mode": "batched",
+    "prefix_tokens": 317,
+    "branches": 2,
+    "timing": {
+     "render_s": 0.006255963000057818,
+     "forward_s": 1.1285906349999095,
+     "total_s": 1.1358066160000817
+    }
+   },
+   "ms": 1146.0
+  }
+ ]
+}

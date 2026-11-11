@@ -277,6 +277,37 @@ DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_prompt_order.py stric
 
 記録：`outputs/decider_clef_flash_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_clef_flash.json`
 
+## 追記：ほかの軽量な判断 AI も試す：Mapika/decider-4b と Kev-4B（締め切り後の追記）
+
+この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 11 日に追記したものです。
+
+個人の開発者が公開している 4B の判断 AI を 2 つ、作者のサーバーで動かして比べました。fork には入れていません。
+
+- [Mapika/decider-4b](https://huggingface.co/Mapika/decider-4b)：重みは Apache-2.0、画像も読めます。サーバーは [Mapika/decider](https://github.com/Mapika/decider) です。
+- [jaredpalmer/kev-4b](https://huggingface.co/jaredpalmer/kev-4b)：Apache-2.0、Qwen3.5-4B に LoRA と回答用のヘッドを足したものです。サーバーは [jaredpalmer/kev](https://github.com/jaredpalmer/kev) で、Mac では MLX で動きます。
+
+```bash
+DECIDER_MODEL=~/models/decider-4b DECIDER_DEVICE=mps DECIDER_IMAGES=1 uvicorn decider.serve:app --port 8743
+python -m kev.serve --run jaredpalmer/kev-4b --port 8744 --device mps
+DECIDER_URL=http://127.0.0.1:8743 .venv/bin/python compare_decider_vs_jev.py decider_mapika_decider4b_vs_jev_comparison.json
+DECIDER_URL=http://127.0.0.1:8743 .venv/bin/python compare_prompt_order.py strict_anchored mapika_decider4b
+# Kev-4B は 8744 番で同じ 2 本（出力名 decider_kev4b_vs_jev_comparison.json / kev4b）
+```
+
+| 比べた点 | decider-4b | Kev-4B | Clef-Flash | Jev 1.14 |
+|---|---|---|---|---|
+| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 14 / 15 | 7 / 15 | 13 / 15 | 15 / 15 |
+| 同じく、直した説明文 | 13 / 15 | 7 / 15 | 12 / 15 | 15 / 15 |
+| 間違った手が合格ラインを越えた数（成功した 15 手） | 0 | 1 | 1 | 0 |
+| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 |
+| 「目」として：Claude の答えと合った割合（15 枚） | 64.6% | ― | ― | 84.6% |
+| 1 回の判断時間（中央値、Mac） | 約 1.4 秒 | 約 0.8 秒 | 約 1.8 秒 | 約 0.15 秒 |
+
+- decider-4b：手順の判断は Clef-Flash より少し良い一方、yes / no の確率が 1.00 か 0.00 に振り切れます（温度 0.05 の設定のため）。間違えるときも確信を持って間違えるので、0.60 の安全確認を余裕として当てにしにくくなります。「目」としては H2O-Lightning-4B v1.4.2（83.8%）や Jev 1.14 に届きませんでした。「目」の検証では decider-4b が位置の枠（Box）に答えないので、その質問を外して送っています。
+- Kev-4B：いちばん速い一方、成功した手の半分ほどが確信度不足で止まりました。持ち上げた直後に「運ぶ」を確信度 0.53 で選び、合格ラインを越えてしまいました（Clef-Flash で通った 1 手は、片付けのあとに「離れる」をもう一度選んだもの）。
+
+記録：`outputs/decider_mapika_decider4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_mapika_decider4b.json`、`outputs/eye_eval_mapika-decider-4b_both2.json`（Hugging Face の版 585473d。「目」の JSON は 95 枚分で、表の値は Jev 1.14 と同じ 15 枚で数えたもの）、`outputs/decider_kev4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_kev4b.json`（Hugging Face の版 6cfce5c）
+
 ## ファイル構成
 
 ```

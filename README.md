@@ -13,6 +13,8 @@ Physical AI 応用1講座 最終課題の作業リポジトリです。
 
 ※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。
 
+> 締め切りのあと、ほかの判断 AI 5 つを strands-decider の fork で動かして比べました。まとめは [締め切り後の追記](#締め切り後の追記ほかの判断-ai-を-strands-decider-の-fork-で動かす2026-11-1011) にあります。
+
 ## 仕組み
 
 MuJoCo 上のロボットアーム SO-101 に、3 cm の赤いキューブを持ち上げさせる作業と、緑のゴールへ運んで置かせる作業を行わせます。役割は 3 つに分けています。
@@ -224,160 +226,112 @@ H2O-Lightning-4B も v1.4 で画像と Box に対応しました。同じ 15 枚
 - Jev：`.venv/bin/python eval_eye_models.py jev`（`.env` に `TYPESAFE_API_KEY` が必要です）
 - H2O：`.venv/bin/python eval_eye_models.py h2o`（v1.4.2 のサーバーを 8741 番で起動しておきます）
 
-## 追記：strands-decider の fork で H2O-Lightning-4B を動かす（締め切り後の追記）
+## 締め切り後の追記：ほかの判断 AI を strands-decider の fork で動かす（2026-11-10〜11）
 
-この節は、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 10 日に追記したものです。
+この節は、課題の提出締め切り（2026 年 11 月 2 日）のあとに追記したものです（レポート 10.6〜10.9 節）。提出した内容（ここより上）は変えていません。
 
-H2O-Lightning-4B を、OSS の判断 AI の道具である strands-decider から、ほかのモデルと同じ使い方で動かせるようにしました。strands-decider 本体は自分のモデル専用の方針なので、fork で対応しています。
+OSS の判断 AI の道具 strands-decider は、本体が自分のモデル専用の方針です。そこで fork（[YukiHSun/strands-decider の feat/clef-flash](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash)）を作り、ほかの会社や個人が公開している判断 AI 5 つを、同じコマンド `strands-decider serve` と同じ API（`POST /v1/systemone`）で動かせるようにしました。そのうえで、6 章と同じ確かめ方（キットのスクリプトはそのまま）で比べました。
 
-- fork：[YukiHSun/strands-decider（feat/h2o-lightning-4b-on-main）](https://github.com/YukiHSun/strands-decider/tree/feat/h2o-lightning-4b-on-main)
-- 協力者の yutamorrow さんが作った H2O-Lightning-4B の読み込み部分（[feat/h2o-lightning-4b](https://github.com/yutamorrow/strands-decider/tree/feat/h2o-lightning-4b)）を、strands-decider の最新版に合わせました。
-- 迷っている yes / no の確率を 0.801 に書き換える設定を外すオプション `--noul-floor 0` を足しました。この書き換えがあると、0.60 の安全確認が効かなくなるためです。
+### 結果
 
-```bash
-strands-decider serve h2oai/h2o-lightning-4b --revision v1.2.3 --attention one-way --noul-floor 0 --device mps --port 8766
-DECIDER_URL=http://127.0.0.1:8766 .venv/bin/python compare_prompt_order.py strict_anchored strands_decider_h2o_v123
-```
+| 判断 AI | 成功した 15 手が合格（元の説明文） | 同じく（直した説明文） | 間違った手が合格 | 失敗を伝えて止まれた場所 | 「目」（15 枚） | 1 回の判断（中央値） |
+|---|---|---|---|---|---|---|
+| [H2O-Lightning-4B](https://huggingface.co/h2oai/h2o-lightning-4b) v1.2.3（4B） | 15 / 15 | 15 / 15 | 0 | 7 / 7 | 83.8%（v1.4.2） | 約 1.1 秒 |
+| [Clef-Flash](https://huggingface.co/Cloudflare/clef-flash)（9B） | 13 / 15 | 12 / 15 | 1 | 7 / 7 | 試していない | 約 1.8 秒 |
+| [Mapika/decider-4b](https://huggingface.co/Mapika/decider-4b)（4B） | 14 / 15 | 13 / 15 | 0 | 7 / 7 | 64.6%（作者のサーバー） | 約 1.1 秒 |
+| [Kev-4B](https://huggingface.co/jaredpalmer/kev-4b)（4B） | 7 / 15 | 7 / 15 | 1 | 7 / 7 | 画像なし | 約 1.2 秒 |
+| [elephant-1](https://huggingface.co/baselabs/elephant-1)（9B） | **15 / 15** | 14 / 15 | 0 | 7 / 7 | 試していない | 約 2.2 秒（Colab の L4 では 0.42 秒） |
+| Jev 1.14（比べる基準、ホスト版） | 15 / 15 | 15 / 15 | 0 | 7 / 7 | 84.6% | 約 0.15 秒 |
 
-6 章と同じ質問を送り、6 章の結果（MLX 版、8bit）と比べました。
+判断時間は、断りのないものは Mac（Apple M シリーズ、36 GB）で fork を動かしたときの値です。
 
-| 比べた点 | 結果 |
-|---|---|
-| 記録した 19 問で、6 章と同じスキルを選んだ数 | 19 / 19 |
-| 合格か停止かの判定が同じだった数 | 19 / 19 |
-| 確信度の差 / 安全確認の確率の差（いちばん大きい値） | 0.029 / 0.009 |
-| 失敗を伝えたときに止まれた場所 | 7 か所中 7 |
-| 1 回の判断時間（中央値、Mac の GPU） | 約 1.1 秒 |
+- **どれも、失敗を伝えた 7 か所すべてで止まれました。** 安全確認は、どの判断 AI でも効きました。
+- **elephant-1** は、元の説明文では Jev 1.14 と同じ結果で、いちばん近い結果でした。ただし、持ち上げた直後の一手は、元の説明文だと「運ぶ」を選んで合格してしまいます（「持ち直す」の確率 0.04 → 直した説明文で 0.93）。直した説明文を使う必要があります。
+- **H2O-Lightning-4B** は、迷っている yes / no の確率を 0.801 に書き換える設定を外す（`--noul-floor 0`）と、6 章の結果をそのまま再現しました。
+- **Clef-Flash** は、手順の判断が Jev や H2O より弱めでした。間違って通った 1 手は、片付けのあとに「離れる」をもう一度選んだもので、腕を危険に動かすものではありません。
+- **decider-4b** は、yes / no の確率が 1.00 か 0.00 に振り切れます（作者の設定で温度 0.05）。間違えるときも確信を持って間違えるので、0.60 の安全確認を余裕として当てにしにくくなります。「目」としては Jev や H2O に届きませんでした。
+- **Kev-4B** は、成功した手の半分ほどが確信度不足で止まり、持ち上げた直後に「運ぶ」を確信度 0.53 で選んで通してしまいました。
+- **直した説明文で 1 手落ちたのは、Clef-Flash、decider-4b、elephant-1 で同じ場所でした。** cube_lift の持ち上げた直後に、別のタスクのスキル（持ち直す）を選んでいます（止まりました）。3 つのモデルで起きたので、説明文の側を直す必要があります。
 
-記録：`outputs/prompt_order_comparison_strict_anchored_strands_decider_h2o_v123.json`、`outputs/decider_strands_decider_h2o_v123_vs_jev_comparison.json`
+### fork と作者の実装の答え合わせ
 
-## 追記：同じ fork で Clef-Flash も動かす（締め切り後の追記）
+fork では作者のコードは動かさず、質問文の組み立て方と答えの読み取り方を書き写しています。作者の実装に同じ質問を送って、答えが同じになるかを確かめました。
 
-この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 10 日に追記したものです。
-
-Cloudflare の 9B の判断 AI、[Clef-Flash](https://huggingface.co/Cloudflare/clef-flash)（Apache-2.0）も、同じ fork から、ほかのモデルと同じ使い方で動かせるようにしました。公式の参考コードと答えがすべて同じになることを、27 問で確かめています（確率の差は 0.0）。
-
-- fork：[YukiHSun/strands-decider（feat/clef-flash）](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash)
-
-```bash
-strands-decider serve Cloudflare/clef-flash --device mps --port 8742   # GPU サーバーでは --device cuda
-DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_decider_vs_jev.py decider_clef_flash_vs_jev_comparison.json
-DECIDER_URL=http://127.0.0.1:8742 .venv/bin/python compare_prompt_order.py strict_anchored clef_flash
-```
-
-| 比べた点 | Clef-Flash | Jev 1.14 |
-|---|---|---|
-| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 13 / 15 | 15 / 15 |
-| 同じく、直した説明文 | 12 / 15 | 15 / 15 |
-| 持ち上げた直後に「持ち直す」を選ぶ確率（直した説明文） | 約 0.32 | 1.00 |
-| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 |
-| 1 回の判断時間（中央値） | 約 1.8 秒（Mac の GPU） | 約 0.16 秒 |
-
-安全確認はすべて効きましたが、手順の判断は Jev や H2O-Lightning-4B より弱めでした。Clef-Flash は、直した説明文で、cube_lift の持ち上げ直後に別のタスクのスキルを選びました。`compare_prompt_order.py` はこのとき止まるので、その 1 問は「止まった不正解」として記録しています。
-
-記録：`outputs/decider_clef_flash_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_clef_flash.json`
-
-## 追記：ほかの軽量な判断 AI も試す：Mapika/decider-4b と Kev-4B（締め切り後の追記）
-
-この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 11 日に追記したものです。
-
-個人の開発者が公開している 4B の判断 AI を 2 つ、作者のサーバーで動かして比べました。そのあと、2 つとも同じ fork（[feat/clef-flash](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash)）にも入れました（この節の最後）。
-
-- [Mapika/decider-4b](https://huggingface.co/Mapika/decider-4b)：重みは Apache-2.0、画像も読めます。サーバーは [Mapika/decider](https://github.com/Mapika/decider) です。
-- [jaredpalmer/kev-4b](https://huggingface.co/jaredpalmer/kev-4b)：Apache-2.0、Qwen3.5-4B に LoRA と回答用のヘッドを足したものです。サーバーは [jaredpalmer/kev](https://github.com/jaredpalmer/kev) で、Mac では MLX で動きます。
-
-```bash
-DECIDER_MODEL=~/models/decider-4b DECIDER_DEVICE=mps DECIDER_IMAGES=1 uvicorn decider.serve:app --port 8743
-python -m kev.serve --run jaredpalmer/kev-4b --port 8744 --device mps
-DECIDER_URL=http://127.0.0.1:8743 .venv/bin/python compare_decider_vs_jev.py decider_mapika_decider4b_vs_jev_comparison.json
-DECIDER_URL=http://127.0.0.1:8743 .venv/bin/python compare_prompt_order.py strict_anchored mapika_decider4b
-# Kev-4B は 8744 番で同じ 2 本（出力名 decider_kev4b_vs_jev_comparison.json / kev4b）
-```
-
-| 比べた点 | decider-4b | Kev-4B | Clef-Flash | Jev 1.14 |
-|---|---|---|---|---|
-| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 14 / 15 | 7 / 15 | 13 / 15 | 15 / 15 |
-| 同じく、直した説明文 | 13 / 15 | 7 / 15 | 12 / 15 | 15 / 15 |
-| 間違った手が合格ラインを越えた数（成功した 15 手） | 0 | 1 | 1 | 0 |
-| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 |
-| 「目」として：Claude の答えと合った割合（15 枚） | 64.6% | ― | ― | 84.6% |
-| 1 回の判断時間（中央値、Mac） | 約 1.4 秒 | 約 0.8 秒 | 約 1.8 秒 | 約 0.15 秒 |
-
-- decider-4b：手順の判断は Clef-Flash より少し良い一方、yes / no の確率が 1.00 か 0.00 に振り切れます（温度 0.05 の設定のため）。間違えるときも確信を持って間違えるので、0.60 の安全確認を余裕として当てにしにくくなります。「目」としては H2O-Lightning-4B v1.4.2（83.8%）や Jev 1.14 に届きませんでした。「目」の検証では decider-4b が位置の枠（Box）に答えないので、その質問を外して送っています。
-- Kev-4B：いちばん速い一方、成功した手の半分ほどが確信度不足で止まりました。持ち上げた直後に「運ぶ」を確信度 0.53 で選び、合格ラインを越えてしまいました（Clef-Flash で通った 1 手は、片付けのあとに「離れる」をもう一度選んだもの）。
-
-記録：`outputs/decider_mapika_decider4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_mapika_decider4b.json`、`outputs/eye_eval_mapika-decider-4b_both2.json`（Hugging Face の版 585473d。「目」の JSON は 95 枚分で、表の値は Jev 1.14 と同じ 15 枚で数えたもの）、`outputs/decider_kev4b_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_kev4b.json`（Hugging Face の版 6cfce5c）
-
-### fork でも動かす
-
-2 つとも同じ fork に入れ、strands-decider のコマンドから、ほかのモデルと同じ使い方で動かせるようにしました。作者のコードは動かさず、質問文の組み立て方と答えの読み取り方を fork 側に書き写しています。
-
-```bash
-strands-decider serve Mapika/decider-4b --device mps --port 8743
-strands-decider serve jaredpalmer/kev-4b --device mps --port 8744
-```
-
-- 作者のサーバーと fork に同じ 30 件を送ると、46 個の答えで選んだ答えがすべて同じでした（確率の差は最大で decider-4b 0.021、Kev-4B 0.026）。
-- キットの 19 問：decider-4b はスキルも合格・停止の判定も 19 / 19 で作者のサーバーと同じでした。Kev-4B はスキルが 19 / 19 で同じでした。判定は、作者の MLX 版と 19 / 19、PyTorch 版と 18 / 19 で同じでした（分かれた 1 問は確信度が 0.45 のすぐ上と下：fork 0.444、PyTorch 版 0.457）。
-- 1 回の判断時間（中央値、Mac の PyTorch）：decider-4b 約 1.1 秒、Kev-4B 約 1.2 秒。
-- fork は画像に対応していないので、decider-4b を「目」として使うときは作者のサーバーを使います。
-
-記録：`outputs/decider_fork_mapika_decider4b_vs_jev_comparison.json`、`outputs/decider_fork_kev4b_vs_jev_comparison.json`、`outputs/decider_kev4b_official_torch_vs_jev_comparison.json`（作者のサーバーの PyTorch 版）
-
-## 追記：elephant-1 を作者の動かし方と fork で確かめる（締め切り後の追記）
-
-この節も、課題の提出締め切り（2026 年 11 月 2 日）のあと、2026 年 11 月 11 日に追記したものです（レポート 10.9 節）。
-
-6.4 節では OpenRouter 経由で試した [elephant-1](https://huggingface.co/baselabs/elephant-1)（9B、MIT）を、作者が指定している動かし方（[OneJev](https://github.com/OmniJev/OneJev) に作者の `serve.patch` を当てたもの）で動かしました。NVIDIA の GPU が必要なので Google Colab の L4（24 GB）で答えさせ、答えを持ち帰って小さなサーバーから返し、キットのスクリプトをそのまま実行しました。そのあと [fork（feat/clef-flash）](https://github.com/YukiHSun/strands-decider/tree/feat/clef-flash) にも入れ、Mac で動かせるようにしました。
-
-| 比べた点 | 作者の動かし方（Colab L4） | fork（Mac） | Jev 1.14 |
+| 判断 AI | 比べた相手 | 答え | キットの手（スキル / 合格か停止か） |
 |---|---|---|---|
-| 成功した 15 手で、合格ラインを越えた数（元の説明文） | 15 / 15 | 15 / 15 | 15 / 15 |
-| 同じく、直した説明文 | 14 / 15 | 14 / 15 | 15 / 15 |
-| 間違った手が合格ラインを越えた数（成功した 15 手） | 0 | 0 | 0 |
-| 失敗を伝えたときに止まれた場所 | 7 か所中 7 | 7 か所中 7 | 7 か所中 7 |
-| 持ち上げた直後に「持ち直す」を選ぶ確率（元 → 直した説明文） | 0.039 → 0.931 | 0.040 → 0.930 | 0.79〜0.87 → 1.00 |
-| 1 回の判断時間（中央値） | 約 0.42 秒 | 約 2.2 秒 | 約 0.15 秒 |
+| H2O-Lightning-4B | 6 章の結果（MLX 版、8bit） | 確信度の差は最大 0.029、安全確認の差は最大 0.009 | 19 / 19、19 / 19 |
+| Clef-Flash | 作者の参考コード | 27 件すべて同じ（差 0.0） | ― |
+| decider-4b | 作者のサーバー | 30 件・46 個すべて同じ選択（差は最大 0.021） | 19 / 19、19 / 19 |
+| Kev-4B | 作者のサーバー | 30 件・46 個すべて同じ選択（差は最大 0.026） | 19 / 19、MLX 版と 19 / 19・PyTorch 版と 18 / 19 ※1 |
+| elephant-1 | 作者の動かし方（Colab の L4） ※2 | 42 件・67 個すべて同じ選択（差は最大 0.026） | 19 / 19、19 / 19 |
 
-- 元の説明文では Jev 1.14 と同じ結果で、fork で試した判断 AI の中でいちばん近い結果です。
-- 直した説明文で落ちた 1 手は、cube_lift の持ち上げた直後に別のタスクの「持ち直す」を選んだもの（止まりました）。Clef-Flash と decider-4b でも同じ間違いが起きたので、説明文の側を直す必要があります。
-- fork と作者の動かし方は、42 件・67 個の答えですべて同じ答えを選びました（確率の差は最大 0.026）。fork の質問文は OneJev のものと 67 問すべてで同じでした。キットでも、スキルと合格・停止の判定がすべて同じでした。
+※1 分かれた 1 問は、確信度が合格ライン 0.45 のすぐ上と下（fork 0.444、PyTorch 版 0.457）でした。<br>
+※2 elephant-1 の作者の動かし方（[OneJev](https://github.com/OmniJev/OneJev) に作者の `serve.patch` を当てたもの）は NVIDIA の GPU が必要なので、Google Colab の L4（24 GB）で答えさせ、答えを持ち帰って小さなサーバーから返しました。fork が組み立てる質問文は、OneJev のものと 67 問すべてで 1 文字も違いませんでした。
 
 ### 動かし方
 
-fork（Mac でも GPU でも。重みは約 19 GB、Mac は 32 GB 以上）：
+fork を入れて、判断 AI のサーバーを 1 つ起動し、キットをそこへ向けます。初回は重みを Hugging Face から取得します。約 19 GB の Clef-Flash と elephant-1 は、Mac なら 32 GB 以上、GPU なら 24 GB 以上が目安です。
 
 ```bash
 git clone -b feat/clef-flash https://github.com/YukiHSun/strands-decider && cd strands-decider
 pip install -e .
-strands-decider serve baselabs/elephant-1 --device mps --port 8748     # GPU なら --device cuda
-curl -s http://127.0.0.1:8748/health                                  # "attention":"noncausal" と出れば OK
+
+# どれか 1 つ（--device は mps / cuda / cpu）
+strands-decider serve h2oai/h2o-lightning-4b --revision v1.2.3 --attention one-way --noul-floor 0 --device mps --port 8766
+strands-decider serve Cloudflare/clef-flash --device mps --port 8742   # 約 19 GB
+strands-decider serve Mapika/decider-4b --device mps --port 8743       # 文章だけ
+strands-decider serve jaredpalmer/kev-4b --device mps --port 8744      # 文章だけ
+strands-decider serve baselabs/elephant-1 --device mps --port 8748     # 約 19 GB
+
+curl -s http://127.0.0.1:8748/health      # 応答があれば起動完了
 ```
 
-作者の動かし方（Colab CLI と Colab の GPU が必要。VM は最後に必ず返します）：
-
-```bash
-scripts/elephant1_colab/run_colab.sh L4      # outputs/elephant1_colab/bodies/ の質問に答え、answers/ に保存（約 20 分）
-python scripts/elephant1_colab/replay_server.py outputs/elephant1_colab/answers/*.json --port 8745
-```
-
-キットの比較（どちらのサーバーにも同じように向けます）：
+このリポジトリに戻って、キットの比較を実行します（ポートと出力名をモデルに合わせます）。
 
 ```bash
 DECIDER_URL=http://127.0.0.1:8748 .venv/bin/python compare_decider_vs_jev.py decider_fork_elephant1_vs_jev_comparison.json
 DECIDER_URL=http://127.0.0.1:8748 .venv/bin/python scripts/run_order_tolerant.py strict_anchored fork_elephant1
 ```
 
-`scripts/run_order_tolerant.py` は、別のタスクのスキルが返ってきたときに止めずに「止まった不正解」として数えるための包み（キット本体は変えていません）。
+`scripts/run_order_tolerant.py` は `compare_prompt_order.py` の包みです。別のタスクのスキルが返ってきたときに止めずに「止まった不正解」として数えます（キット本体は変えていません）。比べるときに Jev も呼ぶので、`.env` に `TYPESAFE_API_KEY` が必要です。
 
-気をつけること：
+<details>
+<summary>作者のサーバー・動かし方で確かめるとき（decider-4b、Kev-4B、elephant-1）</summary>
 
-- L4（24 GB）では、作者のコードが出力層を 32 ビットに広げる途中でメモリが足りなくなります。`answer_bodies.py` は同じ変換を CPU を通して行います（値は同じ、ピーク 20.4 GB）。
-- 作者のコードは、モデルをローカルのフォルダーから読んだときだけ、このモデルの注意の向き（ブロックの中で双方向）を使います。Hugging Face の名前で渡すと、黙ってふつうの一方向の注意で動きます。
-- Colab の CLI は、接続が切れたまま止まることがあります。`run_colab.sh` は処理を VM の中で独立して動かし、短い命令でログを見に行きます。
-- このとき Colab で借りられたのは T4 と L4 だけでした（A100、H100 は借りられず）。
+```bash
+# decider-4b（github.com/Mapika/decider）。画像の「目」を試すときもこちら
+DECIDER_MODEL=~/models/decider-4b DECIDER_DEVICE=mps DECIDER_IMAGES=1 uvicorn decider.serve:app --port 8743
 
-記録：`outputs/decider_elephant1_official_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_elephant1_official.json`（作者の動かし方）、`outputs/decider_fork_elephant1_vs_jev_comparison.json`、`outputs/prompt_order_comparison_strict_anchored_fork_elephant1.json`（fork）、`outputs/elephant1_colab/`（送った質問、Colab での答え、`fork_vs_official_parity.json`）。Hugging Face の版 b3f8a93、OneJev 81ce62f。
+# Kev-4B（github.com/jaredpalmer/kev）。Mac では MLX で動き、/health はありません
+python -m kev.serve --run jaredpalmer/kev-4b --port 8744 --device mps
+
+# elephant-1（OneJev）。Colab CLI と Colab の GPU が必要。VM は最後に必ず返します（約 20 分）
+scripts/elephant1_colab/run_colab.sh L4      # outputs/elephant1_colab/bodies/ の質問に答え、answers/ に保存
+python scripts/elephant1_colab/replay_server.py outputs/elephant1_colab/answers/*.json --port 8745
+```
+
+</details>
+
+### 気をつけること
+
+- **H2O-Lightning-4B は `--noul-floor 0` を付けます。** 付けないと、迷っている yes / no の確率が 0.801 に書き換えられ、0.60 の安全確認が効かなくなります。
+- **elephant-1 の作者のコードは、モデルをローカルのフォルダーから読んだときだけ、正しい注意の向き（ブロックの中で双方向）を使います。** Hugging Face の名前で渡すと、黙ってふつうの一方向の注意で動きます。fork は名前で渡しても正しく読みます。
+- **Colab の L4（24 GB）では、elephant-1 の作者のコードが読み込みの途中でメモリ不足になります。** `scripts/elephant1_colab/answer_bodies.py` は同じ計算を CPU を通して行います（値は同じ、ピーク 20.4 GB）。このとき Colab で借りられたのは T4 と L4 だけでした。
+- **Colab の CLI は、接続が切れたまま止まることがあります。** `run_colab.sh` は処理を VM の中で独立して動かし、短い命令でログを見に行きます。
+- **Hugging Face からのダウンロードが止まるとき** は、`HF_HUB_DISABLE_XET=1` を付けると進みました。
+- fork は画像に対応していないモデルがあります（decider-4b、Kev-4B、elephant-1 は文章だけ）。decider-4b を「目」として使うときは作者のサーバーを使います。
+
+### 記録
+
+| 判断 AI | ファイル（`outputs/`） |
+|---|---|
+| H2O-Lightning-4B | `decider_strands_decider_h2o_v123_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_strands_decider_h2o_v123.json` |
+| Clef-Flash | `decider_clef_flash_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_clef_flash.json` |
+| decider-4b | `decider_mapika_decider4b_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_mapika_decider4b.json`、`eye_eval_mapika-decider-4b_both2.json`（作者のサーバー）、`decider_fork_mapika_decider4b_vs_jev_comparison.json`（fork） |
+| Kev-4B | `decider_kev4b_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_kev4b.json`（作者のサーバー、MLX）、`decider_kev4b_official_torch_vs_jev_comparison.json`（同、PyTorch）、`decider_fork_kev4b_vs_jev_comparison.json`（fork） |
+| elephant-1 | `decider_elephant1_official_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_elephant1_official.json`（作者の動かし方）、`decider_fork_elephant1_vs_jev_comparison.json`、`prompt_order_comparison_strict_anchored_fork_elephant1.json`（fork）、`elephant1_colab/`（送った質問、Colab での答え、fork との答え合わせ） |
+
+使った版：H2O-Lightning-4B v1.2.3、Clef-Flash fb4417d、decider-4b 585473d、Kev-4B 6cfce5c（土台 Qwen3.5-4B-Base 1001bb4d）、elephant-1 b3f8a93（OneJev 81ce62f）。「目」の JSON は 95 枚分で、表の値は Jev 1.14 と同じ 15 枚で数えたものです。
 
 ## ファイル構成
 

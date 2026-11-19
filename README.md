@@ -13,7 +13,7 @@ Physical AI 応用1講座 最終課題の作業リポジトリです。
 
 ※ 9 通りは、手が作業を終えられると確かめた位置（41 通り中 20 通り）から選びました。画像を読む部分は Claude（有料）を使っています。
 
-> 締め切りのあと、ほかの判断 AI 5 つを strands-decider の fork で動かして比べました。まとめは [締め切り後の追記](#締め切り後の追記ほかの判断-ai-を-strands-decider-の-fork-で動かす2026-11-1011) にあります。
+> 締め切りのあと、ほかの判断 AI 5 つを strands-decider の fork で動かして比べました。まとめは [締め切り後の追記](#締め切り後の追記ほかの判断-ai-を-strands-decider-の-fork-で動かす2026-11-1019) にあります。
 
 ## 仕組み
 
@@ -226,7 +226,7 @@ H2O-Lightning-4B も v1.4 で画像と Box に対応しました。同じ 15 枚
 - Jev：`.venv/bin/python eval_eye_models.py jev`（`.env` に `TYPESAFE_API_KEY` が必要です）
 - H2O：`.venv/bin/python eval_eye_models.py h2o`（v1.4.2 のサーバーを 8741 番で起動しておきます）
 
-## 締め切り後の追記：ほかの判断 AI を strands-decider の fork で動かす（2026-11-10〜11）
+## 締め切り後の追記：ほかの判断 AI を strands-decider の fork で動かす（2026-11-10〜19）
 
 この節は、課題の提出締め切り（2026 年 11 月 2 日）のあとに追記したものです（レポート 10.6〜10.9 節）。提出した内容（ここより上）は変えていません。
 
@@ -333,6 +333,17 @@ python scripts/elephant1_colab/replay_server.py outputs/elephant1_colab/answers/
 
 使った版：H2O-Lightning-4B v1.2.3、Clef-Flash fb4417d、decider-4b 585473d、Kev-4B 6cfce5c（土台 Qwen3.5-4B-Base 1001bb4d）、elephant-1 b3f8a93（OneJev 81ce62f）。「目」の JSON は 95 枚分で、表の値は Jev 1.14 と同じ 15 枚で数えたものです。
 
+### 選択肢の並び順で答えが変わるか（2026-11-19）
+
+strands-decider の [Issue #151](https://github.com/strands-labs/strands-decider/issues/151) で、選択肢を並べる順番が答えに影響するかもしれないと指摘されました。キットの記録から、スキル選びの 34 問を、選択肢の並び順だけ変えて聞き直しました（1 問あたり 9〜14 通り、fork を Colab の L4 で動かしました）。この結果はレポートには入れていません。
+
+- Clef-Flash：並び順で答えはまったく変わりませんでした。
+- H2O-Lightning-4B v1.2.3：今の文面と並び順では、成功した手順 21 問がすべて合格しました。ほかの並び順では、合格は 18〜21 問でした。
+- strands-decider 2B：並び順でいちばん答えが変わり、先頭の選択肢が少し選ばれやすくなりました。
+- どのモデルでも、どの並び順でも、失敗の観測で安全確認が破られることはありませんでした。
+
+ほかの並び順の平均で決める方法も試しましたが、判断の時間が 5〜10 倍になり、正解は増えませんでした。そのため、キットの並び順はそのままにしています。`TaskSpec` のスキルの順番を変えたり、スキルを足したりしたときは、確かめ直してください（コマンドは「比較スクリプト」にあります）。詳しい結果は fork の [docs/so101-kit-checks.md](https://github.com/YukiHSun/strands-decider/blob/feat/clef-flash/docs/so101-kit-checks.md#option-order) に、記録は `outputs/option_order/` にあります。
+
 ## ファイル構成
 
 ```
@@ -343,6 +354,9 @@ compare_prompt_order.py       指示文 3 種（original / strict / strict_ancho
 check_layouts.py              AI なしでスキルを順番に実行し、手が作業を終えられる位置を調べる
 scripts/elephant1_colab/      elephant-1 を作者の動かし方で Colab の GPU に答えさせるスクリプトと、答えを返すサーバー
 scripts/run_order_tolerant.py compare_prompt_order.py の包み（別のタスクのスキルを止まった不正解として数える）
+scripts/measure_option_order.py      選択肢の並び順だけ変えて聞き直し、答えの変わり方を測る（Issue #151）
+scripts/summarize_option_order.py    並び順ごとに、合格と停止をキットの正解と比べる
+scripts/simulate_order_averaging.py  並び順の平均で決めたときの試算（記録した答えだけで計算する）
 eval_eye_models.py            画像を読む「目」の評価（Jev 1.14 / H2O-Lightning-4B v1.4 の画像入力と Box、Ollama の小型モデル）
 strands_so101_sim/
   claude_jev_controller.py    質問の組み立て、ゲート（0.45 / 0.60）、Jev / ローカル判断 AI の切り替え
@@ -360,6 +374,7 @@ outputs/
   decider_*_vs_jev_comparison.json, prompt_order_comparison_*.json   比較結果
   h2o_layout_success_rate.json, layout_feasibility.json   9 通りの結果と、41 通りの下見の結果
   eye_eval_*.json             画像を読む「目」の評価（Jev 1.13 / 1.14、H2O-Lightning-4B v1.4.2）
+  option_order/               選択肢の並び順の測定結果（strands-decider 2B / H2O-Lightning-4B / Clef-Flash）
 report/                       レポート（PDF / HTML）と図
 video/                        動画（2 倍速。判断の過程つきの版を含む）
 ```
@@ -445,6 +460,10 @@ export DECIDER_URL=http://127.0.0.1:8741        # 未設定なら Jev を使う
 ```bash
 DECIDER_URL=http://127.0.0.1:8741 .venv/bin/python compare_decider_vs_jev.py decider_h2o_vs_jev_comparison.json
 DECIDER_URL=http://127.0.0.1:8741 .venv/bin/python compare_prompt_order.py strict_anchored
+# 選択肢の並び順で答えが変わるか（Issue #151）
+B=outputs/elephant1_colab
+DECIDER_URL=http://127.0.0.1:8741 .venv/bin/python scripts/measure_option_order.py $B/bodies/kit_compare.json $B/bodies/kit_order.json $B/bodies_rest/kit_order_rest.json --tag h2o --out outputs/option_order/h2o.json
+.venv/bin/python scripts/summarize_option_order.py $B outputs/option_order/h2o.json
 .venv/bin/python -m unittest strands_so101_sim/tests/test_claude_jev.py strands_so101_sim/tests/test_decider_client.py strands_so101_sim/tests/test_pick_place.py
 ```
 

@@ -1,0 +1,251 @@
+{
+ "strands-decider-2b": {
+  "succ_req": 25,
+  "succ_ok_orig": 7,
+  "succ_ok_all": 3,
+  "succ_broken_some": 4,
+  "succ_calls": 310,
+  "succ_calls_ok": 68,
+  "fail_req": 9,
+  "fail_safe_orig": 9,
+  "fail_safe_all": 9,
+  "fail_calls": 108,
+  "fail_calls_unsafe": 0,
+  "wrong_skill_pass_calls": 37,
+  "calls": 418,
+  "examples": [
+   {
+    "task": "Grip the 3 cm red cube with the SO-101 g",
+    "last": "ready",
+    "expected": "move_above_cube",
+    "broken_orders": 2,
+    "of": 9,
+    "got": [
+     "move_above_cube/stop"
+    ]
+   },
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "move_above_cube",
+    "expected": "descend",
+    "broken_orders": 2,
+    "of": 14,
+    "got": [
+     "descend/stop"
+    ]
+   },
+   {
+    "task": "Grip the 3 cm red cube with the SO-101 g",
+    "last": "ready",
+    "expected": "move_above_cube",
+    "broken_orders": 4,
+    "of": 11,
+    "got": [
+     "move_above_cube/stop"
+    ]
+   },
+   {
+    "task": "Grip the 3 cm red cube with the SO-101 g",
+    "last": "move_above_cube",
+    "expected": "descend",
+    "broken_orders": 2,
+    "of": 11,
+    "got": [
+     "descend/stop"
+    ]
+   }
+  ],
+  "summary": {
+   "requests": 34,
+   "calls": 418,
+   "flip_rate": 0.6176470588235294,
+   "flip_rate_per_order": 0.2682291666666667,
+   "verdict_change_rate": 0.8529411764705882,
+   "tvd_mean": 0.15245065104166666,
+   "tvd_max": 0.4647,
+   "correct_original": 0.35294117647058826,
+   "correct_all_orders": 0.39712918660287083,
+   "position_mass": {
+    "5": {
+     "n": 8,
+     "uniform": 0.2,
+     "first": 0.2166,
+     "last": 0.1807
+    },
+    "7": {
+     "n": 6,
+     "uniform": 0.1429,
+     "first": 0.1629,
+     "last": 0.1382
+    },
+    "10": {
+     "n": 20,
+     "uniform": 0.1,
+     "first": 0.1177,
+     "last": 0.1028
+    }
+   },
+   "median_ms": 280.5
+  }
+ },
+ "h2o-lightning-4b-v1.2.3": {
+  "succ_req": 25,
+  "succ_ok_orig": 23,
+  "succ_ok_all": 17,
+  "succ_broken_some": 6,
+  "succ_calls": 310,
+  "succ_calls_ok": 251,
+  "fail_req": 9,
+  "fail_safe_orig": 9,
+  "fail_safe_all": 9,
+  "fail_calls": 108,
+  "fail_calls_unsafe": 0,
+  "wrong_skill_pass_calls": 89,
+  "calls": 418,
+  "examples": [
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "move_above_cube",
+    "expected": "descend",
+    "broken_orders": 3,
+    "of": 14,
+    "got": [
+     "close_gripper/pass",
+     "close_gripper/stop"
+    ]
+   },
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "transfer",
+    "expected": "lower",
+    "broken_orders": 2,
+    "of": 14,
+    "got": [
+     "lower/stop",
+     "release/pass"
+    ]
+   },
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "lift",
+    "expected": "secure_grasp",
+    "broken_orders": 10,
+    "of": 14,
+    "got": [
+     "transfer/pass",
+     "transfer/stop"
+    ]
+   },
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "lift",
+    "expected": "secure_grasp",
+    "broken_orders": 1,
+    "of": 14,
+    "got": [
+     "transfer/pass"
+    ]
+   },
+   {
+    "task": "Pick up a 3 cm red cube, carry it, and s",
+    "last": "lift",
+    "expected": "secure_grasp",
+    "broken_orders": 10,
+    "of": 14,
+    "got": [
+     "transfer/pass"
+    ]
+   },
+   {
+    "task": "Grip the 3 cm red cube with the SO-101 g",
+    "last": "lift",
+    "expected": "done",
+    "broken_orders": 5,
+    "of": 11,
+    "got": [
+     "secure_grasp/pass"
+    ]
+   }
+  ],
+  "summary": {
+   "requests": 34,
+   "calls": 418,
+   "flip_rate": 0.23529411764705882,
+   "flip_rate_per_order": 0.11458333333333333,
+   "verdict_change_rate": 0.2647058823529412,
+   "tvd_mean": 0.09300546875,
+   "tvd_max": 0.86165,
+   "correct_original": 0.8235294117647058,
+   "correct_all_orders": 0.7559808612440191,
+   "position_mass": {
+    "5": {
+     "n": 8,
+     "uniform": 0.2,
+     "first": 0.1877,
+     "last": 0.2025
+    },
+    "7": {
+     "n": 6,
+     "uniform": 0.1429,
+     "first": 0.1572,
+     "last": 0.1357
+    },
+    "10": {
+     "n": 20,
+     "uniform": 0.1,
+     "first": 0.1093,
+     "last": 0.0984
+    }
+   },
+   "median_ms": 365.0
+  }
+ },
+ "clef-flash": {
+  "succ_req": 25,
+  "succ_ok_orig": 17,
+  "succ_ok_all": 17,
+  "succ_broken_some": 0,
+  "succ_calls": 310,
+  "succ_calls_ok": 201,
+  "fail_req": 9,
+  "fail_safe_orig": 9,
+  "fail_safe_all": 9,
+  "fail_calls": 108,
+  "fail_calls_unsafe": 0,
+  "wrong_skill_pass_calls": 124,
+  "calls": 418,
+  "examples": [],
+  "summary": {
+   "requests": 34,
+   "calls": 418,
+   "flip_rate": 0.0,
+   "flip_rate_per_order": 0.0,
+   "verdict_change_rate": 0.0,
+   "tvd_mean": 0.0,
+   "tvd_max": 0.0,
+   "correct_original": 0.5588235294117647,
+   "correct_all_orders": 0.5478468899521531,
+   "position_mass": {
+    "5": {
+     "n": 8,
+     "uniform": 0.2,
+     "first": 0.2,
+     "last": 0.2
+    },
+    "7": {
+     "n": 6,
+     "uniform": 0.1429,
+     "first": 0.1429,
+     "last": 0.1429
+    },
+    "10": {
+     "n": 20,
+     "uniform": 0.1,
+     "first": 0.1,
+     "last": 0.1
+    }
+   },
+   "median_ms": 439.0
+  }
+ }
+}

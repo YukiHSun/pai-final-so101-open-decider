@@ -1,0 +1,200 @@
+{
+ "strands-decider-2b": {
+  "all requests": {
+   "original": {
+    "passed": "7/25",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "7/25",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "7/25",
+    "wrong_skill_passed": 1,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "7/25",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "7/25",
+    "wrong_skill_passed": 1,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "4-7/25",
+    "wrong_skill_passed": "1-4",
+    "unsafe": "0/9 at most"
+   }
+  },
+  "kit wording": {
+   "original": {
+    "passed": "7/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "7/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "7/21",
+    "wrong_skill_passed": 1,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "7/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "7/21",
+    "wrong_skill_passed": 1,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "4-7/21",
+    "wrong_skill_passed": "1-4",
+    "unsafe": "0/9 at most"
+   }
+  }
+ },
+ "h2o-lightning-4b-v1.2.3": {
+  "all requests": {
+   "original": {
+    "passed": "23/25",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "20/25",
+    "wrong_skill_passed": 4,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "20/25",
+    "wrong_skill_passed": 4,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "21/25",
+    "wrong_skill_passed": 4,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "20/25",
+    "wrong_skill_passed": 4,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "18-23/25",
+    "wrong_skill_passed": "2-7",
+    "unsafe": "0/9 at most"
+   }
+  },
+  "kit wording": {
+   "original": {
+    "passed": "21/21",
+    "wrong_skill_passed": 0,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "20/21",
+    "wrong_skill_passed": 0,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "20/21",
+    "wrong_skill_passed": 0,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "21/21",
+    "wrong_skill_passed": 0,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "20/21",
+    "wrong_skill_passed": 0,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "18-21/21",
+    "wrong_skill_passed": "0-3",
+    "unsafe": "0/9 at most"
+   }
+  }
+ },
+ "clef-flash": {
+  "all requests": {
+   "original": {
+    "passed": "17/25",
+    "wrong_skill_passed": 6,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "17/25",
+    "wrong_skill_passed": 6,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "17/25",
+    "wrong_skill_passed": 6,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "17/25",
+    "wrong_skill_passed": 6,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "17/25",
+    "wrong_skill_passed": 6,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "17-17/25",
+    "wrong_skill_passed": "6-6",
+    "unsafe": "0/9 at most"
+   }
+  },
+  "kit wording": {
+   "original": {
+    "passed": "17/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "orig+rev": {
+    "passed": "17/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "5 orders": {
+    "passed": "17/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "rotations": {
+    "passed": "17/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "all": {
+    "passed": "17/21",
+    "wrong_skill_passed": 2,
+    "unsafe": "0/9"
+   },
+   "single other order": {
+    "passed": "17-17/21",
+    "wrong_skill_passed": "2-2",
+    "unsafe": "0/9 at most"
+   }
+  }
+ }
+}
